@@ -1,55 +1,53 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Article;
+use App\Http\Controllers\Controller;
+use App\Category;
 
-class IndexController extends Controller
+class AdminArticleController extends Controller
 {
-    //
-
-    protected $message;
-    protected $header;
-
-    public function __construct()
-    {
-        $this->header = 'Hello!';
-        $this->message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, natus.';
-    }
-
+	/**
+	 * 
+	 */
     public function index()
     {
         $articles = Article::select(['id', 'title', 'description'])->get();
 
         // dump($articles);
 
-        return view('page')->with(['header' => $this->header,
-                    'message' => $this->message,
+        return view('admin/index')->with([
                     'articles' => $articles
         ]);
     }
 
-    public function show($id)
+	/**
+	 * 
+	 */
+    public function update($id)
     {
         // $article = Article::find($id);
         $article = Article::select(['id', 'title', 'text'])->where('id', $id)->first();
 
         // dump($article);
 
-        return view('article-content')->with(['header' => $this->header,
-                    'message' => $this->message,
+        return view('admin/update')->with([
                     'article' => $article
         ]);
     }
 
-    public function add()
+	/**
+	 * 
+	 */
+    public function create()
     {
-        return view('add-content')->with(['header' => $this->header,
-                    'message' => $this->message,
-        ]);
+        return view('admin/create');
     }
 
+	/**
+	 * 
+	 */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -65,7 +63,6 @@ class IndexController extends Controller
 
         $article->save();
 
-        return redirect('/');
+        return redirect('admin/index');
     }
-
 }

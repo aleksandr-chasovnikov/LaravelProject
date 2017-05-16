@@ -3,21 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Article;
 
-class IndexController extends Controller
+class ArticleController extends Controller
 {
-    //
-
-    protected $message;
-    protected $header;
-
-    public function __construct()
-    {
-        $this->header = 'Hello!';
-        $this->message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, natus.';
-    }
-
+    
+    /**
+     * Создание статей
+     * @param object $request
+     */
     public function index()
     {
         $articles = Article::select(['id', 'title', 'description'])->get();
@@ -29,7 +22,11 @@ class IndexController extends Controller
                     'articles' => $articles
         ]);
     }
-
+    
+    /**
+     * Создание статей
+     * @param object $request
+     */
     public function show($id)
     {
         // $article = Article::find($id);
@@ -43,29 +40,24 @@ class IndexController extends Controller
         ]);
     }
 
-    public function add()
-    {
-        return view('add-content')->with(['header' => $this->header,
-                    'message' => $this->message,
-        ]);
-    }
-
+	/**
+	 * Создание статей
+	 * @param object $request
+	 */
     public function store(Request $request)
     {
         $this->validate($request, [
             'title' => 'required|max:255',
-            'alias' => 'required|unique:articles,alias',
             'text' => 'required',
         ]);
 
         $data = $request->all();
 
-        $article = new Article;
-        $article->fill($data);
+        $post = new Article;
+        $post->fill($data);
 
-        $article->save();
+        $post->save();
 
         return redirect('/');
     }
-
 }
