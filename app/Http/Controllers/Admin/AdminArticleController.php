@@ -43,7 +43,7 @@ class AdminArticleController extends AdminController
         self::checkAdmin();
 
         // $article = Article::find($id);
-        $article = Article::select(['id', 'title', 'text'])->where('id', $id)->first();
+        $article = Article::select(['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'])->where('id', $id)->first();
 
         // dump($article);
 
@@ -63,9 +63,9 @@ class AdminArticleController extends AdminController
         return view('admin/create');
     }
 
-	/**
-	 * 
-	 */
+    /**
+     * 
+     */
     public function store(Request $request)
     {
         // Проверка доступа
@@ -84,6 +84,31 @@ class AdminArticleController extends AdminController
 
         $article->save();
 
-        return redirect('admin/index');
+        return view('admin/create');
+    }
+
+	/**
+	 * 
+	 */
+    public function postUpdate(Request $request)
+    {
+        // Проверка доступа
+        self::checkAdmin();
+        
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'alias' => 'required|unique:articles,alias',
+            'text' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        $article = Article::select(['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'])->where('id', $request->id)->first();
+
+        $article->fill($data);
+
+        $article->save();
+
+        return view('admin/create');
     }
 }

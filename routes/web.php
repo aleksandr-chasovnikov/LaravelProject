@@ -32,16 +32,17 @@ Route::group(['prefix' => 'admin/article'], function () {
 	Route::get('index', 'Admin\AdminArticleController@index')->name('adminIndex');
 	Route::post('create', 'Admin\AdminArticleController@store')->name('articleStore');
 	Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
-	Route::get('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
-	Route::get('delete', 'Admin\AdminArticleController@delete')->name('articleDelete'); 
+	Route::get('update/{id}', 'Admin\AdminArticleController@update')->name('articleUpdate');
+	Route::post('update', 'Admin\AdminArticleController@postUpdate')->name('articlePostUpdate');
+	Route::get('delete/{article}', 'Admin\AdminArticleController@delete')->name('articleDelete'); 
 });
 Route::group(['prefix' => 'admin/category'], function () {
 
 	Route::get('index', 'Admin\AdminCategoryController@index')->name('categoryIndex');;
 	Route::post('create', 'Admin\AdminCategoryController@store')->name('categoryStore');;
 	Route::get('create', 'Admin\AdminCategoryController@create')->name('categoryCreate');;
-	Route::get('update', 'Admin\AdminCategoryController@update')->name('categoryUpdate');;
-	Route::get('delete', 'Admin\AdminCategoryController@delete')->name('categoryDelete');;
+	Route::get('update/{id}', 'Admin\AdminCategoryController@update')->name('categoryUpdate');;
+	Route::get('delete/{article}', 'Admin\AdminCategoryController@delete')->name('categoryDelete');;
 });
 // ======== END AdminPanel =======================
 

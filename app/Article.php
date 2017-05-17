@@ -8,10 +8,13 @@ use App\Comment;
 
 class Article extends Model
 {
+    /**
+     * Определяет необходимость отметок времени для модели
+     * @var bool
+     */
+    public $timestamps = false;
     //
-    protected $fillable = ['title', 'alias', 'description', 'text'];
-    protected $updated_at = false;
-    protected $created_at = false;
+    protected $fillable = ['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'];
 
     /**
 	 * Получить пользователя - владельца данной статьи
