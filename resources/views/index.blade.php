@@ -5,9 +5,9 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
 	<div class="container">
-		<h1>Hello!</h1>
+		<h1>Привет!</h1>
 		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita, natus.</p>
-		<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+		<p><a class="btn btn-primary btn-lg" href="#" role="button">Узнать больше &raquo;</a></p>
 	</div>
 </div>
 

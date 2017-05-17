@@ -24,26 +24,41 @@ Route::get('article/{id}', 'SiteController@show')->name('articleShow');
 
 Route::get('comment/{id}', 'CommentController@show')->name('commentShow');
 
-// ======== ADMIN =========================
-Route::get('admin', 'AdminArtickleController@index')->name('admin');
+// ======== AdminPanel =========================
+Route::get('admin/comment', 'CommentController@index')->name('commentIndex');
 
 Route::group(['prefix' => 'admin/article'], function () {
 
-	Route::get('index', 'AdminArtickleController@index')->name('admin/article/index');
-	Route::post('create', 'AdminArtickleController@store')->name('admin/article/create');
-	Route::get('create', 'AdminArtickleController@create')->name('admin/article/create');
-	Route::get('update', 'AdminArtickleController@update')->name('admin/article/update');
-	Route::get('delete', 'AdminArtickleController@delete')->name('admin/article/delete'); 
+	Route::get('index', 'Admin\AdminArticleController@index')->name('adminIndex');
+	Route::post('create', 'Admin\AdminArticleController@store')->name('articleStore');
+	Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
+	Route::get('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
+	Route::get('delete', 'Admin\AdminArticleController@delete')->name('articleDelete'); 
 });
 Route::group(['prefix' => 'admin/category'], function () {
 
-	Route::get('index', 'AdminCategoryController@index')->name('admin/category/index');;
-	Route::post('create', 'AdminCategoryController@store')->name('admin/category/create');;
-	Route::get('create', 'AdminCategoryController@create')->name('admin/category/create');;
-	Route::get('update', 'AdminCategoryController@update')->name('admin/category/update');;
-	Route::get('delete', 'AdminCategoryController@delete')->name('admin/category/delete');;
+	Route::get('index', 'Admin\AdminCategoryController@index')->name('categoryIndex');;
+	Route::post('create', 'Admin\AdminCategoryController@store')->name('categoryStore');;
+	Route::get('create', 'Admin\AdminCategoryController@create')->name('categoryCreate');;
+	Route::get('update', 'Admin\AdminCategoryController@update')->name('categoryUpdate');;
+	Route::get('delete', 'Admin\AdminCategoryController@delete')->name('categoryDelete');;
 });
-// ======== END ADMIN =======================
+// ======== END AdminPanel =======================
+
+// ======== Authentication =======================
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+// login
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+// register
+Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('register', 'Auth\RegisterController@register')->name('register');
+// ======== END Authentication =======================
 
 // Route::get('page/add', 'IndexController@add');
 
@@ -59,17 +74,3 @@ Route::group(['prefix' => 'admin/category'], function () {
 
 // })->name('articleDelete');
 // //------------------------------
-
-// //------------------------------
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-// Маршруты аутентификации...
-Route::get('login', 'Auth\AuthController@getLogin')->name('login');
-Route::post('login', 'Auth\AuthController@postLogin')->name('login');
-Route::get('logout', 'Auth\AuthController@getLogout');
-
-// Маршруты регистрации...
-Route::get('register', 'Auth\AuthController@getRegister')->name('register');
-Route::post('register', 'Auth\AuthController@postRegister')->name('register');

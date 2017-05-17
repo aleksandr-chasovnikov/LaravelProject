@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\User;
 
 abstract class AdminController extends Controller
 {
-	protected static $class;
+    /**
+     * Проверяет пользователя на наличие администароских прав
+     * @return true
+     */
+	public static function checkAdmin()
+	{
+        // Проверяем авторизирован ли пользователь. Если нет, он будет переадресован
+        if (\Auth::check()) {
 
-	public function index($class)
-    {
-        $articles = $class::select(['id', 'title', 'description'])->get();
+            // Если роль текущего пользователя "admin", пускаем его в админпанель
+	        if (\Auth::user()->role == 'admin') {
+	            return true;
+	        }
 
-        // dump($articles);
+            // Иначе завершаем работу с сообщением об закрытом доступе
+        	die('Access denied / Доступ запрещён');
+    	
+        }      
+	}
 
-        return view('page')->with(['header' => $this->header,
-                    'message' => $this->message,
-                    'articles' => $articles
-        ]);
-    }
 }

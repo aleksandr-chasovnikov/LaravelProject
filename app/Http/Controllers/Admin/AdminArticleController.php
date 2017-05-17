@@ -3,16 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use App\Category;
+use App\Article;
 
-class AdminArticleController extends Controller
+class AdminArticleController extends AdminController
 {
+    // /**
+    //  * Сработает для пользователя с именем "admin"
+    //  */
+    // public function __construct()
+    // {
+    //     $this->user('admin');
+    // }
+
 	/**
 	 * 
 	 */
     public function index()
     {
+        // Проверка доступа
+        self::checkAdmin();
+
         $articles = Article::select(['id', 'title', 'description'])->get();
 
         // dump($articles);
@@ -27,6 +39,9 @@ class AdminArticleController extends Controller
 	 */
     public function update($id)
     {
+        // Проверка доступа
+        self::checkAdmin();
+
         // $article = Article::find($id);
         $article = Article::select(['id', 'title', 'text'])->where('id', $id)->first();
 
@@ -42,6 +57,9 @@ class AdminArticleController extends Controller
 	 */
     public function create()
     {
+        // Проверка доступа
+        self::checkAdmin();
+
         return view('admin/create');
     }
 
@@ -50,6 +68,9 @@ class AdminArticleController extends Controller
 	 */
     public function store(Request $request)
     {
+        // Проверка доступа
+        self::checkAdmin();
+        
         $this->validate($request, [
             'title' => 'required|max:255',
             'alias' => 'required|unique:articles,alias',
