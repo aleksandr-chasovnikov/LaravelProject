@@ -4,25 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\Category;
 
 class SiteController extends Controller
 {
+    /**
+     * Action для главной страницы
+     */
 	public function index()
 	{
-        $articles = Article::select(['id', 'title', 'description'])->get();
+        //Список статей
+        $articles = Article::select(['id', 'title', 'description'])->paginate(7);
 
-        // dump($articles);
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
 
-        return view('index')->with(['articles' => $articles]);
+        return view('index')->with(['articles' => $articles, 'categories' => $categories]);
 	}
 
-    public function show($id)
-    {
-        // $article = Article::find($id);
-        $article = Article::select(['id', 'title', 'text'])->where('id', $id)->first();
-
-        // dump($article);
-
-        return view('article')->with(['article' => $article]);
-    }
 }

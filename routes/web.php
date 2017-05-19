@@ -20,9 +20,11 @@ Route::get('/', [
 	'uses' => 'SiteController@index'
 ]);
 
-Route::get('article/{id}', 'SiteController@show')->name('articleShow');
+Route::get('article/{id}', 'ArticleController@show')->name('articleShow');
+Route::get('index/{categoryId}', 'ArticleController@showByCategory')->name('articleByCategory');
 
 Route::get('comment/{id}', 'CommentController@show')->name('commentShow');
+Route::post('article', 'CommentController@store')->name('commentStore');
 
 // ======== AdminPanel =========================
 Route::get('admin/comment', 'CommentController@index')->name('commentIndex');

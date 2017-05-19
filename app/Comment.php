@@ -8,6 +8,14 @@ use App\Article;
 
 class Comment extends Model
 {
+    /**
+     * Определяет необходимость отметок времени для модели
+     * @var bool
+     */
+    public $timestamps = false;
+    //
+    protected $fillable = ['id', 'article_id', 'user_name', 'user_email', 'comm'];
+
 	/**
 	 * Получить пользователя - владельца данного комментария
 	 */

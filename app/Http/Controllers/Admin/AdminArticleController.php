@@ -78,6 +78,7 @@ class AdminArticleController extends AdminController
         ]);
 
         $data = $request->all();
+dd($data);
 
         $article = new Article;
         $article->fill($data);

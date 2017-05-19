@@ -3,61 +3,58 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
+use App\Article;
+use App\Category;
+use App\User;
 
 class ArticleController extends Controller
 {
-    
     /**
-     * Создание статей
-     * @param object $request
-     */
-    public function index()
-    {
-        $articles = Article::select(['id', 'title', 'description'])->get();
-
-        // dump($articles);
-
-        return view('page')->with(['header' => $this->header,
-                    'message' => $this->message,
-                    'articles' => $articles
-        ]);
-    }
-    
-    /**
-     * Создание статей
-     * @param object $request
+     * Показать одну статью
      */
     public function show($id)
     {
         // $article = Article::find($id);
-        $article = Article::select(['id', 'title', 'text'])->where('id', $id)->first();
+        $article = Article::select(['id', 'title', 'text'])
+                ->where('id', $id)
+                ->first();
 
-        // dump($article);
+        //Комментарии, принадлежащие статье
+        $comments = Article::find($id)->comments()->get();
 
-        return view('article-content')->with(['header' => $this->header,
-                    'message' => $this->message,
-                    'article' => $article
-        ]);
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
+
+        return view('article')->with([
+            'article' => $article,
+            'categories' => $categories,
+            'comments' => $comments,
+            ]);
     }
 
-	/**
-	 * Создание статей
-	 * @param object $request
-	 */
-    public function store(Request $request)
+    /**
+     * 
+     */
+    public function showByCategory($categoryId)
     {
-        $this->validate($request, [
-            'title' => 'required|max:255',
-            'text' => 'required',
-        ]);
+        //Выбранная категория
+        $category = Category::all()->where('id', $categoryId);
 
-        $data = $request->all();
+        //Список статей
+        $articles = Article::select(['id', 'title', 'description'])
+                ->where('categories_id', $categoryId)
+                ->paginate(7);
 
-        $post = new Article;
-        $post->fill($data);
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
+        // dd($categories);
 
-        $post->save();
-
-        return redirect('/');
+        return view('index')->with([
+            'articles' => $articles,
+            'category' => $category,
+            'categories' => $categories
+            ]);
     }
+
 }

@@ -11,24 +11,48 @@
 	</div>
 </div>
 
+@if(!empty($category))
+	@foreach($category as $cat)
+	<div class="container">
+		<div class="row">
+			<h4>Категория &#8194;&#8658;&#8194; {{$cat->name_category}}</h4>
+		</div>
+	</div>
+	@endforeach
+@endif
+
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
+		<div class="content">
 
-		@foreach($articles as $article)
+			@foreach($articles as $article)
 
-		<div class="col-md-4">
 			<h2>{{ $article->title }}</h2>
 			<p>{{ $article->description }}</p>
 			<p><a class="btn btn-default" href="{{ route('articleShow',['id'=>$article->id]) }}" role="button">Подробнее &raquo;</a></p>
-			
+			<hr>
 
+			@endforeach
+
+			<div class="paginate container">
+				<div class="row">
+					{{ $articles->links() }}
+				</div>		
+			</div>
+
+			<ul class="panel-menu-wrap categories">
+				@foreach($categories as $category)
+				<li>
+					<a href="{{ route('articleByCategory',['categoryId' => $category->id]) }}" class="btn btn-menu">{{ $category->name_category }}</a>
+				</li>
+				@endforeach
+			</ul>        
 		</div>
-
-		@endforeach
-
 	</div>
 
-@endsection
+
+
+	@endsection
 
 

@@ -9,6 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/my.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -44,55 +45,89 @@
 
                         @if (Auth::guest())
 
-                            <li><a href="{{ route('login') }}">Войти</a></li>
-                            <li><a href="{{ route('register') }}">Регистрация</a></li>
+                        <li><a href="{{ route('login') }}">Войти</a></li>
+                        <li><a href="{{ route('register') }}">Регистрация</a></li>
 
                         @else
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    Выйти
                                 </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Выйти
-                                        </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
                             </li>
-                            
-                        @endif
+                        </ul>
+                    </li>
 
-                    </ul>
-                </div>
+                    @endif
+
+                </ul>
             </div>
-        </nav>
-        
+        </div>
+    </nav>
+
     @if(count($errors) > 0)
 
-      <div class="alert alert-danger">
+    <div class="alert alert-danger">
         <ul>
-          
+
           @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
+          <li>{{ $error }}</li>
           @endforeach
 
-        </ul>
-      </div>
+      </ul>
+  </div>
 
-    @endif
+  @endif
 
-        @yield('content')
-    </div>
+  @yield('content')
+</div>
 
-    <!-- Scripts -->
+<footer class="footer"><!-- FOOTER =============== -->
+  <div class="footer__logo logo">
+    <img src="" alt="logo" class="logo__img logo__img_small">
+</div>
+
+<div class="copy">
+    <p class="copy text-center">&copy; Компания </p>
+</div>      
+</footer><!-- FOOTER END =============== -->
+
+<a href="#" class="btn btn-default up-button" role="button" title="Кнопка вверх">&#8657;</a>
+</div><!-- wrapper END -->
+
+
+    <!--[if lt IE 9]>
+    <script src="libs/html5shiv/es5-shim.min.js"></script>
+    <script src="libs/html5shiv/html5shiv.min.js"></script>
+    <script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+    <script src="libs/respond/respond.min.js"></script>
+    <![endif]-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/my.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            $(".add-to-cart").click(function () {
+                var id = $(this).attr("data-id");
+                $.post("/cart/addAjax/"+id, {}, function (data) {
+                    $("#cart-count").html(data);
+                });
+                return false;
+            });
+        });
+    </script>
 </body>
 </html>

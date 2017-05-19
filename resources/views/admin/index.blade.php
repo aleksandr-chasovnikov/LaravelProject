@@ -4,19 +4,13 @@
 
 <section>
     <div class="container">
-        <div class="row"> 
-
-            <br/>            
-            <h4>Добрый день, администратор!</h4>            
-            <br/>            
-            <p>Вам доступны такие возможности:</p>            
-            <br/>            
+        <div class="row">          
+            <h4>Добрый день, администратор!</h4>
             <ul>
                 <li><a href="{{route('articleCreate')}}">Добавить новую статью</a></li>
                 <li><a href="{{route('categoryIndex')}}">Управление категориями</a></li>
                 <li><a href="{{route('commentIndex')}}">Управление комментариями</a></li>
             </ul>            
-            
         </div>
         <div class="row">
 

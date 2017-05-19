@@ -1,0 +1,24 @@
+
+.content {
+	position: relative;
+	max-width: 850px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.paginate {
+	max-width: 850px;
+	text-align: center;
+}
+
+.form-control {
+	margin-bottom: 5px;
+}
+
+.categories {
+	background-color: #D5D5D5;
+	position: absolute;
+	top: 0;
+}
