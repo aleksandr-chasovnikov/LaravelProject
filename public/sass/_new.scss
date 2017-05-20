@@ -20,5 +20,10 @@
 .categories {
 	background-color: #D5D5D5;
 	position: absolute;
-	top: 0;
+	top: 53px;
+	&:hover {
+		@include rot(90);
+	}
+
 }
+

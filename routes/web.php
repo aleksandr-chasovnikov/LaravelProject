@@ -25,9 +25,10 @@ Route::get('index/{categoryId}', 'ArticleController@showByCategory')->name('arti
 
 Route::get('comment/{id}', 'CommentController@show')->name('commentShow');
 Route::post('article', 'CommentController@store')->name('commentStore');
+Route::delete('delete/{comment}', 'CommentController@delete')->name('commentDelete');
 
 // ======== AdminPanel =========================
-Route::get('admin/comment', 'CommentController@index')->name('commentIndex');
+// Route::get('admin/comment', 'Admin\AdminCommentController@index')->name('commentIndex');
 
 Route::group(['prefix' => 'admin/article'], function () {
 
@@ -36,8 +37,9 @@ Route::group(['prefix' => 'admin/article'], function () {
 	Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
 	Route::get('update/{id}', 'Admin\AdminArticleController@update')->name('articleUpdate');
 	Route::post('update', 'Admin\AdminArticleController@postUpdate')->name('articlePostUpdate');
-	Route::get('delete/{article}', 'Admin\AdminArticleController@delete')->name('articleDelete'); 
+	Route::get('delete/{article}', 'Admin\AdminArticleController@delete')->name('articleDelete');
 });
+
 Route::group(['prefix' => 'admin/category'], function () {
 
 	Route::get('index', 'Admin\AdminCategoryController@index')->name('categoryIndex');;

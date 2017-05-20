@@ -10,6 +10,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/screen.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <div id="app">
@@ -103,7 +105,7 @@
 </div>      
 </footer><!-- FOOTER END =============== -->
 
-<a href="#" class="btn btn-default up-button" role="button" title="Кнопка вверх">&#8657;</a>
+<!-- <a href="#" class="btn btn-default up-button" role="button" title="Кнопка вверх">&#8657;</a> -->
 </div><!-- wrapper END -->
 
 

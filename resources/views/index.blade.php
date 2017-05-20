@@ -12,13 +12,13 @@
 </div>
 
 @if(!empty($category))
-	@foreach($category as $cat)
-	<div class="container">
-		<div class="row">
-			<h4>Категория &#8194;&#8658;&#8194; {{$cat->name_category}}</h4>
-		</div>
+@foreach($category as $cat)
+<div class="container">
+	<div class="row">
+		<h4>Категория &#8194;&#8658;&#8194; {{$cat->name_category}}</h4>
 	</div>
-	@endforeach
+</div>
+@endforeach
 @endif
 
 <div class="container">
@@ -36,23 +36,25 @@
 			@endforeach
 
 			<div class="paginate container">
-				<div class="row">
-					{{ $articles->links() }}
-				</div>		
-			</div>
-
-			<ul class="panel-menu-wrap categories">
-				@foreach($categories as $category)
-				<li>
-					<a href="{{ route('articleByCategory',['categoryId' => $category->id]) }}" class="btn btn-menu">{{ $category->name_category }}</a>
-				</li>
-				@endforeach
-			</ul>        
+				{{ $articles->links() }}
+			</div>		
 		</div>
+
+
+
 	</div>
+</div>
+<div class="categories">				
+	<h3>Категории</h3>
+	<ul class="panel-menu-wrap">
+		@foreach($categories as $category)
+		<li>
+			<a href="{{ route('articleByCategory',['categoryId' => $category->id]) }}" class="btn btn-menu">{{ $category->name_category }}</a>
+		</li>
+		@endforeach
+	</ul>   
+</div>
 
-
-
-	@endsection
+@endsection
 
 
