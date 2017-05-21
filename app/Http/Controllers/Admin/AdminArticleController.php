@@ -9,14 +9,6 @@ use App\Article;
 
 class AdminArticleController extends AdminController
 {
-    // /**
-    //  * Сработает для пользователя с именем "admin"
-    //  */
-    // public function __construct()
-    // {
-    //     $this->user('admin');
-    // }
-
 	/**
 	 * 
 	 */
@@ -25,13 +17,15 @@ class AdminArticleController extends AdminController
         // Проверка доступа
         self::checkAdmin();
 
-        $articles = Article::select(['id', 'title', 'description'])->get();
+        $articles = Article::select(['id', 'title', 'description', 'created_at'])->get();
 
-        // dump($articles);
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
 
         return view('admin/index')->with([
-                    'articles' => $articles
-        ]);
+                'articles' => $articles,
+                'categories' => $categories
+            ]);
     }
 
 	/**
@@ -42,10 +36,7 @@ class AdminArticleController extends AdminController
         // Проверка доступа
         self::checkAdmin();
 
-        // $article = Article::find($id);
         $article = Article::select(['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'])->where('id', $id)->first();
-
-        // dump($article);
 
         return view('admin/update')->with([
                     'article' => $article
@@ -60,7 +51,12 @@ class AdminArticleController extends AdminController
         // Проверка доступа
         self::checkAdmin();
 
-        return view('admin/create');
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
+
+        return view('admin/create')->with([
+            'categories' => $categories
+            ]);
     }
 
     /**
@@ -78,8 +74,6 @@ class AdminArticleController extends AdminController
         ]);
 
         $data = $request->all();
-dd($data);
-
         $article = new Article;
         $article->fill($data);
 
@@ -111,5 +105,16 @@ dd($data);
         $article->save();
 
         return view('admin/create');
+    }
+
+    /**
+     * Удалить комментарий
+     */
+    public function delete($article)
+    {
+        $article_tmp = Article::where('id', $article)->first();
+        $article_tmp->delete();
+
+        return redirect()->back();
     }
 }

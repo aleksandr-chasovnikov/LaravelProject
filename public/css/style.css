@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* RESET ================== */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -106,6 +107,7 @@ html {
 }
 
 /* RESET END ================== */
+
 .content {
   position: relative;
   max-width: 850px;
@@ -135,3 +137,16 @@ html {
   transform: rotate(90deg);
   transform-origin: center center;
 }
+
+.footer__logo {
+  margin: 0 auto;
+}
+
+.logo {
+  padding-left: 70px;
+}
+
+.admin-panel {
+  margin-left: 120px;
+}
+

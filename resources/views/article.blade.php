@@ -21,7 +21,7 @@
 			<p>{{ $comment->comm }}</p>
 			<a class="btn btn-default" href="#" role="button">Ответить</a>
 
-		@if ( (Auth::check()) && (Auth::user()->email) == $comment->user_email)
+@if ((Auth::check()) && ((Auth::user()->email) == $comment->user_email	|| (Auth::user()->role) == 'admin'))
 			<form action="{{ route('commentDelete', ['comment'=>$comment->id]) }}" method="post">
 				<!-- <input type="hidden" name="_method" value="DELETE"> -->
 				{{method_field('DELETE')}}
@@ -55,18 +55,7 @@
 		@endif
 
 	</div>
-
-	<div class="container">
-		<div class="row">
-			<ul class="panel-menu-wrap clearfix">
-				@foreach($categories as $category)
-				<li>
-					<a href="{{ $category->id }}" class="btn btn-menu">{{ $category->name_category }}</a>
-				</li>
-				@endforeach
-			</ul>        
-		</div>
-	</div>
+</div>
 
 	@endsection
 

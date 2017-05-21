@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.default')
 
 @section('content')
 
 <div class="container">
 	<div class="row">
 		<form action="{{ route('articleStore') }}" method="post" role="form">
-			<legend>Form title</legend>
+			<legend>Создание статьи</legend>
 			<p>Поля, обозначенные звёздочкой (&#10033;), обязательны для заполнения.</p>
 
 			<div class="form-group">
@@ -19,9 +19,9 @@
 			<div class="form-group">
 				<label for="categories_id">Категория</label>&nbsp;&#10033;
 				<select name="categories_id" size="3" class="form-control" id="categories_id" required>
-					<option value="1">Категория 1</option>
-					<option value="2">Категория 2</option>
-					<option value="3">Категория 3</option>
+				@foreach ($categories as $category)
+					<option value="{{$category->id}}">{{$category->name_category}}</option>
+				@endforeach
 				</select>
 			</div>
 			<div class="form-group">
@@ -37,7 +37,7 @@
 			</div>
 			<div class="form-group">
 				<label for="created_at">Дата создания</label>
-				<input name="created_at" type="text" class="form-control" id="created_at" value="{{date('Y-m-d')}}" disabled>
+				<input name="created_at" type="text" class="form-control" id="created_at" value="{{date('Y-m-d')}}">
 			</div>
 
 			<button type="submit" class="btn btn-primary">Сохранить</button>

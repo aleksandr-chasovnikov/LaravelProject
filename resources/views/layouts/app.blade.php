@@ -6,103 +6,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'MySite') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/screen.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/style.css?123') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/demo.css?123') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css?123') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/categories.css?123') }}" />
 
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <!-- Collapsed Hamburger -->
+    <div id="app wrapper">
+        <div class="row">
+            <nav class="navbar navbar-default navbar-top h-header">
+                <div class="container h-header">
+<!--                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                         <span class="sr-only">Toggle Navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
+                </div> -->
+                <!-- <div class="collapse navbar-collapse" id="app-navbar-collapse"> -->
+                <a class="navbar-brand logo" href="{{ url('/') }}">
+                    {{ config('app.name', 'MySite') }}
+                </a>
+                <ul class="nav navbar-nav">
 
-                        @if ( (Auth::check()) && (Auth::user()->role) == 'admin')
+                    @if ( (Auth::check()) && (Auth::user()->role) == 'admin')
 
-                        <li><a href="{{ route('adminIndex') }}">Панель администратора</a></li>
-                        
-                        @endif
-
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-
-                        @if (Auth::guest())
-
-                        <li><a href="{{ route('login') }}">Войти</a></li>
-                        <li><a href="{{ route('register') }}">Регистрация</a></li>
-
-                        @else
-
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    Выйти
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ route('adminIndex') }}">Панель администратора</a></li>
 
                     @endif
 
                 </ul>
+
+                <!-- </div> -->
             </div>
-        </div>
-    </nav>
-
-    @if(count($errors) > 0)
-
-    <div class="alert alert-danger">
+        </nav>
+    </div>
+    <nav id="bt-menu" class="bt-menu">
+        <a href="#" class="bt-menu-trigger"><span>Категории</span></a>
         <ul>
+            @if (Auth::guest())
 
-          @foreach($errors->all() as $error)
-          <li>{{ $error }}</li>
-          @endforeach
+            <li><a href="{{ route('login') }}">Войти</a></li>
+            <li><a href="{{ route('register') }}">Регистрация</a></li>
 
-      </ul>
-  </div>
+            @else
 
-  @endif
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{ Auth::user()->name }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                    Выйти
+                </a>
 
-  @yield('content')
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                </form>
+            </li>
+
+        @endif
+        <li><h2>Категории:</h2></li>
+
+        @foreach($categories as $category)
+        <li>
+            <a href="{{ route('articleByCategory',['categoryId' => $category->id]) }}" class="btn btn-menu">{{ $category->name_category }}</a>
+        </li>
+        @endforeach
+    </ul>
+    <ul>
+        <li><a href="https://twitter.com/siteherelesson" class="bt-icon icon-twitter">Twitter</a></li>
+        <li><a href="https://plus.google.com/115094575201291193952/posts" class="bt-icon icon-gplus">Google+</a></li>
+        <li><a href="https://www.facebook.com" class="bt-icon icon-facebook">Facebook</a></li>
+        <li><a href="https://github.com/" class="bt-icon icon-github">GitHub</a></li>
+    </ul>
+
+</ul>
+</nav>
+
+@if(count($errors) > 0)
+
+<div class="alert alert-danger">
+    <ul>
+
+      @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+
+  </ul>
 </div>
+
+@endif
+
+@yield('content')
 
 <footer class="footer"><!-- FOOTER =============== -->
-  <div class="footer__logo logo">
-    <img src="" alt="logo" class="logo__img logo__img_small">
-</div>
+<!--     <div class="footer__logo logo">
+        <img src="" alt="logo" class="logo__img logo__img_small">
+    </div> -->
 
-<div class="copy">
-    <p class="copy text-center">&copy; Компания </p>
-</div>      
+    <div class="copy">
+        <p class="copy text-center">&copy; Компания </p>
+    </div>      
 </footer><!-- FOOTER END =============== -->
 
 <!-- <a href="#" class="btn btn-default up-button" role="button" title="Кнопка вверх">&#8657;</a> -->
@@ -117,9 +131,16 @@
     <![endif]-->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/my.js') }}"></script>
+    <script src="{{ asset('js/classie.js') }}"></script>
+    <script src="{{ asset('js/borderMenu.js') }}"></script>
     <script>
         $(document).ready(function(){
             $(".add-to-cart").click(function () {
