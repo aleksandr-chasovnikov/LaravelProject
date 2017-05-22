@@ -17,7 +17,7 @@ class AdminArticleController extends AdminController
         // Проверка доступа
         self::checkAdmin();
 
-        $articles = Article::select(['id', 'title', 'description', 'created_at'])->get();
+        $articles = Article::select(['id', 'title', 'description'])->get();
 
         //Список категорий
         $categories = Category::select(['id', 'name_category'])->get();
@@ -38,9 +38,13 @@ class AdminArticleController extends AdminController
 
         $article = Article::select(['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'])->where('id', $id)->first();
 
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
+
         return view('admin/update')->with([
-                    'article' => $article
-        ]);
+                'article' => $article,
+                'categories' => $categories
+            ]);
     }
 
 	/**
@@ -79,7 +83,7 @@ class AdminArticleController extends AdminController
 
         $article->save();
 
-        return view('admin/create');
+        return redirect()->back();
     }
 
 	/**
@@ -104,7 +108,7 @@ class AdminArticleController extends AdminController
 
         $article->save();
 
-        return view('admin/create');
+        return redirect()->back();
     }
 
     /**

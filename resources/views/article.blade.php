@@ -16,10 +16,10 @@
 
 		@foreach($comments as $comment)
 		<div class="content">
-			<h3>{{ $comment->user_name }}</h3>
+			<h2>{{ $comment->user_name }}</h2>
 			<p>{{ $comment->created_at }}</p>
 			<p>{{ $comment->comm }}</p>
-			<a class="btn btn-default" href="#" role="button">Ответить</a>
+			<!-- <a class="btn btn-default" href="#" role="button">Ответить</a> -->
 
 @if ((Auth::check()) && ((Auth::user()->email) == $comment->user_email	|| (Auth::user()->role) == 'admin'))
 			<form action="{{ route('commentDelete', ['comment'=>$comment->id]) }}" method="post">

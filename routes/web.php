@@ -11,25 +11,18 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-Route::get('/', [
-	'as' => 'index',
-	'uses' => 'SiteController@index'
-]);
+//Articles
+Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);
+Route::get('article/{id}', 'SiteController@show')->name('articleShow');
+Route::get('index/{categoryId}', 'SiteController@showByCategory')->name('articleByCategory');
 
-Route::get('article/{id}', 'ArticleController@show')->name('articleShow');
-Route::get('index/{categoryId}', 'ArticleController@showByCategory')->name('articleByCategory');
-
+//Comments
 Route::get('comment/{id}', 'CommentController@show')->name('commentShow');
 Route::post('article', 'CommentController@store')->name('commentStore');
 Route::delete('delete/{comment}', 'CommentController@delete')->name('commentDelete');
 
 // ======== AdminPanel =========================
-// Route::get('admin/comment', 'Admin\AdminCommentController@index')->name('commentIndex');
-
 Route::group(['prefix' => 'admin/article'], function () {
 
 	Route::get('index', 'Admin\AdminArticleController@index')->name('adminIndex');
@@ -47,13 +40,11 @@ Route::group(['prefix' => 'admin/category'], function () {
 	Route::get('create', 'Admin\AdminCategoryController@create')->name('categoryCreate');
 	Route::get('update/{id}', 'Admin\AdminCategoryController@update')->name('categoryUpdate');
 	Route::get('delete/{article}', 'Admin\AdminCategoryController@delete')->name('categoryDelete');
-// Route::delete('delete/{comment}', 'CommentController@delete')->name('commentDelete');
 });
 // ======== END AdminPanel =======================
 
 // ======== Authentication =======================
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 // login
@@ -66,17 +57,3 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register')->name('register');
 // ======== END Authentication =======================
 
-// Route::get('page/add', 'IndexController@add');
-
-// Route::post('page/add', 'IndexController@store')->name('articleStore');
-
-// Route::delete('page/delete/{article}', function(\App\Article $article) {
-
-// 	// $article_tmp = \App\Article::where('id', $article)->first();
-
-// 	$article->delete();
-
-// 	return redirect('/');
-
-// })->name('articleDelete');
-// //------------------------------

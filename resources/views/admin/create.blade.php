@@ -4,9 +4,11 @@
 
 <div class="container">
 	<div class="row">
-		<form action="{{ route('articleStore') }}" method="post" role="form">
-			<legend>Создание статьи</legend>
+		<form action="{{ route('articleStore') }}" method="post" role="form" enctype='multipart/form-data'>
+			<h2>Создать статью</h2>
+			<br>
 			<p>Поля, обозначенные звёздочкой (&#10033;), обязательны для заполнения.</p>
+			<br>
 
 			<div class="form-group">
 				<label for="title">Заголовок</label>&nbsp;&#10033;
@@ -36,9 +38,24 @@
 				<input name="users_id" type="hidden" class="form-control" id="users_id" value="{{Auth::user()->id}}">
 			</div>
 			<div class="form-group">
+				<label for="status">Показывать?</label>
+				<select name="status" id="status">
+					<option value="1">Да</option>
+					<option value="0">Нет</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="meta_desc">Мета: описание</label>
+				<input name="meta_desc" type="text" class="form-control" id="meta_desc">
+			</div>
+			<div class="form-group">
+				<label for="keywords">Мета: ключевые слова</label>
+				<input name="keywords" type="text" class="form-control" id="keywords">
+			</div>
+		<!-- 	<div class="form-group">
 				<label for="created_at">Дата создания</label>
 				<input name="created_at" type="text" class="form-control" id="created_at" value="{{date('Y-m-d')}}">
-			</div>
+			</div> -->
 
 			<button type="submit" class="btn btn-primary">Сохранить</button>
 

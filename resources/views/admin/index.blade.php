@@ -15,7 +15,7 @@
             @foreach($articles as $article)
 
                 <hr>     
-                <h2>{{ $article->title }}</h2><small>{{ $article->created_at }}</small>
+                <h2>{{ $article->title }}</h2><small>$article->created_at</small>
                 <p>{{ $article->description }}</p>
                 <p>
                     <a class="btn btn-default" href="{{ route('articleShow',['id'=>$article->id]) }}" role="button">Подробнее &raquo;</a>

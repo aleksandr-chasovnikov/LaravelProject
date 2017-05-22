@@ -35,10 +35,7 @@ class AdminCommentController extends AdminController
         // Проверка доступа
         self::checkAdmin();
 
-        // $article = Comment::find($id);
         $article = Comment::select(['id', 'title', 'text'])->where('id', $id)->first();
-
-        // dump($article);
 
         return view('admin/update')->with([
                     'article' => $article

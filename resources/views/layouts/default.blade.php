@@ -18,32 +18,41 @@
         <div class="row">
             <nav class="navbar navbar-default navbar-top h-header">
                 <div class="container h-header">
- 
-                <a class="navbar-brand logo" href="{{ url('/') }}">
-                    {{ config('app.name', 'MySite') }}
-                </a>
+                   
+                    <a class="navbar-brand logo" href="{{ url('/') }}">
+                        {{ config('app.name', 'MySite') }}
+                    </a>
+                    <ul class="nav navbar-nav">
 
-            </div>
-        </nav>
-    </div>
+                        @if ( (Auth::check()) && (Auth::user()->role) == 'admin')
 
-@if(count($errors) > 0)
+                        <li><a href="{{ route('adminIndex') }}">Панель администратора</a></li>
 
-<div class="alert alert-danger">
-    <ul>
+                        @endif
 
-      @foreach($errors->all() as $error)
-      <li>{{ $error }}</li>
-      @endforeach
+                    </ul>
 
-  </ul>
-</div>
+                </div>
+            </nav>
+        </div>
 
-@endif
+        @if(count($errors) > 0)
 
-@yield('content')
+        <div class="alert alert-danger">
+            <ul>
 
-<footer class="footer"><!-- FOOTER =============== -->
+              @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+
+          </ul>
+      </div>
+
+      @endif
+
+      @yield('content')
+
+      <footer class="footer"><!-- FOOTER =============== -->
 <!--     <div class="footer__logo logo">
         <img src="" alt="logo" class="logo__img logo__img_small">
     </div> -->

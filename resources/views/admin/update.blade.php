@@ -23,10 +23,13 @@
 			<div class="form-group">
 				<label for="categories_id">Категория</label>&nbsp;&#10033;
 				<select name="categories_id" size="3" class="form-control" id="categories_id" required>
-					<option value="1">Категория 1</option>
-					<option value="2">Категория 2</option>
-					<option value="3">Категория 3</option>
-					<option selected value="{{$article->categories_id}}">Категория {{$article->categories_id}}</option>
+					@foreach ($categories as $category)
+					@if($article->categories_id == $category->id)
+					<option selected value="{{$category->id}}">{{$category->name_category}}</option>
+					@else
+					<option value="{{$category->id}}">{{$category->name_category}}</option>
+					@endif
+					@endforeach
 				</select>
 			</div>
 			<div class="form-group">
@@ -38,10 +41,28 @@
 				<textarea name="text" type="text" rows="7" class="form-control" id="text" required>{{$article->text}}</textarea>
 			</div>
 			<div class="form-group">
-				<label for="updated_at">Дата создания</label>
-				<input name="updated_at" type="hidden" class="form-control" value="{{date('Y-m-d')}}">
-				<input name="updated_at" type="text" class="form-control" id="updated_at" value="{{date('Y-m-d')}}" disabled>
+				<label for="status">Показывать?</label>
+				<select name="status" id="status">
+					<option value="1">Да</option>
+					<option value="0">Нет</option>
+				</select>
 			</div>
+			<div class="form-group">
+				<label for="meta_desc">Мета: описание</label>
+				<input name="meta_desc" type="text" class="form-control" id="meta_desc" value="{{$article->meta_desc}}">
+			</div>
+			<div class="form-group">
+				<label for="keywords">Мета: ключевые слова</label>
+				<input name="keywords" type="text" class="form-control" id="keywords" value="{{$article->keywords}}">
+			</div>
+<!-- 			<div class="form-group">
+				<label for="created_at">Дата создания</label>
+				<input name="created_at" type="text" class="form-control" id="created_at" value="{{time()}}">
+			</div>
+			<div class="form-group">
+				<label for="updated_at">Дата создания</label>
+				<input name="updated_at" type="text" class="form-control" id="updated_at" value="{{time()}}">
+			</div> -->
 
 			<button type="submit" class="btn btn-primary">Сохранить</button>
 
