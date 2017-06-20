@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'MySite') }}</title>
+    <title>{{ config('app.name', 'WEBAdept') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
@@ -31,7 +31,10 @@
                 </div> -->
                 <!-- <div class="collapse navbar-collapse" id="app-navbar-collapse"> -->
                 <a class="navbar-brand logo" href="{{ url('/') }}">
-                    {{ config('app.name', 'MySite') }}
+                    WEBAdept
+                </a>
+                <a class="navbar-brand logo" href="{{ route('contact') }}">
+                    О проекте
                 </a>
                 <ul class="nav navbar-nav">
 
@@ -115,7 +118,8 @@
     </div> -->
 
     <div class="copy">
-        <p class="copy text-center">&copy; Компания </p>
+        <p class="copy text-center">&copy; Aleksander Chasovnikov, 2017 </p>
+        <br>
     </div>      
 </footer><!-- FOOTER END =============== -->
 
@@ -130,7 +134,6 @@
     <script src="libs/respond/respond.min.js"></script>
     <![endif]-->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

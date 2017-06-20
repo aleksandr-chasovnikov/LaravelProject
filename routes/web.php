@@ -11,6 +11,10 @@
 |
 */
 
+//Contact
+Route::get('contact', function () {
+    return view('contact');
+})->name('contact');
 
 //Articles
 Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);

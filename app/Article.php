@@ -7,8 +7,9 @@ use App\User;
 use App\Comment;
 
 class Article extends Model
-{    
-  protected $dates = ['created_at', 'updated_at'];
+{
+    protected $dateFormat;
+    protected $dates = ['created_at', 'updated_at'];
 
     /**
      * Определяет необходимость отметок времени для модели

@@ -18,9 +18,11 @@
         <div class="row">
             <nav class="navbar navbar-default navbar-top h-header">
                 <div class="container h-header">
-                   
                     <a class="navbar-brand logo" href="{{ url('/') }}">
-                        {{ config('app.name', 'MySite') }}
+                        WEBAdept
+                    </a>
+                    <a class="navbar-brand logo" href="{{ route('contact') }}">
+                        О проекте
                     </a>
                     <ul class="nav navbar-nav">
 
@@ -58,7 +60,8 @@
     </div> -->
 
     <div class="copy">
-        <p class="copy text-center">&copy; Компания </p>
+        <p class="copy text-center">&copy; Aleksander Chasovnikov, 2017 </p>
+        <br>
     </div>      
 </footer><!-- FOOTER END =============== -->
 

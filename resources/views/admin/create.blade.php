@@ -32,7 +32,7 @@
 			</div>
 			<div class="form-group">
 				<label for="text">Полный текст</label>&nbsp;&#10033;
-				<textarea name="text" type="text" class="form-control" id="text" required></textarea>
+				<textarea name="text" class="form-control" id="text" required></textarea>
 			</div>
 			<div class="form-group">
 				<input name="users_id" type="hidden" class="form-control" id="users_id" value="{{Auth::user()->id}}">

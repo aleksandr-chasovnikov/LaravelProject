@@ -17,7 +17,7 @@ class AdminArticleController extends AdminController
         // Проверка доступа
         self::checkAdmin();
 
-        $articles = Article::select(['id', 'title', 'description'])->get();
+        $articles = Article::select(['id', 'title', 'description', 'created_at'])->get();
 
         //Список категорий
         $categories = Category::select(['id', 'name_category'])->get();

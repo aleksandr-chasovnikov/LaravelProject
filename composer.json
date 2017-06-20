@@ -47,5 +47,10 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
+    },
+    "autoload": {
+        "classmap": [
+            "app/libraries"
+        ]
     }
 }

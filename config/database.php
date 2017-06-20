@@ -41,7 +41,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', '92.53.96.121'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
@@ -109,7 +109,7 @@ return [
         'client' => 'predis',
 
         'default' => [
-            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'host' => env('REDIS_HOST', '92.53.96.121'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
