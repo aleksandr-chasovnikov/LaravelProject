@@ -3,21 +3,24 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Presenters\DatePresenter;
 use App\User;
 use App\Comment;
 
 class Article extends Model
 {
-    protected $dateFormat;
-    protected $dates = ['created_at', 'updated_at'];
+    use DatePresenter;
+    
+    // protected $dateFormat;
+    // protected $dates = ['created_at', 'updated_at'];
 
     /**
      * Определяет необходимость отметок времени для модели
      * @var bool
      */
-    public $timestamps = false;
-    //
-    protected $fillable = ['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'];
+    // public $timestamps = false;
+    // //
+    // protected $fillable = ['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'];
 
     /**
 	 * Получить пользователя - владельца данной статьи
