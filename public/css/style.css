@@ -28,6 +28,7 @@ footer, header, hgroup, menu, nav, section, main {
 
 html, body {
   height: 100%;
+  font-size: 18px;
 }
 
 body {
@@ -77,12 +78,17 @@ input[type="submit"]::-moz-focus-inner, button::-moz-focus-inner {
 
 textarea {
   overflow: auto;
+  min-width: 100%;
 }
 
 input, button {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+strong {
+  font-weight: 900;
 }
 
 div, input, textarea, select, button,

@@ -31,7 +31,7 @@
                 </div> -->
                 <!-- <div class="collapse navbar-collapse" id="app-navbar-collapse"> -->
                 <a class="navbar-brand logo" href="{{ url('/') }}">
-                    WEBAdept
+                    WEBAdeptus
                 </a>
                 <a class="navbar-brand logo" href="{{ route('contact') }}">
                     О проекте
@@ -118,7 +118,7 @@
     </div> -->
 
     <div class="copy">
-        <p class="copy text-center">&copy; Aleksander Chasovnikov, 2017 </p>
+        <p class="copy text-center">&copy; 2017 WEBAdeptus</p>
         <br>
     </div>      
 </footer><!-- FOOTER END =============== -->

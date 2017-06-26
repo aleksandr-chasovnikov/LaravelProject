@@ -11,6 +11,9 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css?123') }}" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/demo.css?123') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css?123') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/categories.css?123') }}" />
 
 </head>
 <body>
@@ -19,7 +22,7 @@
             <nav class="navbar navbar-default navbar-top h-header">
                 <div class="container h-header">
                     <a class="navbar-brand logo" href="{{ url('/') }}">
-                        WEBAdept
+                        WEBAdeptus
                     </a>
                     <a class="navbar-brand logo" href="{{ route('contact') }}">
                         О проекте
@@ -60,7 +63,7 @@
     </div> -->
 
     <div class="copy">
-        <p class="copy text-center">&copy; Aleksander Chasovnikov, 2017 </p>
+        <p class="copy text-center">&copy; 2017 WEBAdeptus</p>
         <br>
     </div>      
 </footer><!-- FOOTER END =============== -->

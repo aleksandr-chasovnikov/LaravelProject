@@ -15,6 +15,7 @@
 Route::get('contact', function () {
     return view('contact');
 })->name('contact');
+Route::post('contact/mail', 'ContactController@contactMail')->name('contactMail');
 
 //Articles
 Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);
