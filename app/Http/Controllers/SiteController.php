@@ -18,12 +18,14 @@ class SiteController extends Controller
 	public function index()
 	{
         //Список статей
-        $articles = Article::select(['id', 'title', 'description', 'created_at'])->paginate(self::PAGINATE);
+        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])->paginate(self::PAGINATE);
 
         //Список категорий
         $categories = Category::select(['id', 'name_category'])->get();
 
-        return view('index')->with(['articles' => $articles, 'categories' => $categories]);
+        return view('index')->with(['articles' => $articles, 
+                                    'categories' => $categories,
+                                    ]);
 	}
 
     /**
@@ -31,8 +33,7 @@ class SiteController extends Controller
      */
     public function show($id)
     {
-        // $article = Article::find($id);
-        $article = Article::select(['id', 'title', 'text', 'created_at'])
+        $article = Article::select(['id', 'title', 'img', 'text', 'created_at'])
                 ->where('id', $id)
                 ->first();
 
@@ -42,11 +43,10 @@ class SiteController extends Controller
         //Список категорий
         $categories = Category::select(['id', 'name_category'])->get();
 
-        return view('article')->with([
-            'article' => $article,
-            'categories' => $categories,
-            'comments' => $comments,
-            ]);
+        return view('article')->with(['article' => $article, 
+                                    'categories' => $categories,
+                                    'comments' => $comments,
+                                    ]);
     }
 
     /**
@@ -58,7 +58,7 @@ class SiteController extends Controller
         $category = Category::all()->where('id', $categoryId);
 
         //Список статей
-        $articles = Article::select(['id', 'title', 'description', 'created_at'])
+        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])
                 ->where('categories_id', $categoryId)
                 ->paginate(self::PAGINATE);
 

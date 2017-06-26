@@ -4,7 +4,14 @@
 
 <div class="container">
 	<div class="row">
-		<form action="{{ route('articleStore') }}" method="post" role="form" enctype='multipart/form-data'>
+		
+	@if (!empty($message))
+		<div class="alert alert-danger text-center">
+			{{$message}}
+		</div>
+	@endif
+
+		<form action="{{ route('articleStore') }}" method="post" role="form" enctype="multipart/form-data">
 			<h2>Создать статью</h2>
 			<br>
 			<p>Поля, обозначенные звёздочкой (&#10033;), обязательны для заполнения.</p>
@@ -25,6 +32,11 @@
 					<option value="{{$category->id}}">{{$category->name_category}}</option>
 				@endforeach
 				</select>
+			</div>
+			<div class="form-group">
+				<label for="img">Краткое описание</label>&nbsp;&#10033;
+				<input type="hidden" name="MAX_FILE_SIZE" value="500000" />
+				<input name="img" type="file" class="form-control" id="img">
 			</div>
 			<div class="form-group">
 				<label for="description">Краткое описание</label>&nbsp;&#10033;

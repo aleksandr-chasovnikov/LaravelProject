@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin/article'], function () {
 	Route::get('update/{id}', 'Admin\AdminArticleController@update')->name('articleUpdate');
 	Route::post('update', 'Admin\AdminArticleController@postUpdate')->name('articlePostUpdate');
 	Route::delete('delete/{article}', 'Admin\AdminArticleController@delete')->name('articleDelete');
+	Route::post('upload', 'Admin\AdminArticleController@uploadFile')->name('upload');
 });
 
 Route::group(['prefix' => 'admin/category'], function () {

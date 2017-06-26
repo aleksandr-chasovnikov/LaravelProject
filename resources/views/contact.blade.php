@@ -53,6 +53,7 @@
 
 					</form>
 			@else
+				{{ $success }} &nbsp;&nbsp; <a href="/">На главную</a>
 			@endif
 
 				</div>

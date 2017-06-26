@@ -17,6 +17,9 @@
 			
 			<small class="pull-right">{{$article->created_at}}</small>
 			<h2>{{ $article->title }}</h2>
+			<div class="text-center">
+				<img src="uploads/{{ $article->img }}" alt="" align="middle" width="90%">
+			</div>
 			<p>{{ $article->description }}</p>
 			<p><a class="btn btn-default" href="{{ route('articleShow',['id'=>$article->id]) }}" role="button">Подробнее &raquo;</a></p>
 			<hr>

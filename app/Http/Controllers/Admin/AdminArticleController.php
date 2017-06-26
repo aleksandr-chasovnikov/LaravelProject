@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Category;
 use App\Article;
+use Illuminate\Support\Facades\Input;
 
 class AdminArticleController extends AdminController
 {
@@ -58,8 +59,11 @@ class AdminArticleController extends AdminController
         //Список категорий
         $categories = Category::select(['id', 'name_category'])->get();
 
+        $message = false;
+
         return view('admin/create')->with([
-            'categories' => $categories
+            'categories' => $categories,
+            'message' => $message
             ]);
     }
 
@@ -70,6 +74,9 @@ class AdminArticleController extends AdminController
     {
         // Проверка доступа
         self::checkAdmin();
+
+        //Список категорий
+        $categories = Category::select(['id', 'name_category'])->get();
         
         $this->validate($request, [
             'title' => 'required|max:255',
@@ -78,12 +85,45 @@ class AdminArticleController extends AdminController
         ]);
 
         $data = $request->all();
-        $article = new Article;
+
         $article->fill($data);
+                $article->save();
 
-        $article->save();
+        // if(Input::hasFile('img')) {
+        //     $files = Input::file('img');
 
-        return redirect()->back();
+        //     foreach ($files as $file) {
+        //         $file->move('uploads', $file->getClientOriginalName());
+        // $article = new Article;
+        //         $article->img = $file->getClientOriginalName();
+        //     }
+
+        //     $message = 'Готово!';
+        // } else {
+        //     $message = 'Файл не удалось загрузить!';
+        // }
+
+        // $name = basename( $_FILES['img']['tmp_name'] );
+
+        // $path = implode( DIRECTORY_SEPARATOR, array('uploads', $name) );
+
+        // if ( is_uploaded_file( $_FILES['img']['tmp_name'] ) ) {
+
+        //     $res = move_uploaded_file( $_FILES['img']['tmp_name'], $path );
+
+        //     if ($res) {
+        //         $message = 'Готово!';
+        //     } else {
+        //         $message = 'Ошибка! Неудалось переместить файл.';
+        //     }
+        // } else {  
+        //     $message = 'Ошибка! Неудалось загрузить файл. Возможно слишком большой файл.';
+        // }
+
+        return view('admin/create')->with([
+            'categories' => $categories,
+            'message' => $message
+            ]);
     }
 
 	/**
@@ -96,7 +136,6 @@ class AdminArticleController extends AdminController
         
         $this->validate($request, [
             'title' => 'required|max:255',
-            'alias' => 'required|unique:articles,alias',
             'text' => 'required',
         ]);
 
@@ -119,6 +158,28 @@ class AdminArticleController extends AdminController
         $article_tmp = Article::where('id', $article)->first();
         $article_tmp->delete();
 
+        return redirect()->back();
+    }
+
+    /**
+     * Удалить комментарий
+     */
+    public function uploadFile(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $filename = $request->file->getClientOriginalName();
+            $result = $request->file->move('uploads', $filename);
+
+            if($result) {
+
+                $id = $request->id;
+
+                \DB::table('articles')
+                        ->where('id', $id)
+                        ->update(['img' => $filename]);
+                
+            }
+        }        
         return redirect()->back();
     }
 }

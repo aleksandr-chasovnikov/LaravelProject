@@ -10,7 +10,7 @@
 			<div class="form-group">
 				<label for="id">ID</label>
 				<input name="id" type="hidden" class="form-control" value="{{$article->id}}">
-				<input name="id" type="numeric" class="form-control" id="id" value="{{$article->id}}" disabled>
+				<input type="numeric" class="form-control" id="id" value="{{$article->id}}" disabled>
 			</div>
 			<div class="form-group">
 				<label for="title">Заголовок</label>&nbsp;&#10033;

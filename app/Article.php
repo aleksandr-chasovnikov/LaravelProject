@@ -19,8 +19,8 @@ class Article extends Model
      * @var bool
      */
     // public $timestamps = false;
-    // //
-    // protected $fillable = ['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'];
+    
+    protected $fillable = ['id', 'title', 'alias', 'img', 'description', 'text', 'categories_id', 'users_id'];
 
     /**
 	 * Получить пользователя - владельца данной статьи

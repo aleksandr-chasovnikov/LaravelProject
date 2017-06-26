@@ -17,7 +17,7 @@ class Comment extends Model
      */
     // public $timestamps = false;
     // //
-    // protected $fillable = ['id', 'article_id', 'user_name', 'user_email', 'comm'];
+    protected $fillable = ['id', 'article_id', 'user_name', 'user_email', 'comm'];
 
 	/**
 	 * Получить пользователя - владельца данного комментария
