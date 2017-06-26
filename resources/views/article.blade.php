@@ -56,7 +56,6 @@
 
 	</div>
 
-
 @if (Auth::check() && (Auth::user()->role == 'admin'))
 		<form class="form-horizontal" role="form" method="POST" action="{{ route('upload') }}" enctype="multipart/form-data">
             {{ csrf_field() }}
@@ -66,6 +65,16 @@
 					<input name="id" type="hidden" class="form-control" value="{{$article->id}}">
                     <input id="file" type="file" class="form-control" name="file" required>
 					<button type="submit" class="btn btn-info">Загрузить</button>
+                </div>
+        </form>
+        <hr>
+		<form class="form-horizontal" role="form" method="POST" action="{{ route('upload') }}" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <label for="file" class="col-md-4 control-label">Удалить изображение</label>
+                <div class="col-md-6">
+					<input name="id" type="hidden" class="form-control" value="{{$article->id}}">
+					<button type="submit" class="btn btn-info">Удалить</button>
                 </div>
         </form>
 @endif

@@ -54,17 +54,15 @@ class SiteController extends Controller
      */
     public function showByCategory($categoryId)
     {
-        //Выбранная категория
-        $category = Category::all()->where('id', $categoryId);
-
-        //Список статей
-        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])
-                ->where('categories_id', $categoryId)
-                ->paginate(self::PAGINATE);
-
         //Список категорий
         $categories = Category::select(['id', 'name_category'])->get();
-        // dd($categories);
+
+        //Выбранная категория
+        $category = Category::all()->where('id', $categoryId);        
+
+        //Список статей
+        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])->paginate(self::PAGINATE);
+
 
         return view('index')->with([
             'articles' => $articles,

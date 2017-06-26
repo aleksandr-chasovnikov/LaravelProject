@@ -89,37 +89,6 @@ class AdminArticleController extends AdminController
         $article->fill($data);
                 $article->save();
 
-        // if(Input::hasFile('img')) {
-        //     $files = Input::file('img');
-
-        //     foreach ($files as $file) {
-        //         $file->move('uploads', $file->getClientOriginalName());
-        // $article = new Article;
-        //         $article->img = $file->getClientOriginalName();
-        //     }
-
-        //     $message = 'Готово!';
-        // } else {
-        //     $message = 'Файл не удалось загрузить!';
-        // }
-
-        // $name = basename( $_FILES['img']['tmp_name'] );
-
-        // $path = implode( DIRECTORY_SEPARATOR, array('uploads', $name) );
-
-        // if ( is_uploaded_file( $_FILES['img']['tmp_name'] ) ) {
-
-        //     $res = move_uploaded_file( $_FILES['img']['tmp_name'], $path );
-
-        //     if ($res) {
-        //         $message = 'Готово!';
-        //     } else {
-        //         $message = 'Ошибка! Неудалось переместить файл.';
-        //     }
-        // } else {  
-        //     $message = 'Ошибка! Неудалось загрузить файл. Возможно слишком большой файл.';
-        // }
-
         return view('admin/create')->with([
             'categories' => $categories,
             'message' => $message
@@ -170,16 +139,16 @@ class AdminArticleController extends AdminController
             $filename = $request->file->getClientOriginalName();
             $result = $request->file->move('uploads', $filename);
 
-            if($result) {
+        } else {
+            $filename = false;
+        }    
 
-                $id = $request->id;
+        $id = $request->id;
 
-                \DB::table('articles')
-                        ->where('id', $id)
-                        ->update(['img' => $filename]);
-                
-            }
-        }        
-        return redirect()->back();
+        \DB::table('articles')
+                ->where('id', $id)
+                ->update(['img' => $filename]);
+            
+        return redirect()->back()->with('message', 'Готово!');
     }
 }

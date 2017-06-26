@@ -7,15 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Category;
 
 class AdminCategoryController extends AdminController
-{
-    // /**
-    //  * Сработает для пользователя с именем "admin"
-    //  */
-    // public function __construct()
-    // {
-    //     $this->user('admin');
-    // }
-    
+{ 
 	/**
 	 * 
 	 */
