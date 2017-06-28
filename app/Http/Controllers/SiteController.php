@@ -36,7 +36,7 @@ class SiteController extends Controller
         $article = Article::select(['id', 'title', 'img', 'text', 'created_at'])
                 ->where('id', $id)
                 ->first();
-
+                
         //Комментарии, принадлежащие статье
         $comments = Article::find($id)->comments()->get();
 

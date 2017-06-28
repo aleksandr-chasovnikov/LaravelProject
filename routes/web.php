@@ -12,14 +12,12 @@
 */
 
 //Contact
-Route::get('contact', function () {
-    return view('contact');
-})->name('contact');
+Route::get('contact', function () { return view('contact'); })->name('contact');
 Route::post('contact/mail', 'ContactController@contactMail')->name('contactMail');
 
 //Articles
 Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);
-Route::get('article/{id}', 'SiteController@show')->name('articleShow');
+Route::get('article{id}', 'SiteController@show')->name('articleShow');
 Route::get('index/{categoryId}', 'SiteController@showByCategory')->name('articleByCategory');
 
 //Comments
@@ -54,12 +52,12 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // login
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login')->name('login');
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('loginX', 'Auth\LoginController@showLoginForm')->name('loginX');
+Route::post('loginX', 'Auth\LoginController@login')->name('loginX');
+Route::get('logoutX', 'Auth\LoginController@logout')->name('logoutX');
 
 // register
-Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'Auth\RegisterController@register')->name('register');
+Route::get('registerX', 'Auth\RegisterController@showRegistrationForm')->name('registerX');
+Route::post('registerX', 'Auth\RegisterController@register')->name('registerX');
 // ======== END Authentication =======================
 
