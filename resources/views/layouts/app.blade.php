@@ -10,10 +10,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/my.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css?123') }}" media="screen, projection" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/demo.css?123') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css?123') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/categories.css?123') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/demo.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/icons.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/categories.css') }}" />
+    <link href="{{ asset('css/style.css') }}" media="screen, projection" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
@@ -51,7 +51,7 @@
         </nav>
     </div>
     <nav id="bt-menu" class="bt-menu">
-        <a href="#" class="bt-menu-trigger"><span>Категории</span></a>
+        <a href="#" class="bt-menu-trigger"><span>МЕНЮ</span></a>
         <ul>
             @if (Auth::guest())
 

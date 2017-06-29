@@ -61,10 +61,12 @@ class SiteController extends Controller
         $category = Category::all()->where('id', $categoryId);        
 
         //Список статей
-        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])->paginate(self::PAGINATE);
+        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])
+                            ->where('categories_id', $categoryId)
+                            ->paginate(self::PAGINATE);
 
 
-        return view('index')->with([
+        return view('category')->with([
             'articles' => $articles,
             'category' => $category,
             'categories' => $categories

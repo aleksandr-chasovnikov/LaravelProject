@@ -157,3 +157,10 @@ html {
   margin-left: 120px;
 }
 
+h3, h2 {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: black;
+  padding-bottom: 10px;
+}
+
