@@ -67,9 +67,9 @@ class SiteController extends Controller
 
 
         return view('category')->with([
-            'articles' => $articles,
-            'category' => $category,
-            'categories' => $categories
+                'articles' => $articles,
+                'category' => $category,
+                'categories' => $categories
             ]);
     }
 

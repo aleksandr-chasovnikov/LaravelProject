@@ -87,7 +87,7 @@ class AdminArticleController extends AdminController
         $data = $request->all();
 
         $article->fill($data);
-                $article->save();
+        $article->save();
 
         return view('admin/create')->with([
             'categories' => $categories,
@@ -131,7 +131,7 @@ class AdminArticleController extends AdminController
     }
 
     /**
-     * Удалить комментарий
+     * Загрузить файл
      */
     public function uploadFile(Request $request)
     {

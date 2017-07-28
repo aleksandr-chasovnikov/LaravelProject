@@ -11,6 +11,31 @@
 |
 */
 
+
+
+// ======== MyExample =======================
+// Route::post('registerX.{id?}', function() {
+
+	// 	$route = Route::current(); // new Route
+	// 	echo $route->getName; // покажет 'registerX'
+	// 	echo $route->getParameter('id', 25); // id, 25 - default
+	// 	print_r($route->parameters()); // покажет массив с параметрами
+
+// })->name('registerX');
+
+// php artisan make:controller PhotoController --resource --model=Photo
+// Route::resource('/pages', 'PhotoController', [
+	// 'except'=> ['index', 'show'] // исключить методы: index, show
+	// ]); // CRUD (RESTfull: post, get, put, delete)
+
+// Route::controller('/pages', 'NewController'); // methods: getShow, getIndex, postStore и др.
+
+// uses ... as -> назначить имя,
+// Route::controller('/pages', ['uses' => 'NewController', 'as' => 'article', 'middleware' => 'mymiddle:admin']); //admin - параметр
+// Route::controller('/pages', ['uses' => 'NewController', 'as' => 'article'])->middleware(['mymiddle']); 
+
+// ============================================
+
 //Contact
 Route::get('contact', function () { return view('contact'); })->name('contact');
 Route::post('contact.mail', 'ContactController@contactMail')->name('contactMail');
@@ -27,6 +52,7 @@ Route::delete('delete.{comment}', 'CommentController@delete')->name('commentDele
 
 // ======== AdminPanel =========================
 Route::group(['prefix' => 'admin/article'], function () {
+// Route::group(['prefix' => 'admin/article', 'middleware' => ['auth', 'admin']], function () {
 
 	Route::get('index', 'Admin\AdminArticleController@index')->name('adminIndex');
 	Route::post('create', 'Admin\AdminArticleController@store')->name('articleStore');
@@ -60,4 +86,3 @@ Route::get('logoutX', 'Auth\LoginController@logout')->name('logoutX');
 Route::get('registerX', 'Auth\RegisterController@showRegistrationForm')->name('registerX');
 Route::post('registerX', 'Auth\RegisterController@register')->name('registerX');
 // ======== END Authentication =======================
-
