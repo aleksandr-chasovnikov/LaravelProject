@@ -6,103 +6,118 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Category;
 use App\Article;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\View\View;
 
 class AdminArticleController extends AdminController
 {
-	/**
-	 * 
-	 */
+    /**
+     * Показывает все статьи в админ панели
+     *
+     * @return View
+     */
     public function index()
     {
-        // Проверка доступа
         self::checkAdmin();
 
-        $articles = Article::select(['id', 'title', 'description', 'created_at'])->get();
+        $articles = Article::select([
+            'id',
+            'title',
+            'description',
+            'created_at',
+        ])->get();
 
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
+        $categories = Category::select([
+            'id',
+            'name_category',
+        ])->get();
 
         return view('admin/index')->with([
-                'articles' => $articles,
-                'categories' => $categories
-            ]);
-    }
-
-	/**
-	 * 
-	 */
-    public function update($id)
-    {
-        // Проверка доступа
-        self::checkAdmin();
-
-        $article = Article::select(['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'])->where('id', $id)->first();
-
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-
-        return view('admin/update')->with([
-                'article' => $article,
-                'categories' => $categories
-            ]);
-    }
-
-	/**
-	 * 
-	 */
-    public function create()
-    {
-        // Проверка доступа
-        self::checkAdmin();
-
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-
-        $message = false;
-
-        return view('admin/create')->with([
+            'articles' => $articles,
             'categories' => $categories,
-            'message' => $message
-            ]);
+        ]);
     }
 
     /**
-     * 
+     * @var int $id
+     *
+     * @return View
      */
-    public function store(Request $request)
+    public function update($id)
     {
-        // Проверка доступа
         self::checkAdmin();
 
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-        
-        $this->validate($request, [
-            'title' => 'required|max:255',
-            'alias' => 'required|unique:articles,alias',
-            'text' => 'required',
+        $article = Article::find($id)->first();
+
+        $categories = Category::select([
+            'id',
+            'name_category',
+        ])->get();
+
+        return view('admin/update')->with([
+            'article' => $article,
+            'categories' => $categories,
         ]);
+    }
 
-        $data = $request->all();
+    /**
+     * Выводит форму для создания статьи
+     *
+     * @return View
+     */
+    public function create()
+    {
+        self::checkAdmin();
 
-        $article->fill($data);
-        $article->save();
+        $categories = Category::select([
+            'id',
+            'name_category',
+        ])->get();
 
         return view('admin/create')->with([
             'categories' => $categories,
-            'message' => $message
-            ]);
+            'message' => false,
+        ]);
     }
 
-	/**
-	 * 
-	 */
+    /**
+     * @param Request $request
+     *
+     * @return $this
+     */
+    public function store(Request $request)
+    {
+        self::checkAdmin();
+
+        $categories = Category::select(['id', 'name_category'])->get();
+
+        $this->validate($request, [
+            'title' => 'required|max:255',
+//            'alias' => 'required|unique:articles,alias',
+            'text' => 'required',
+        ]);
+
+        $data = $request->all();
+
+        (new Article)->fill($data)
+            ->save();
+
+        return view('admin/create')->with([
+            'categories' => $categories,
+            'message' => 'Статья успешно создана.',
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function postUpdate(Request $request)
     {
-        // Проверка доступа
         self::checkAdmin();
-        
+
         $this->validate($request, [
             'title' => 'required|max:255',
             'text' => 'required',
@@ -110,7 +125,18 @@ class AdminArticleController extends AdminController
 
         $data = $request->all();
 
-        $article = Article::select(['id', 'title', 'alias', 'description', 'text', 'categories_id', 'users_id'])->where('id', $request->id)->first();
+        /**
+         * @var Article $article
+         */
+        $article = Article::select([
+            'id',
+            'title',
+            'alias',
+            'description',
+            'text',
+            'categories_id',
+            'users_id'
+        ])->where('id', $request->id)->first();
 
         $article->fill($data);
 
@@ -120,10 +146,17 @@ class AdminArticleController extends AdminController
     }
 
     /**
-     * Удалить комментарий
+     * Удаляет статью
+     *
+     * @param $article
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function delete($article)
     {
+        /**
+         * @var Article $article_tmp
+         */
         $article_tmp = Article::where('id', $article)->first();
         $article_tmp->delete();
 
@@ -131,24 +164,30 @@ class AdminArticleController extends AdminController
     }
 
     /**
-     * Загрузить файл
+     * Загружает файл
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function uploadFile(Request $request)
     {
+        //TODO пересмотреть метод
         if ($request->hasFile('file')) {
             $filename = $request->file->getClientOriginalName();
             $result = $request->file->move('uploads', $filename);
-
         } else {
-            $filename = false;
-        }    
+
+            // $filename = false;
+            return redirect()->back()->with('message', 'Ошибка!');
+        }
 
         $id = $request->id;
 
-        \DB::table('articles')
-                ->where('id', $id)
-                ->update(['img' => $filename]);
-            
+        DB::table('articles')
+            ->where('id', $id)
+            ->update(['img' => $filename]);
+
         return redirect()->back()->with('message', 'Готово!');
     }
 }

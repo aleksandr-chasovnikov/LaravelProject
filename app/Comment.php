@@ -30,7 +30,7 @@ class Comment extends Model
 	/**
 	 * Получить статью - владельца данного комментария
 	 */
-	public function articles()
+	public function article()
 	{
 		return $this->belongsTo(Article::class);
 	}

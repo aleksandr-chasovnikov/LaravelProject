@@ -10,25 +10,35 @@ use App\Comment;
 class Article extends Model
 {
     use DatePresenter;
-    
+
     // protected $dateFormat;
     // protected $dates = ['created_at', 'updated_at'];
 
     /**
      * Определяет необходимость отметок времени для модели
+     *
      * @var bool
      */
     // public $timestamps = false;
-    
-    protected $fillable = ['id', 'title', 'alias', 'img', 'description', 'text', 'categories_id', 'users_id'];
+
+    protected $fillable = [
+        'id',
+        'title',
+        'alias',
+        'img',
+        'description',
+        'text',
+        'categories_id',
+        'user_id'
+    ];
 
     /**
-	 * Получить пользователя - владельца данной статьи
-	 */
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+     * Получить пользователя - владельца данной статьи
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     /**
      * Получить все комментарии пользователя.
