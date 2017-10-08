@@ -15,54 +15,36 @@ class AdminArticleController extends AdminController
     /**
      * Показывает все статьи в админ панели
      *
+     * GET /admin/article/index
+     *
      * @return View
      */
     public function index()
     {
         self::checkAdmin();
 
-        $articles = Article::select([
+        $articles = (new Article)->select([
             'id',
             'title',
             'description',
             'created_at',
         ])->get();
 
-        $categories = Category::select([
+        $c = (new Category)->select([
             'id',
             'name_category',
         ])->get();
 
         return view('admin/index')->with([
             'articles' => $articles,
-            'categories' => $categories,
-        ]);
-    }
-
-    /**
-     * @var int $id
-     *
-     * @return View
-     */
-    public function update($id)
-    {
-        self::checkAdmin();
-
-        $article = Article::find($id)->first();
-
-        $categories = Category::select([
-            'id',
-            'name_category',
-        ])->get();
-
-        return view('admin/update')->with([
-            'article' => $article,
-            'categories' => $categories,
+            'categories' => $c,
         ]);
     }
 
     /**
      * Выводит форму для создания статьи
+     *
+     * GET /admin/article/create
      *
      * @return View
      */
@@ -70,18 +52,17 @@ class AdminArticleController extends AdminController
     {
         self::checkAdmin();
 
-        $categories = Category::select([
-            'id',
-            'name_category',
-        ])->get();
-
         return view('admin/create')->with([
-            'categories' => $categories,
+            'categories' => self::showCategories(),
             'message' => false,
         ]);
     }
 
     /**
+     * Сохраняет статью и выводит форму с сообщением об успешной операции
+     *
+     * POST /admin/article/store
+     *
      * @param Request $request
      *
      * @return $this
@@ -90,31 +71,52 @@ class AdminArticleController extends AdminController
     {
         self::checkAdmin();
 
-        $categories = Category::select(['id', 'name_category'])->get();
-
         $this->validate($request, [
             'title' => 'required|max:255',
 //            'alias' => 'required|unique:articles,alias',
             'text' => 'required',
         ]);
 
-        $data = $request->all();
-
-        (new Article)->fill($data)
-            ->save();
+        (new Article)->create($request->all());
 
         return view('admin/create')->with([
-            'categories' => $categories,
+            'categories' => self::showCategories(),
             'message' => 'Статья успешно создана.',
         ]);
     }
 
     /**
+     * Выводит форму для редактирования статьи
+     *
+     * GET /admin/article/edit
+     *
+     * @var int $id
+     *
+     * @return View
+     */
+    public function edit($id)
+    {
+        self::checkAdmin();
+
+        $article = (new Article)->find($id)
+            ->first();
+
+        return view('admin/update')->with([
+            'article' => $article,
+            'categories' => self::showCategories(),
+        ]);
+    }
+
+    /**
+     * Редактирует статью и выводит форму с сообщением об успешной операции
+     *
+     * POST /admin/article/update
+     *
      * @param Request $request
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function postUpdate(Request $request)
+    public function update(Request $request)
     {
         self::checkAdmin();
 
@@ -123,24 +125,8 @@ class AdminArticleController extends AdminController
             'text' => 'required',
         ]);
 
-        $data = $request->all();
-
-        /**
-         * @var Article $article
-         */
-        $article = Article::select([
-            'id',
-            'title',
-            'alias',
-            'description',
-            'text',
-            'categories_id',
-            'users_id'
-        ])->where('id', $request->id)->first();
-
-        $article->fill($data);
-
-        $article->save();
+        (new Article())->find($request->id)
+            ->update($request->all());
 
         return redirect()->back();
     }
@@ -148,17 +134,15 @@ class AdminArticleController extends AdminController
     /**
      * Удаляет статью
      *
-     * @param $article
+     * @param $id
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete($article)
+    public function destroy($id)
     {
-        /**
-         * @var Article $article_tmp
-         */
-        $article_tmp = Article::where('id', $article)->first();
-        $article_tmp->delete();
+        (new Article)->where('id', $id)
+            ->first()
+            ->delete();
 
         return redirect()->back();
     }
@@ -174,12 +158,14 @@ class AdminArticleController extends AdminController
     {
         //TODO пересмотреть метод
         if ($request->hasFile('file')) {
+
             $filename = $request->file->getClientOriginalName();
-            $result = $request->file->move('uploads', $filename);
+            $request->file->move('uploads', $filename);
         } else {
 
             // $filename = false;
-            return redirect()->back()->with('message', 'Ошибка!');
+            return redirect()->back()
+                ->with('message', 'Ошибка!');
         }
 
         $id = $request->id;
@@ -188,6 +174,7 @@ class AdminArticleController extends AdminController
             ->where('id', $id)
             ->update(['img' => $filename]);
 
-        return redirect()->back()->with('message', 'Готово!');
+        return redirect()->back()
+            ->with('message', 'Готово!');
     }
 }

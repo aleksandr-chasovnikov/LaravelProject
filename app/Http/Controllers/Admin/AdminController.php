@@ -2,29 +2,43 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Category;
 use App\Http\Controllers\Controller;
-use App\User;
+use Illuminate\Database\Eloquent\Collection;
 
-abstract class AdminController extends Controller
+class AdminController extends Controller
 {
     /**
      * Проверяет пользователя на наличие администраторских прав
+     *
      * @return true
      */
-	public static function checkAdmin()
-	{
+    public static function checkAdmin()
+    {
         // Проверяем авторизирован ли пользователь
         if (\Auth::check()) {
 
             // Если роль текущего пользователя "admin", разрешаем допуск
-	        if (\Auth::user()->role == 'admin') {
-	            return true;
-	        }
+            if (\Auth::user()->role == 'admin') {
+                return true;
+            }
 
-        	die('Access denied / Доступ запрещён');
-    	
-        }      
-	}
+            abort(403, 'Доступ запрещён!');
+
+        }
+    }
+
+    /**
+     * Возращает список категорий
+     *
+     * @return Category[] | Collection
+     */
+    public static function showCategories()
+    {
+        return (new Category)->select([
+            'id',
+            'name_category',
+        ])->get();
+    }
 
 }

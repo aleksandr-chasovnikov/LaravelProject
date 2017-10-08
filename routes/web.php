@@ -58,9 +58,10 @@ Route::group(['prefix' => 'admin/article'], function () {
 	Route::get('index', 'Admin\AdminArticleController@index')->name('adminIndex');
 	Route::post('create', 'Admin\AdminArticleController@store')->name('articleStore');
 	Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
-	Route::get('update.{id}', 'Admin\AdminArticleController@update')->name('articleUpdate');
-	Route::post('update', 'Admin\AdminArticleController@postUpdate')->name('articlePostUpdate');
-	Route::delete('delete.{article}', 'Admin\AdminArticleController@delete')->name('articleDelete');
+	Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
+	Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
+	Route::delete('delete.{article}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+
 	Route::post('upload', 'Admin\AdminArticleController@uploadFile')->name('upload');
 });
 

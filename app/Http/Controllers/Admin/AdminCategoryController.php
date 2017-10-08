@@ -17,11 +17,9 @@ class AdminCategoryController extends AdminController
     {
         self::checkAdmin();
 
-        $categories = Category::all();
-
         //TODO Не сделаны вьюхи
         return view('admin/index')->with([
-            'articles' => $categories
+            'categories' => self::showCategories(),
         ]);
     }
 
@@ -30,7 +28,6 @@ class AdminCategoryController extends AdminController
      */
     public function create()
     {
-        // Проверка доступа
         self::checkAdmin();
 
         return view('admin/create');
@@ -43,7 +40,6 @@ class AdminCategoryController extends AdminController
      */
     public function store(Request $request)
     {
-//        // Проверка доступа
 //        self::checkAdmin();
 //
 //        $this->validate($request, [

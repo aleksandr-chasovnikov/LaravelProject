@@ -4,7 +4,7 @@
 
 <div class="container">
 	<div class="row">
-		<form action="{{ route('articlePostUpdate') }}" method="post" role="form">
+		<form action="{{ route('articleUpdate') }}" method="post" role="form">
 			<p>Поля, обозначенные звёздочкой (&#10033;), обязательны для заполнения.</p>
 
 			<div class="form-group">

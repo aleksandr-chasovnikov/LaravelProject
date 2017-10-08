@@ -10,28 +10,29 @@ use App\Article;
 class Comment extends Model
 {
     use DatePresenter;
-    
+
     /**
      * Определяет необходимость отметок времени для модели
+     *
      * @var bool
      */
     // public $timestamps = false;
     // //
     protected $fillable = ['id', 'article_id', 'user_name', 'user_email', 'comm'];
 
-	/**
-	 * Получить пользователя - владельца данного комментария
-	 */
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+    /**
+     * Получить пользователя - владельца данного комментария
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-	/**
-	 * Получить статью - владельца данного комментария
-	 */
-	public function article()
-	{
-		return $this->belongsTo(Article::class);
-	}
+    /**
+     * Получить статью - владельца данного комментария
+     */
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
 }
