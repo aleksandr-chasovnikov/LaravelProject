@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\AdminController;
-use App\Category;
 use App\Article;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdminArticleController extends AdminController
 {
@@ -17,7 +16,7 @@ class AdminArticleController extends AdminController
      *
      * GET /admin/article/index
      *
-     * @return View
+     * @return View | HttpException
      */
     public function index()
     {
@@ -30,14 +29,9 @@ class AdminArticleController extends AdminController
             'created_at',
         ])->get();
 
-        $c = (new Category)->select([
-            'id',
-            'name_category',
-        ])->get();
-
         return view('admin/index')->with([
             'articles' => $articles,
-            'categories' => $c,
+            'categories' => $this->showCategories(),
         ]);
     }
 
@@ -46,15 +40,14 @@ class AdminArticleController extends AdminController
      *
      * GET /admin/article/create
      *
-     * @return View
+     * @return View | HttpException
      */
     public function create()
     {
         self::checkAdmin();
 
         return view('admin/create')->with([
-            'categories' => self::showCategories(),
-            'message' => false,
+            'categories' => $this->showCategories(),
         ]);
     }
 
@@ -65,7 +58,7 @@ class AdminArticleController extends AdminController
      *
      * @param Request $request
      *
-     * @return $this
+     * @return $this | HttpException
      */
     public function store(Request $request)
     {
@@ -80,7 +73,7 @@ class AdminArticleController extends AdminController
         (new Article)->create($request->all());
 
         return view('admin/create')->with([
-            'categories' => self::showCategories(),
+            'categories' => $this->showCategories(),
             'message' => 'Статья успешно создана.',
         ]);
     }
@@ -88,11 +81,11 @@ class AdminArticleController extends AdminController
     /**
      * Выводит форму для редактирования статьи
      *
-     * GET /admin/article/edit
+     * GET /admin/article/edit/{id}
      *
      * @var int $id
      *
-     * @return View
+     * @return View | HttpException
      */
     public function edit($id)
     {
@@ -103,7 +96,7 @@ class AdminArticleController extends AdminController
 
         return view('admin/update')->with([
             'article' => $article,
-            'categories' => self::showCategories(),
+            'categories' => $this->showCategories(),
         ]);
     }
 
@@ -114,7 +107,7 @@ class AdminArticleController extends AdminController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse | HttpException
      */
     public function update(Request $request)
     {
@@ -134,12 +127,16 @@ class AdminArticleController extends AdminController
     /**
      * Удаляет статью
      *
+     * DELETE /admin/article/delete/{id}
+     *
      * @param $id
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse | HttpException
      */
     public function destroy($id)
     {
+        self::checkAdmin();
+
         (new Article)->where('id', $id)
             ->first()
             ->delete();
@@ -152,26 +149,35 @@ class AdminArticleController extends AdminController
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse | HttpException
      */
     public function uploadFile(Request $request)
     {
+        self::checkAdmin();
+
         //TODO пересмотреть метод
         if ($request->hasFile('file')) {
+//
+//            try{
+//                $filename = $request->file;
+//
+//                /**
+//                 * @var ?
+//                 */
+//                $request->file->move('uploads', $filename->getClientOriginalName());
+//            } catch ($exception \Exception) {
+//
+//            }
 
-            $filename = $request->file->getClientOriginalName();
-            $request->file->move('uploads', $filename);
+
         } else {
 
-            // $filename = false;
             return redirect()->back()
                 ->with('message', 'Ошибка!');
         }
 
-        $id = $request->id;
-
         DB::table('articles')
-            ->where('id', $id)
+            ->where('id', $request->id)
             ->update(['img' => $filename]);
 
         return redirect()->back()

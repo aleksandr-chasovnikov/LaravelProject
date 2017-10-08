@@ -19,7 +19,7 @@ class AdminController extends Controller
         if (\Auth::check()) {
 
             // Если роль текущего пользователя "admin", разрешаем допуск
-            if (\Auth::user()->role == 'admin') {
+            if (\Auth::user()->role === 'admin') {
                 return true;
             }
 
@@ -33,7 +33,7 @@ class AdminController extends Controller
      *
      * @return Category[] | Collection
      */
-    public static function showCategories()
+    protected function showCategories()
     {
         return (new Category)->select([
             'id',

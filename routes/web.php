@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin/article'], function () {
 	Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
 	Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
 	Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
-	Route::delete('delete.{article}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+	Route::delete('delete.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
 
 	Route::post('upload', 'Admin\AdminArticleController@uploadFile')->name('upload');
 });
