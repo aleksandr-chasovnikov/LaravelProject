@@ -1,5 +1,6 @@
 <?php
 
+use App\Comment;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,11 +14,11 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create(Comment::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('posts_id')->unsigned()->index();
+            $table->integer('article_id')->unsigned()->index();
             $table->integer('users_id')->unsigned()->index();
-            $table->text('comm');
+            $table->text('comment');
             $table->boolean('status');
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists(Comment::TABLE_NAME);
     }
 }

@@ -2,18 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Comment;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property integer $id
- * @property string  $title
- * @property integer $count_articles
- * @property integer $status
+ * @property integer $article_id
+ * @property integer $tag_id
  */
-class Category extends BaseModel
+class ArticleTag extends BaseModel
 {
-    const TABLE_NAME = 'categories';
+    const TABLE_NAME = 'article_tag';
 
     /**
      * @var string
@@ -34,11 +32,13 @@ class Category extends BaseModel
      */
     protected $guarded = [];
 
-//    /**
-//     * Возращает все статьи к данной категории.
-//     */
-//    public function articles()
-//    {
-//        return $this->hasMany(Article::class, 'article_id');
-//    }
+    /**
+     * Возращает статью, владеющую данным тегом
+     *
+     * @return HasOne
+     */
+    public function article()
+    {
+        return $this->hasOne(Article::class, 'article_id');
+    }
 }

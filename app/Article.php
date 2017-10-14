@@ -2,49 +2,59 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Presenters\DatePresenter;
-use App\User;
-use App\Comment;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Article extends Model
+/**
+ * @property integer $id
+ * @property string  $title
+ * @property string  $content
+ * @property string  $description
+ * @property string  $keywords
+ * @property string  $meta_desc
+ * @property integer $user_id
+ * @property integer $categories_id
+ * @property boolean $status
+ *
+ * @property integer $created_at
+ * @property integer $update_at
+ */
+class Article extends BaseModel
 {
     use DatePresenter;
 
-    // protected $dateFormat;
-    // protected $dates = ['created_at', 'updated_at'];
+    const TABLE_NAME = 'articles';
 
     /**
-     * Определяет необходимость отметок времени для модели
+     * @var string
+     */
+    protected $table = self::TABLE_NAME;
+
+    /**
+     * Атрибуты, для которых запрещено массовое назначение.
      *
-     * @var bool
+     * @var array
      */
-    // public $timestamps = false;
+    protected $guarded = [];
 
-    protected $fillable = [
-        'id',
-        'title',
-        'alias',
-        'img',
-        'description',
-        'text',
-        'categories_id',
-        'user_id'
-    ];
-
-    /**
-     * Получить пользователя - владельца данной статьи
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Получить все комментарии пользователя.
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
+//    /**
+//     * Возращает пользователя - владельца данной статьи
+//     *
+//     * @return BelongsTo
+//     */
+//    public function user()
+//    {
+//        return $this->belongsTo(User::class, 'user_id');
+//    }
+//
+//    /**
+//     * Возращает все комментарии пользователя.
+//     *
+//     * @return HasMany
+//     */
+//    public function comments()
+//    {
+//        return $this->hasMany(Comment::class, 'article_id');
+//    }
 }
