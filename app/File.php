@@ -5,7 +5,7 @@ namespace App;
 /**
  * @property integer $id
  * @property integer $target_id
- * @property string $target_type
+ * @property string  $target_type
  * @property boolean $status
  *
  * @property integer $created_at

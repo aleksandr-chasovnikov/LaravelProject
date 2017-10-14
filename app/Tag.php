@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property integer $id
+ * @property string  $title
+ * @property boolean $status
+ */
 class Tag extends BaseModel
 {
     const TABLE_NAME = 'tags';
@@ -19,6 +24,13 @@ class Tag extends BaseModel
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * Атрибуты, для которых запрещено массовое назначение.
+     *
+     * @var array
+     */
+    protected $guarded = [];
 
 //    /**
 //     * Возращает статью - владельца данного комментария

@@ -26,8 +26,12 @@ class AdminArticleController extends AdminController
             'id',
             'title',
             'description',
+            'keywords',
+            'meta_desc',
             'created_at',
-        ])->get();
+        ])->orderBy('id', 'desc')
+            ->where('status', true)
+            ->get();
 
         return view('admin/index')->with([
             'articles' => $articles,
@@ -66,7 +70,6 @@ class AdminArticleController extends AdminController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-//            'alias' => 'required|unique:articles,alias',
             'text' => 'required',
         ]);
 
@@ -168,7 +171,6 @@ class AdminArticleController extends AdminController
 //            } catch ($exception \Exception) {
 //
 //            }
-
 
         } else {
 

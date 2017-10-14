@@ -24,7 +24,6 @@ class AdminController extends Controller
             }
 
             abort(403, 'Доступ запрещён!');
-
         }
     }
 
@@ -37,8 +36,10 @@ class AdminController extends Controller
     {
         return (new Category)->select([
             'id',
-            'name_category',
-        ])->get();
+            'title',
+        ])->orderBy('title')
+            ->where('status', true)
+            ->get();
     }
 
 }

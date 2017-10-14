@@ -1,11 +1,13 @@
 <?php
 
-use App\Category;
+use App\Article;
+use App\ArticleTag;
+use App\Tag;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateArticleTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +16,10 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create(Category::TABLE_NAME, function (Blueprint $table) {
+        Schema::create(ArticleTag::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->integer('count_articles');
-            $table->boolean('status')->default(true);
+            $table->integer('article_id')->unsigned(); // Для MySQL 5.0 внешние ключи не работают
+            $table->integer('tag_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists(Category::TABLE_NAME);
+        Schema::dropIfExists(ArticleTag::TABLE_NAME);
     }
 }

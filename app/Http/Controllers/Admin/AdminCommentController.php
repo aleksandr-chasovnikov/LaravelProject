@@ -27,18 +27,28 @@ class AdminCommentController extends AdminController
     //     ]);
     // }
 
-	/**
-	 * Редактировать комментарий
-	 */
+    /**
+     * Редактировать комментарий
+     *
+     * @param $id
+     *
+     * @return $this
+     */
     public function update($id)
     {
-        // Проверка доступа
         self::checkAdmin();
-
-        $article = Comment::select(['id', 'title', 'text'])->where('id', $id)->first();
+//TODO Доделать редактирование комментов
+        $comment = (new Comment)->select([
+            'id',
+            'title',
+            'text'
+        ])
+            ->where('id', $id)
+            ->where('status', true)
+            ->first();
 
         return view('admin/update')->with([
-                    'article' => $article
+                    'article' => $comment
         ]);
     }
 

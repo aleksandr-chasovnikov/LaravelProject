@@ -2,13 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Faker\Provider\Base;
 use App\Presenters\DatePresenter;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property integer $id
- * @property integer $parent_id
+ * @property integer $target_id
+ * @property string  $target_type
  * @property integer $user_id
  * @property string  $content
  * @property integer $level
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property integer $created_at
  * @property integer $update_at
  */
-class Comment extends Model
+class Comment extends BaseModel
 {
     use DatePresenter;
 
@@ -31,13 +32,7 @@ class Comment extends Model
     /**
      * @var array
      */
-    protected $fillable = [
-        'id',
-        'parent_id',
-        'user_id',
-        'content',
-        'level',
-    ];
+    protected $guarded = [];
 
 //    /**
 //     * Возращает пользователя - владельца данного комментария

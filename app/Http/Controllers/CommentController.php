@@ -8,7 +8,11 @@ use App\Comment;
 class CommentController extends Controller
 {
     /**
-     * Создать комментарий
+     * Сохранить комментарий
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {

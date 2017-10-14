@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property integer $id
  * @property string  $title
  * @property string  $content
+ * @property integer $user_id
  * @property string  $description
  * @property string  $keywords
  * @property string  $meta_desc
- * @property integer $user_id
  * @property integer $categories_id
  * @property boolean $status
  *
