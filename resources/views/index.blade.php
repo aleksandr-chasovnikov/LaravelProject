@@ -2,52 +2,49 @@
 
 @section('content')
 
-<div class="container">
-	<!-- Example row of columns -->
-	<div class="row">
-		<div class="content">
+    <div class="col-md-8 blog-top-left-grid">
+        <div class="left-blog">
+            <div class="blog-left">
 
-@if ( !empty($category) )
+                @if (empty($articles))
+                    <p>Извините. В этой категории ещё нет статей.</p>
+                @endif
 
-	@foreach ($category as $cat)
-	<div class="container">
-	        <h4>Категория &#8194;&#8658;&#8194; {{$cat->name_category}}</h4>
-	</div>
-	@endforeach
+                @foreach ($articles as $article)
+                    <div class="blog-left-left wow fadeInRight animated animated"
+                         data-wow-delay=".5s">
+                        <p>&nbsp;&nbsp; {{$article->created_at}} &nbsp;&nbsp;
+                            <a href="#">Comments (10)</a>
+                        </p>
+                        <a href="{{ route('articleShow',['id'=>$article->id]) }}">
+{{--                            @if (!empty($article))
+                                <img src="uploads/{{ $article->file }}" alt="" align="middle"
+                                     width="90%"/>
+                            @endif--}}
+                        </a>
+                    </div>
 
-@endif
+                    <div class="blog-left-right wow fadeInRight animated animated"
+                         data-wow-delay=".5s">
+                        <a href="{{ route('articleShow',['id'=>$article->id]) }}">Phasellus ultrices
+                            tellus eget ipsum ornare
+                            molestie</a>
 
-	@if (empty($articles))
-		<p>Извините. В это категории ещё нет статей.</p>
-	@endif
+                        <p>{{ $article->description }}</p>
 
-	@foreach ($articles as $article)
-	
-	<small class="pull-right">{{$article->created_at}}</small>
-	<h3 style="font-style: italic; color: black;">{{ $article->title }}</h3>
-	<br>
+                    </div>
+                    <div class="clearfix"></div>
 
-	<p>{{ $article->description }}</p>
+                @endforeach
 
-		@if (!empty($article->img))
-			<div class="text-center">
-				<img src="uploads/{{ $article->img }}" alt="" align="middle" width="90%" />
-			</div>
-		@endif
-	<p class="text-right"><a class="btn btn-default" href="{{ route('articleShow',['id'=>$article->id]) }}" role="button">Подробнее &raquo;</a></p>
-	<hr>
-
-	@endforeach
-
-	<div class="paginate container">
-		{{ $articles->links() }}
-	</div>	
-
-
-		</div>
-	</div>
-</div>
-
+            </div>
+        </div>
+        <nav>
+            <ul class="pagination wow fadeInRight animated animated" data-wow-delay=".5s">
+                {{ $articles->links() }}
+            </ul>
+        </nav>
+    </div>
 
 @endsection
 

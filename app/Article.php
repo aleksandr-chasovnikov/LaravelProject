@@ -3,8 +3,6 @@
 namespace App;
 
 use App\Presenters\DatePresenter;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer $id
@@ -19,6 +17,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @property integer $created_at
  * @property integer $update_at
+ *
+ * @method Comment[] comments()
+ * @method User[] user()
  */
 class Article extends BaseModel
 {

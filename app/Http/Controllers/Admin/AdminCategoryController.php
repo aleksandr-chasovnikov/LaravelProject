@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\AdminController;
 use App\Category;
 use Illuminate\View\View;
 
-class AdminCategoryController extends AdminController
+class AdminCategoryController extends BaseController
 {
     //TODO Не доделаны методы данного класса
     /**
@@ -67,7 +67,8 @@ class AdminCategoryController extends AdminController
     {
         self::checkAdmin();
 
-        $category = Category::find($id);
+        $category = (new Category)->find($id)
+            ->first();
 
         return view('admin/update')->with([
             'article' => $category

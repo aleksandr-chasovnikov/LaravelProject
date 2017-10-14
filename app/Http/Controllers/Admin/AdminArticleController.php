@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Article;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class AdminArticleController extends AdminController
+class AdminArticleController extends BaseController
 {
     /**
      * Показывает все статьи в админ панели
@@ -26,10 +27,10 @@ class AdminArticleController extends AdminController
             'id',
             'title',
             'description',
-            'keywords',
-            'meta_desc',
+//            'keywords',
+//            'meta_desc',
             'created_at',
-        ])->orderBy('id', 'desc')
+        ])->orderBy('created_at', 'desc')
             ->where('status', true)
             ->get();
 

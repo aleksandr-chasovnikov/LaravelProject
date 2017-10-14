@@ -2,75 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Article;
 use App\Category;
+use Illuminate\View\View;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
-     * Количество статей на странице
+     * Возращает все статьи
+     *
+     * @return View
      */
-    const PAGINATE = 5;
-    /**
-     * Показать все статьи
-     */
-	public function index()
-	{
-        //Список статей
-        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])->paginate(self::PAGINATE);
-
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-
-        return view('index')->with(['articles' => $articles, 
-                                    'categories' => $categories,
-                                    ]);
-	}
-
-    /**
-     * Показать одну статью
-     */
-    public function show($id)
+    public function index()
     {
-        $article = Article::select(['id', 'title', 'img', 'text', 'created_at'])
-                ->where('id', $id)
-                ->first();
-                
-        //Комментарии, принадлежащие статье
-        $comments = Article::find($id)->comments()->get();
+        $articles = (new Article)->select([
+            'id',
+            'title',
+            'description',
+            'created_at',
+        ])->where('status', true)
+            ->paginate(self::PAGINATE);
 
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-
-        return view('article')->with(['article' => $article, 
-                                    'categories' => $categories,
-                                    'comments' => $comments,
-                                    ]);
+        return view('index')->with([
+            'articles' => $articles,
+            'categories' => $this->showCategories(),
+        ]);
     }
 
     /**
-     * Показать статьи по категории
+     * Возращает одну статью
+     *
+     * @param $id
+     *
+     * @return $this
+     */
+    public function show($id)
+    {
+        $article = (new Article)->find($id)
+            ->first();
+
+        return view('article')->with([
+            'article' => $article,
+            'categories' => $this->showCategories(),
+            'comments' => $article->comments(),
+        ]);
+    }
+
+    /**
+     * Возращает статьи по категории
+     *
+     * @param $categoryId
+     *
+     * @return $this
      */
     public function showByCategory($categoryId)
     {
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
+        $category = (new Category)->find($categoryId)->first();
 
-        //Выбранная категория
-        $category = Category::all()->where('id', $categoryId);        
-
-        //Список статей
-        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])
-                            ->where('categories_id', $categoryId)
-                            ->paginate(self::PAGINATE);
-
+        $articles = (new Article)->select([
+            'id',
+            'title',
+            'description',
+            'created_at',
+        ])
+            ->where('categories_id', $categoryId)
+            ->where('status', true)
+            ->paginate(self::PAGINATE);
 
         return view('category')->with([
-                'articles' => $articles,
-                'category' => $category,
-                'categories' => $categories
-            ]);
+            'articles' => $articles,
+            'category' => $category,
+            'categories' => $this->showCategories(),
+        ]);
     }
 
 }

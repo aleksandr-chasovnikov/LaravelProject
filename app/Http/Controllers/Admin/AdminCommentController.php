@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\BaseController;
 use App\Comment;
-use App\Article;
 
 
-class AdminCommentController extends AdminController
+class AdminCommentController extends BaseController
 {
 	/**
 	 * Показать все комментарии

@@ -2,88 +2,86 @@
 
 @section('content')
 
-<div class="container">
-	<!-- Example row of columns -->
-	<div class="row">
-		
-		@if($article)
 
-		<div class="content">
-			<h2>{{ $article->title }}</h2>
-		@if (!empty($article->img))
-		<div class="text-center">
-			<img src="uploads/{{ $article->img }}" alt="" align="middle" width="90%">
-		</div>
-		@endif
-			<p>{{ $article->text }}</p>
-		</div>
-		<hr>
-
-		@foreach($comments as $comment)
-		<div class="content">
-			<h2>{{ $comment->user_name }}</h2>
-			<p>{{ $comment->created_at }}</p>
-			<p>{{ $comment->comm }}</p>
-			<!-- <a class="btn btn-default" href="#" role="button">Ответить</a> -->
-
-			@if ((Auth::check()) && ((Auth::user()->email) == $comment->user_email	|| (Auth::user()->role) == 'admin'))
-			<form action="{{ route('commentDelete', ['comment'=>$comment->id]) }}" method="post">
-				<!-- <input type="hidden" name="_method" value="DELETE"> -->
-				{{method_field('DELETE')}}
-				{{csrf_field()}}
-				<button type="submit" class="btn btn-danger">Удалить</button>
-			</form>
-			@endif 
-			<hr>
-		</div>
-		
-		@endforeach
-
-		<form action="{{ route('commentStore') }}" class="content" method="post" role="form">
-			<h3>Добавить комментарий</h3>
-
-			<input type="hidden" name="article_id" value="{{ $article->id }}">
-			<textarea name="comm" id="comm" rows="4" class="form-control" placeholder="Введите свой комментарий" required></textarea>
-			
-			@if(Auth::check())
-			<input type="hidden" name="user_email" value="{{ Auth::user()->email }}">
-			<input type="hidden"  name="user_name" value="{{ Auth::user()->name }}">
-			@else
-			<input class="form-control" name="user_email" type="email" placeholder="E-mail (обязательно)" required>
-			<input class="form-control" name="user_name" type="text" placeholder="Имя (обязательно)" required>
-			@endif
-			{{ csrf_field() }}
-
-			<button class="btn btn-default" type="submit">Отправить комментарий</button>
-		</form>
-
-		@endif
-
-	</div>
-
-	@if (Auth::check() && (Auth::user()->role == 'admin'))
-	<form class="form-horizontal" role="form" method="POST" action="{{ route('upload') }}" enctype="multipart/form-data">
-		{{ csrf_field() }}
-		<div class="form-group">
-			<label for="file" class="col-md-4 control-label">Загрузить файл</label>
-			<div class="col-md-6">
-				<input name="id" type="hidden" class="form-control" value="{{$article->id}}">
-				<input id="file" type="file" class="form-control" name="file" required>
-				<button type="submit" class="btn btn-info">Загрузить</button>
-			</div>
-		</form>
-		<hr>
-		<form class="form-horizontal" role="form" method="POST" action="{{ route('upload') }}" enctype="multipart/form-data">
-			{{ csrf_field() }}
-			<div class="form-group">
-				<label for="file" class="col-md-4 control-label">Удалить изображение</label>
-				<div class="col-md-6">
-					<input name="id" type="hidden" class="form-control" value="{{$article->id}}">
-					<button type="submit" class="btn btn-info">Удалить</button>
+	<div class="col-md-8 blog-top-left-grid">
+		<div class="left-blog left-single">
+			<div class="blog-left">
+				<div class="single-left-left wow fadeInRight animated animated" data-wow-delay=".5s">
+					<p>Posted By <a href="#">Admin</a> &nbsp;&nbsp; on Mar 2, 2016 &nbsp;&nbsp; <a href="#">Comments (10)</a></p>
+					<img src="images/b1.jpg" alt="" />
 				</div>
-			</form>
-			@endif
+				<div class="blog-left-bottom wow fadeInRight animated animated" data-wow-delay=".5s">
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.Sed blandit massa vel mauris sollicitudin
+						dignissim. Phasellus ultrices tellus eget ipsum ornare molestie scelerisque eros dignissim. Phasellus
+						fringilla hendrerit lectus nec vehicula. ultrices tellus eget ipsum ornare consectetur adipiscing elit.Sed blandit .
+					</p>
+				</div>
+			</div>
+			<div class="response">
+				<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s">Responses</h3>
+				<div class="media response-info">
+					<div class="media-left response-text-left wow fadeInRight animated animated" data-wow-delay=".5s">
+						<a href="#">
+							<img class="media-object" src="images/t1.jpg" alt="">
+						</a>
+						<h5><a href="#">Admin</a></h5>
+					</div>
+					<div class="media-body response-text-right">
+						<p class="wow fadeInRight animated animated" data-wow-delay=".5s">Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
+							sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<ul class="wow fadeInRight animated animated" data-wow-delay=".5s">
+							<li>Mar 24,2016</li>
+							<li><a href="single.html">Reply</a></li>
+						</ul>
+						<div class="media response-info">
+							<div class="media-left response-text-left wow fadeInRight animated animated" data-wow-delay=".5s">
+								<a href="#">
+									<img class="media-object" src="images/t2.jpg" alt="">
+								</a>
+								<h5><a href="#">Admin</a></h5>
+							</div>
+							<div class="media-body response-text-right wow fadeInRight animated animated" data-wow-delay=".5s">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
+									sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<ul>
+									<li>Mar 28,2016</li>
+									<li><a href="single.html">Reply</a></li>
+								</ul>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+				<div class="media response-info">
+					<div class="media-left response-text-left wow fadeInRight animated animated" data-wow-delay=".5s">
+						<a href="#">
+							<img class="media-object" src="images/t3.jpg" alt="">
+						</a>
+						<h5><a href="#">Admin</a></h5>
+					</div>
+					<div class="media-body response-text-right wow fadeInRight animated animated" data-wow-delay=".5s">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,There are many variations of passages of Lorem Ipsum available,
+							sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+						<ul>
+							<li>Mar 21,2016</li>
+							<li><a href="single.html">Reply</a></li>
+						</ul>
+					</div>
+					<div class="clearfix"> </div>
+				</div>
+			</div>
+			<div class="opinion">
+				<h3 class="wow fadeInRight animated animated" data-wow-delay=".5s">Leave your comment</h3>
+				<form class="wow fadeInRight animated animated" data-wow-delay=".5s">
+					<input type="text" placeholder="Name" required="">
+					<input type="text" placeholder="Email" required="">
+					<textarea placeholder="Message" required=""></textarea>
+					<input type="submit" value="SEND">
+				</form>
+			</div>
 		</div>
+	</div>
 
 		@endsection
 
