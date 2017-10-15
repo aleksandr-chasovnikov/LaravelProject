@@ -16,6 +16,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  *
  * @property integer $created_at
  * @property integer $update_at
+ *
+ * @property Article[] $articles
  */
 class User extends Authenticatable
 {
@@ -52,24 +54,24 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-//    /**
-//     * Возращает все статьи пользователя.
-//     *
-//     * @return HasMany
-//     */
-//    public function articles()
-//    {
-//        return $this->hasMany(Article::class, 'user_id');
-//    }
-//
-//    /**
-//     * Возращает все комментарии пользователя.
-//     *
-//     * @return HasMany
-//     */
-//    public function comments()
-//    {
-//        return $this->hasMany(Comment::class, 'user_id');
-//    }
+    /**
+     * Возращает все статьи пользователя.
+     *
+     * @return HasMany
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'user_id');
+    }
+
+    /**
+     * Возращает все комментарии пользователя.
+     *
+     * @return HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
 
 }

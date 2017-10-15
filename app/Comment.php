@@ -34,23 +34,21 @@ class Comment extends BaseModel
      */
     protected $guarded = [];
 
-//    /**
-//     * Возращает пользователя - владельца данного комментария
-//     *
-//     * @return belongsTo
-//     */
-//    public function user()
-//    {
-//        return $this->belongsTo(User::class, 'user_id');
-//    }
-//
-//    /**
-//     * Возращает статью - владельца данного комментария
-//     *
-//     * @return belongsTo
-//     */
-//    public function article()
-//    {
-//        return $this->belongsTo(Article::class, 'article_id');
-//    }
+    /**
+     * Возращает пользователя - владельца данного комментария
+     *
+     * @return belongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Получить все модели, обладающие target.
+     */
+    public function target()
+    {
+        return $this->morphTo();
+    }
 }

@@ -5,9 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property integer $id
- * @property string  $title
- * @property boolean $status
+ * @property integer   $id
+ * @property string    $title
+ * @property boolean   $status
+ *
+ * @property Article[] $articles
  */
 class Tag extends BaseModel
 {
@@ -32,13 +34,16 @@ class Tag extends BaseModel
      */
     protected $guarded = [];
 
-//    /**
-//     * Возращает статью - владельца данного комментария
-//     *
-//     * @return belongsTo
-//     */
-//    public function article()
-//    {
-//        return $this->belongsTo(Article::class, 'article_id');
-//    }
+    /**
+     * Роли, принадлежащие пользователю.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(
+            Article::class,
+            ArticleTag::TABLE_NAME,
+            'tag_id',
+            'article_id'
+        );
+    }
 }

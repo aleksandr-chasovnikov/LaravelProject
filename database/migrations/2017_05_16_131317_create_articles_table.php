@@ -23,6 +23,7 @@ class CreateArticlesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on(User::TABLE_NAME);
             $table->text('description');
+            $table->integer('viewed')->nullable(); // кол-во просмотров
             $table->string('keywords');
             $table->string('meta_desc');
             $table->integer('categories_id')->unsigned();

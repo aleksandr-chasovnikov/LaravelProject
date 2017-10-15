@@ -8,8 +8,9 @@ use App\Comment;
 /**
  * @property integer $id
  * @property string  $title
- * @property integer $count_articles
  * @property integer $status
+ *
+ * @property Article[] $articles
  */
 class Category extends BaseModel
 {
@@ -34,11 +35,11 @@ class Category extends BaseModel
      */
     protected $guarded = [];
 
-//    /**
-//     * Возращает все статьи к данной категории.
-//     */
-//    public function articles()
-//    {
-//        return $this->hasMany(Article::class, 'article_id');
-//    }
+    /**
+     * Возращает все статьи к данной категории.
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class, 'categories_id');
+    }
 }

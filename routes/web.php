@@ -42,7 +42,8 @@ Route::post('contact.mail', 'ContactController@contactMail')->name('contactMail'
 // Articles
 Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);
 Route::get('article.{id}', 'SiteController@show')->name('articleShow');
-Route::get('category.{categoryId}', 'SiteController@showByCategory')->name('articleByCategory');
+Route::get('category.{categoryId}', 'SiteController@showByCategory')->name('articlesByCategory');
+Route::get('tag.{tagId}', 'SiteController@showByTag')->name('articlesByTag');
 
 // Comments
 Route::get('comment{id}', 'CommentController@show')->name('commentShow');

@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->integer('target_id'); // Для MySQL 5.0 полиморф не работает
             $table->string('target_type');
-            $table->integer('user_id')->unsigned(); // Для MySQL 5.0 внешние ключи не работают
+            $table->integer('user_id')->unsigned(); // Для MySQL 5.0 метод foreign() не работает
             $table->text('content');
             $table->integer('level');
             $table->boolean('status')->default(true);

@@ -3,27 +3,31 @@
 namespace App;
 
 use App\Presenters\DatePresenter;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property integer $id
- * @property string  $title
- * @property string  $content
- * @property integer $user_id
- * @property string  $description
- * @property string  $keywords
- * @property string  $meta_desc
- * @property integer $categories_id
- * @property boolean $status
+ * @property integer   $id
+ * @property string    $title
+ * @property string    $content
+ * @property integer   $user_id
+ * @property string    $description
+ * @property integer   $viewed
+ * @property string    $keywords
+ * @property string    $meta_desc
+ * @property integer   $categories_id
+ * @property boolean   $status
  *
- * @property integer $created_at
- * @property integer $update_at
+ * @property integer   $created_at
+ * @property integer   $update_at
  *
- * @method Comment[] comments()
- * @method User[] user()
+ * @property User[]    $user
+ * @property Comment[] $comments
+ * @property Tag[]     $tags
  */
 class Article extends BaseModel
 {
-    use DatePresenter;
+    use DatePresenter; // работает с датами
 
     const TABLE_NAME = 'articles';
 
@@ -39,23 +43,50 @@ class Article extends BaseModel
      */
     protected $guarded = [];
 
-//    /**
-//     * Возращает пользователя - владельца данной статьи
-//     *
-//     * @return BelongsTo
-//     */
-//    public function user()
-//    {
-//        return $this->belongsTo(User::class, 'user_id');
-//    }
-//
-//    /**
-//     * Возращает все комментарии пользователя.
-//     *
-//     * @return HasMany
-//     */
-//    public function comments()
-//    {
-//        return $this->hasMany(Comment::class, 'article_id');
-//    }
+    /**
+     * Возращает владельца данной статьи
+     *
+     * @return BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Возращает все комментарии статьи.
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'target');
+    }
+
+    /**
+     * Возращает все файлы к статье.
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'target');
+    }
+
+    /**
+     * Возращает категорию данной статьи.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categories_id');
+    }
+
+    /**
+     * Возращает тэги статьи.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            ArticleTag::TABLE_NAME/*,
+            'article_id',
+            'tag_id'*/
+        );
+    }
 }

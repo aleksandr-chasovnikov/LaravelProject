@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ config('app.locale') }}">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Around | Blog</title>
+    <title>{{ config('app.name', 'BeOnTopic') }}</title>
     <!-- bootstrap-css -->
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ asset('GoEasyOn/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all"/>
     <!--// bootstrap-css -->
     <!-- font -->
     <link href='//fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
@@ -15,15 +15,15 @@
           rel='stylesheet' type='text/css'>
     <!-- //font -->
     <!-- css -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" type="text/css" media="all"/>
-    <link rel="stylesheet" href="{{ asset('css/component.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('GoEasyOn/css/style.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('GoEasyOn/css/component.css') }}" type="text/css" media="all"/>
     <!--// css -->
     <!-- font-awesome icons -->
-    <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('GoEasyOn/css/font-awesome.css') }}" rel="stylesheet">
     <!-- //font-awesome icons -->
 </head>
 <body>
-<div class="banner" id="home">
+<div class="container demo-2" id="home">
     <!--carbonads-container-->
     <div class="content">
         <div class="w3_agile_menu">
@@ -38,52 +38,62 @@
                 <div id="m_nav_container" class="m_nav wthree_bg">
                     <nav class="menu menu--sebastian">
                         <ul id="m_nav_list" class="m_nav menu__list">
-                            <li class="m_nav_item active" id="m_nav_item_1"><a href="index.html"
-                                                                               class="link link--kumya"><i
-                                            class="fa fa-home" aria-hidden="true"></i><span
-                                            data-letters="Home">Home</span></a></li>
-                            <li class="m_nav_item" id="moble_nav_item_2"><a href="typography.html"
-                                                                            class="link link--kumya scroll"><i
-                                            class="fa fa-cog" aria-hidden="true"></i><span
-                                            data-letters="Services">Services</span></a></li>
-                            <li class="m_nav_item" id="moble_nav_item_3"><a href="blog.html"
-                                                                            class="link link--kumya scroll"><i
-                                            class="fa fa-info-circle" aria-hidden="true"></i><span
-                                            data-letters="Blog">Blog</span></a></li>
-                            <li class="m_nav_item" id="moble_nav_item_5"><a href="gallery.html"
-                                                                            class="link link--kumya scroll"><i
-                                            class="fa fa-picture-o" aria-hidden="true"></i><span
-                                            data-letters="Gallery">Gallery</span></a></li>
-                            <li class="m_nav_item" id="moble_nav_item_6"><a href="contact.html"
-                                                                            class="link link--kumya scroll"><i
-                                            class="fa fa-envelope-o" aria-hidden="true"></i><span
-                                            data-letters="Contact Us">Contact Us</span></a></li>
+                            <li class="m_nav_item active" id="m_nav_item_1">
+                                <a href="{{ url('/') }}" class="link link--kumya">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                    <span data-letters="Главная">Главная</span>
+                                </a>
+                            </li>
+                            <li class="m_nav_item" id="moble_nav_item_2">
+                                <a href="{{ route('contact') }}" class="link link--kumya scroll">
+                                    <span data-letters="О проекте">О проекте</span>
+                                </a>
+                            </li>
+
+                            @if (Auth::guest())
+
+                            <li class="m_nav_item" id="moble_nav_item_5">
+                                <a href="{{ route('loginX') }}" class="link link--kumya scroll">
+                                    <span data-letters="Вход">Вход&nbsp;</span>
+                                </a>
+                            </li>
+                            <li class="m_nav_item" id="moble_nav_item_6">
+                                <a href="{{ route('registerX') }}" class="link link--kumya scroll">
+                                    <span data-letters="Регистрация">Регистрация</span>
+                                </a>
+                            </li>
+
+
+                            @else
+
+                            @if (isAdmin())
+                            <li class="m_nav_item" id="moble_nav_item_6">
+                                <a href="{{ route('adminIndex') }}" class="link link--kumya scroll">
+                                    <span data-letters="Админ">Админ-панель</span>
+                                </a>
+                            </li>
+                            @endif
+
+                            <li class="m_nav_item" id="moble_nav_item_6">
+                                <a href="#" class="link link--kumya scroll">
+                                    <span data-letters="{{ Auth::user()->name }}">Привет, {{ Auth::user()->name }}</span>
+                                </a>
+                            </li>
+                            <li class="m_nav_item" id="moble_nav_item_6">
+                                <a href="{{ route('logoutX') }}" class="link link--kumya scroll">
+                                    <span data-letters="Выход">Выход</span>
+                                </a>
+                            </li>
+
+                            @endif
+
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
-
-        <h1 class="title wow fadeInDown animated animated" data-wow-delay=".3s"><a
-                    class="link link--takiri" href="index.html">Go Easy On<span
-                        class="wow fadeInUp animated animated" data-wow-delay=".5s">Where do you want to be?</span></a>
-        </h1>
-
     </div>
-
-</div>
-</div>
-<!--/start-inner-content-->
-<!-- blog -->
-<div class="blog">
-    <!-- container -->
-    <div class="container">
-        <div class="blog-info wow fadeInDown animated animated" data-wow-delay=".5s">
-            <h2 class="tittle">Our Blog</h2>
-        </div>
-        <div class="blog-top-grids">
-
-            @if(!empty($errors))
+            @unless (empty($errors->all()))
 
                 <div class="alert alert-danger">
                     <ul>
@@ -95,7 +105,7 @@
                     </ul>
                 </div>
 
-            @endif
+            @endunless
 
             @yield('content')
 
@@ -106,9 +116,9 @@
                         categories</h3>
                     <ul>
 
-                        @if ( !empty($category) )
+                        @if ( !empty($categories) )
 
-                            @foreach ($category as $cat)
+                            @foreach ($categories as $cat)
                                 <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
                                     <a href="#">{{$cat->title}}</a>
                                 </li>
@@ -145,9 +155,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-    </div>
-    <!-- //container -->
-</div>
 <!-- //blog -->
 <!--//end-inner-content-->
 
@@ -161,11 +168,11 @@
 <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
                                                                          style="opacity: 1;"> </span></a>
 <!--/script-->
-<script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
-<script src="{{ asset('js/modernizr.custom.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/menu.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.magnific-popup.js') }}"></script>
-<link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet" type="text/css">
+<script src="{{ asset('GoEasyOn/js/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ asset('GoEasyOn/js/modernizr.custom.js') }}"></script>
+<script type="text/javascript" src="{{ asset('GoEasyOn/js/menu.js') }}"></script>
+<script type="text/javascript" src="{{ asset('GoEasyOn/js/jquery.magnific-popup.js') }}"></script>
+<link href="{{ asset('GoEasyOn/css/magnific-popup.css') }}" rel="stylesheet" type="text/css">
 <script>
     $(document).ready(function () {
         $('.popup-with-zoom-anim').magnificPopup({
@@ -182,15 +189,42 @@
     });
 </script>
 <!--animate-->
-<link href="{{ asset('css/animate.css') }}" rel="stylesheet" type="text/css" media="all">
-<script src="{{ asset('js/wow.min.js') }}"></script>
+<link href="{{ asset('GoEasyOn/css/animate.css') }}" rel="stylesheet" type="text/css" media="all">
+<script src="{{ asset('GoEasyOn/js/wow.min.js') }}"></script>
 <script>
     new WOW().init();
 </script>
 <!--//end-animate-->
+<!-- menu -->
+<script type="text/javascript" src="{{ asset('GoEasyOn/js/main.js') }}"></script>
+<!-- //menu -->
+<script src="{{ asset('GoEasyOn/js/rAF.js') }}"></script>
+<script src="{{ asset('GoEasyOn/js/demo-2.js') }}"></script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-48014931-1', 'codyhouse.co');
+    ga('send', 'pageview');
+
+    jQuery(document).ready(function($){
+        $('.close-carbon-adv').on('click', function(event){
+            event.preventDefault();
+            $('#carbonads-container').hide();
+        });
+        var domain = 'http://codyhouse.co/demo/stretchy-navigation/';
+        $('.cd-demo-settings').on('change', function(){
+            var animation = $('#selectAnimation').find("option:selected").val(),
+                newFile = animation+'.html';
+            window.location.href = domain+newFile;
+        });
+    });
+</script>
 <!-- gallery Modals -->
-<script type="text/javascript" src="{{ asset('js/move-top.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/easing.js') }}"></script>
+<script type="text/javascript" src="{{ asset('GoEasyOn/js/move-top.js') }}"></script>
+<script type="text/javascript" src="{{ asset('GoEasyOn/js/easing.js') }}"></script>
 <script type="text/javascript">
     jQuery(document).ready(function ($) {
         $(".scroll").click(function (event) {
@@ -216,7 +250,7 @@
     });
 </script>
 <!-- for bootstrap working -->
-<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('GoEasyOn/js/bootstrap.js') }}"></script>
 <!-- //for bootstrap working -->
 
 

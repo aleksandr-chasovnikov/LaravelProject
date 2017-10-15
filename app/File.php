@@ -26,4 +26,12 @@ class File extends BaseModel
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Получить все модели, обладающие target.
+     */
+    public function target()
+    {
+        return $this->morphTo();
+    }
 }

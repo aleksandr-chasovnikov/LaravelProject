@@ -22,6 +22,16 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Дата в прошлом
 
 
 define('ROOT', __DIR__);
+define('IS_ADMIN', 'admin545');
+
+//===== My functions =====
+
+function isAdmin(){
+    return Auth::user()->role === IS_ADMIN;
+}
+
+//===== My functions END =====
+
 
 require __DIR__.'/../bootstrap/autoload.php';
 require_once __DIR__.'/../vendor/fzaninotto/Faker/src/autoload.php';
