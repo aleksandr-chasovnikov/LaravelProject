@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ config('app.name', 'BeOnTopic') }}</title>
     <!-- bootstrap-css -->
-    <link href="{{ asset('GoEasyOn/css/bootstrap.css') }}" rel="stylesheet" type="text/css" media="all"/>
+    <link href="{{ asset('GoEasyOn/css/bootstrap.css') }}" rel="stylesheet" type="text/css"
+          media="all"/>
     <!--// bootstrap-css -->
     <!-- font -->
     <link href='//fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
@@ -15,8 +16,10 @@
           rel='stylesheet' type='text/css'>
     <!-- //font -->
     <!-- css -->
-    <link rel="stylesheet" href="{{ asset('GoEasyOn/css/style.css') }}" type="text/css" media="all"/>
-    <link rel="stylesheet" href="{{ asset('GoEasyOn/css/component.css') }}" type="text/css" media="all"/>
+    <link rel="stylesheet" href="{{ asset('GoEasyOn/css/style.css') }}" type="text/css"
+          media="all"/>
+    <link rel="stylesheet" href="{{ asset('GoEasyOn/css/component.css') }}" type="text/css"
+          media="all"/>
     <!--// css -->
     <!-- font-awesome icons -->
     <link href="{{ asset('GoEasyOn/css/font-awesome.css') }}" rel="stylesheet">
@@ -52,38 +55,41 @@
 
                             @if (Auth::guest())
 
-                            <li class="m_nav_item" id="moble_nav_item_5">
-                                <a href="{{ route('loginX') }}" class="link link--kumya scroll">
-                                    <span data-letters="Вход">Вход&nbsp;</span>
-                                </a>
-                            </li>
-                            <li class="m_nav_item" id="moble_nav_item_6">
-                                <a href="{{ route('registerX') }}" class="link link--kumya scroll">
-                                    <span data-letters="Регистрация">Регистрация</span>
-                                </a>
-                            </li>
+                                <li class="m_nav_item" id="moble_nav_item_5">
+                                    <a href="{{ route('loginX') }}" class="link link--kumya scroll">
+                                        <span data-letters="Вход">Вход&nbsp;</span>
+                                    </a>
+                                </li>
+                                <li class="m_nav_item" id="moble_nav_item_6">
+                                    <a href="{{ route('registerX') }}"
+                                       class="link link--kumya scroll">
+                                        <span data-letters="Регистрация">Регистрация</span>
+                                    </a>
+                                </li>
 
 
                             @else
 
-                            @if (isAdmin())
-                            <li class="m_nav_item" id="moble_nav_item_6">
-                                <a href="{{ route('adminIndex') }}" class="link link--kumya scroll">
-                                    <span data-letters="Админ">Админ-панель</span>
-                                </a>
-                            </li>
-                            @endif
+                                @if (isAdmin())
+                                    <li class="m_nav_item" id="moble_nav_item_6">
+                                        <a href="{{ route('adminIndex') }}"
+                                           class="link link--kumya scroll">
+                                            <span data-letters="Админ">Админ-панель</span>
+                                        </a>
+                                    </li>
+                                @endif
 
-                            <li class="m_nav_item" id="moble_nav_item_6">
-                                <a href="#" class="link link--kumya scroll">
-                                    <span data-letters="{{ Auth::user()->name }}">Привет, {{ Auth::user()->name }}</span>
-                                </a>
-                            </li>
-                            <li class="m_nav_item" id="moble_nav_item_6">
-                                <a href="{{ route('logoutX') }}" class="link link--kumya scroll">
-                                    <span data-letters="Выход">Выход</span>
-                                </a>
-                            </li>
+                                <li class="m_nav_item" id="moble_nav_item_6">
+                                    <a href="#" class="link link--kumya scroll">
+                                        <span data-letters="{{ Auth::user()->name }}">Привет, {{ Auth::user()->name }}</span>
+                                    </a>
+                                </li>
+                                <li class="m_nav_item" id="moble_nav_item_6">
+                                    <a href="{{ route('logoutX') }}"
+                                       class="link link--kumya scroll">
+                                        <span data-letters="Выход">Выход</span>
+                                    </a>
+                                </li>
 
                             @endif
 
@@ -93,68 +99,50 @@
             </div>
         </div>
     </div>
-            @unless (empty($errors->all()))
 
-                <div class="alert alert-danger">
-                    <ul>
+    {{--@unless (empty($errors->all()))--}}
 
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
+        {{--<div class="alert alert-danger">--}}
+            {{--<ul>--}}
 
-                    </ul>
-                </div>
+                {{--@foreach($errors->all() as $error)--}}
+                    {{--<li>{{ $error }}</li>--}}
+                {{--@endforeach--}}
 
-            @endunless
+            {{--</ul>--}}
+        {{--</div>--}}
 
-            @yield('content')
+    {{--@endunless--}}
 
+    @yield('content')
 
-            <div class="col-md-4 blog-top-right-grid">
-                <div class="categories">
-                    <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-                        categories</h3>
-                    <ul>
+    @if ( !empty($comments) )
+        <div class="comments">
+            <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
+                комментарии</h3>
 
-                        @if ( !empty($categories) )
-
-                            @foreach ($categories as $cat)
-                                <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-                                    <a href="#">{{$cat->title}}</a>
-                                </li>
-                            @endforeach
-
-                        @endif
-                    </ul>
-                </div>
-
-                @if ( !empty($comments) )
-                    <div class="comments">
-                        <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
-                            комментарии</h3>
-
-                        @foreach ($comments as $comment)
-                            <div class="comments-text wow fadeInLeft animated animated"
-                                 data-wow-delay=".5s">
-                                <div class="col-md-3 comments-left">
-                                    <img src="images/t3.jpg" alt=""/>
-                                </div>
-                                <div class="col-md-9 comments-right">
-                                    <h5>Admin</h5>
-                                    <a href="#">Phasellus sem leointerdum risus</a>
-                                    <p>March 16,2014 6:09:pm</p>
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        @endforeach
-
+            @foreach ($comments as $comment)
+                <div class="comments-text wow fadeInLeft animated animated"
+                     data-wow-delay=".5s">
+                    <div class="col-md-3 comments-left">
+                        <img src="images/t3.jpg" alt=""/>
                     </div>
-                @endif
+                    <div class="col-md-9 comments-right">
+                        <h5>Admin</h5>
+                        <a href="#">Phasellus sem leointerdum risus</a>
+                        <p>March 16,2014 6:09:pm</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            @endforeach
 
-
-            </div>
-            <div class="clearfix"></div>
         </div>
+    @endif
+
+
+</div>
+<div class="clearfix"></div>
+</div>
 <!-- //blog -->
 <!--//end-inner-content-->
 
@@ -201,24 +189,31 @@
 <script src="{{ asset('GoEasyOn/js/rAF.js') }}"></script>
 <script src="{{ asset('GoEasyOn/js/demo-2.js') }}"></script>
 <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-48014931-1', 'codyhouse.co');
     ga('send', 'pageview');
 
-    jQuery(document).ready(function($){
-        $('.close-carbon-adv').on('click', function(event){
+    jQuery(document).ready(function ($) {
+        $('.close-carbon-adv').on('click', function (event) {
             event.preventDefault();
             $('#carbonads-container').hide();
         });
         var domain = 'http://codyhouse.co/demo/stretchy-navigation/';
-        $('.cd-demo-settings').on('change', function(){
+        $('.cd-demo-settings').on('change', function () {
             var animation = $('#selectAnimation').find("option:selected").val(),
-                newFile = animation+'.html';
-            window.location.href = domain+newFile;
+                newFile = animation + '.html';
+            window.location.href = domain + newFile;
         });
     });
 </script>

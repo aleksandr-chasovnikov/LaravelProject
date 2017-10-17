@@ -21,6 +21,13 @@ class File extends BaseModel
     protected $table = self::TABLE_NAME;
 
     /**
+     * Атрибуты, которые должны быть преобразованы в даты.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at'];
+
+    /**
      * Атрибуты, для которых запрещено массовое назначение.
      *
      * @var array

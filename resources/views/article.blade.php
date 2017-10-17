@@ -2,14 +2,11 @@
 
 @section('content')
 
-    <?php//Тестовые данные
-    $faker = Faker\Factory::create('en_US');?>
-
     <div class="blog">
         <!-- container -->
         <div class="container">
 
-            @if (!empty($article))
+            @unless(empty($article))
 
                 <h3 class="tittle">{{ $article->title }}</h3>
                 <div class="col-md-8 blog-top-left-grid">
@@ -20,7 +17,9 @@
                                 <p>Статья от <a href="#">{{ $article->user->name }}</a>
                                     &nbsp;&nbsp; {{$article->created_at}} &nbsp;&nbsp;
                                     <a href="#comments">
-                                        (Комментариев: {{ $article->comment()->count() }} )
+                                        @unless (empty($commentsAll = $article->comment))
+                                            (Комментариев: {{ $commentsAll->count() }} )
+                                        @endunless
                                     </a>
                                 </p>
                                 <img src="" alt="image"/>
@@ -49,15 +48,7 @@
                                     <div class="media response-info">
                                         <div class="media-left response-text-left wow fadeInRight animated animated"
                                              data-wow-delay=".5s">
-                                            <img width="50" class="media-object" src="
-
-{{--@if (!empty($comment->user->image))
-{{$comment->user->image}}
-@else
-'/no-image.png'
-@endif--}}
-
-                                                    " alt="image">
+                                            <img width="50" class="media-object" src="" alt="image">
 
                                             <h5>{{$comment->user->name}}</h5>
                                         </div>
@@ -76,7 +67,6 @@
                                                     @if ((Auth::check()) && ((Auth::user()->email) === $comment->user->email	|| isAdmin()))
                                                         <form action="{{ route('commentDelete', ['comment'=>$comment->id]) }}"
                                                               method="post">
-                                                            <!-- <input type="hidden" name="_method" value="DELETE"> -->
                                                             {{method_field('DELETE')}}
                                                             {{csrf_field()}}
                                                             <button type="submit"
@@ -126,11 +116,7 @@
                                     <a
                                             name="com">Оставьте свой комментарий</a></h3>
 
-                                {{--@if( Yii::$app->session->getFlash('comment') )--}}
-                                {{--<div class="alert alert-success" role="alert">--}}
-                                {{--<?= Yii::$app->session->getFlash('comment') ?>--}}
-                                {{--</div>--}}
-                                {{--@endif--}}
+//TODO здесь работа с сессией
 
                                 <form action="{{ route('commentStore') }}"
                                       class="wow fadeInRight animated animated" method="post"
@@ -175,7 +161,8 @@
                             <div class="col-md-6">
                                 <input name="id" type="hidden" class="form-control"
                                        value="{{$article->id}}">
-                                <input id="file" type="file" class="form-control" name="file" required>
+                                <input id="file" type="file" class="form-control" name="file"
+                                       required>
                                 <button type="submit" class="btn btn-info">Загрузить</button>
                             </div>
                         </div>
@@ -185,7 +172,8 @@
                           action="{{ route('upload') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="file" class="col-md-4 control-label">Удалить изображение</label>
+                            <label for="file" class="col-md-4 control-label">Удалить
+                                изображение</label>
                             <div class="col-md-6">
                                 <input name="id" type="hidden" class="form-control"
                                        value="{{$article->id}}">
@@ -194,7 +182,8 @@
                         </div>
                     </form>
                 @endif
-            @endif
+                @endif
+            @endunless
 
             <div class="col-md-4 blog-top-right-grid">
                 <div class="categories">
@@ -203,12 +192,15 @@
                     <ul>
 
                         @if (!empty($categories))
-                            @foreach($categories as $category): ?>
+                            @foreach($categories as $category)
 
                             <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-                                <a href="{{ route('articleByCategory') }}">{{$category->title}}</a>
-                                <span class="post-count pull-right">({{$category->articles->count()}}
-                                    )</span>
+                                <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
+                                @unless (empty($articleAll = $category->articles))
+                                    <span class="post-count pull-right">
+                                        ({{$articleAll->count()}})
+                                    </span>
+                                @endunless
                             </li>
 
                             @endforeach
@@ -220,54 +212,66 @@
                     <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Популярные
                         статьи</h3>
 
-                    {{--@foreach($popular as $article)--}}
+                    @unless (empty($popular))
+                        @foreach($popular as $article)
 
-                    {{--<div class="comments-text wow fadeInLeft animated animated"--}}
-                    {{--data-wow-delay=".5s">--}}
-                    {{--<div class="col-md-3 comments-left">--}}
-                    {{--<a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>">--}}
-                    {{--<img src="<?= (new Article)->getImage($article->image); ?>"--}}
-                    {{--alt="image"/>--}}
-                    {{--</a>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-9 comments-right">--}}
-                    {{--<a href="<?= Url::toRoute([--}}
-                    {{--'site/view',--}}
-                    {{--'id' => $article->id--}}
-                    {{--]) ?>"><?= $article->title ?></a>--}}
-                    {{--<p><?= (new Article)->getDate($article->date) ?></p>--}}
-                    {{--</div>--}}
-                    {{--<div class="clearfix"></div>--}}
-                    {{--</div>--}}
+                            <div class="comments-text wow fadeInLeft animated animated"
+                                 data-wow-delay=".5s">
+                                <div class="col-md-3 comments-left">
+                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                        <img src=" " alt="image"/>
+                                    </a>
+                                </div>
+                                <div class="col-md-9 comments-right">
+                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                        {{$article->title}}
+                                    </a>
+                                    <p>$article->getDate()</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
 
-                    {{--@endforeach--}}
+                        @endforeach
+                    @endunless
 
                 </div>
                 <div class="comments">
                     <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
                         статьи</h3>
+                    @unless (empty($recent))
+                        @foreach($recent as $article)
 
-                    {{--<?php foreach($recent as $article): ?>--}}
+                            <div class="comments-text wow fadeInLeft animated animated"
+                                 data-wow-delay=".5s">
+                                <div class="col-md-3 comments-left">
+                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                        <img src="" alt="image"/>
+                                    </a>
+                                </div>
+                                <div class="col-md-9 comments-right">
+                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                        {{ $article->title }}
+                                    </a>
+                                    <p><?/*= $article->getDate() */?></p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
 
-                    {{--<div class="comments-text wow fadeInLeft animated animated"--}}
-                    {{--data-wow-delay=".5s">--}}
-                    {{--<div class="col-md-3 comments-left">--}}
-                    {{--<a href="<?= Url::toRoute(['site/view', 'id' => $article->id]) ?>">--}}
-                    {{--<img src="<?= (new Article)->getImage($article->image); ?>"--}}
-                    {{--alt="image"/>--}}
-                    {{--</a>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-md-9 comments-right">--}}
-                    {{--<a href="<?= Url::toRoute([--}}
-                    {{--'site/view',--}}
-                    {{--'id' => $article->id--}}
-                    {{--]) ?>"><?= $article->title ?></a>--}}
-                    {{--<p><?= (new Article)->getDate($article->date) ?></p>--}}
-                    {{--</div>--}}
-                    {{--<div class="clearfix"></div>--}}
-                    {{--</div>--}}
+                        @endforeach
+                    @endunless
 
-                    {{--<?php endforeach; ?>--}}
+                </div>
+                <div class="comments">
+                    <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако
+                        тегов</h3>
+                    @unless (empty($tags))
+                        <div class="tags">
+                            @foreach($tags as $tag)
+                                <a href="{{ route('showByTag', ['id' => $tag->id]) }}">{{ $tag->title }}</a>
+                                |
+                            @endforeach
+                        </div>
+                    @endunless
 
                 </div>
             </div>
