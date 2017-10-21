@@ -39,7 +39,7 @@ class BaseController extends Controller
      */
     protected function showCategories()
     {
-        return (new Category())->select(['id', 'title'])
+        return Category::select(['id', 'title'])
             ->orderBy('title')
             ->where('status', true)
             ->get();
@@ -52,7 +52,7 @@ class BaseController extends Controller
      */
     protected function showTags()
     {
-        return (new Tag())->select()
+        return Tag::select()
             ->orderBy('title')
             ->where('status', true)
             ->get();
@@ -68,7 +68,7 @@ class BaseController extends Controller
      */
     protected function showAllArticles($tagId = null, $categoryId = null)
     {
-        $articles = (new Article)->select()
+        $articles = Article::select()
             ->where('status', true);
 
         if (!empty($categoryId)) {

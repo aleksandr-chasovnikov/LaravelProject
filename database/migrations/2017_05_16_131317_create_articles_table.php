@@ -30,6 +30,7 @@ class CreateArticlesTable extends Migration
             $table->foreign('categories_id')->references('id')->on(Category::TABLE_NAME);
             $table->boolean('status')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -1,5 +1,10 @@
 <?php
 
+use App\Article;
+use App\Category;
+use App\User;
+use Faker\Generator as Faker;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -12,13 +17,17 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    static $password;
+$factory->define(Category::class, function (Faker $faker) {
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'target_id' => function () {
+            return factory(Article::class)->create()->id;
+        },
+        'target_type' => 'App\Article',
+        'user_id' =>function () {
+            return factory(User::class)->create()->id;
+        },
+        'content' => $faker->text(200),
+        'status' => true,
     ];
 });

@@ -4,7 +4,6 @@ namespace App;
 
 use App\Presenters\DatePresenter;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property integer   $id

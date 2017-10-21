@@ -64,7 +64,7 @@ class SiteController extends BaseController
     {
         $category = (new Category)->find($categoryId)->first(['title']);
 
-        $articles = $this->showAllArticles($categoryId);
+        $articles = $this->showAllArticles(null, $categoryId);
 
         return view('index')->with([
             'articles' => $articles->paginate(self::PAGINATE),

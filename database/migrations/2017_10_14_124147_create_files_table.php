@@ -19,7 +19,9 @@ class CreateFilesTable extends Migration
             $table->integer('target_id'); // Для MySQL 5.0 полиморф не работает
             $table->string('target_type'); // Для MySQL 5.0 метод foreign() не работает
             $table->boolean('status')->default(true);
+            $table->string('path');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

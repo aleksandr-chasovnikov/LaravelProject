@@ -19,6 +19,7 @@ class CreateTagsTable extends Migration
             $table->string('title');
             $table->boolean('status')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -18,9 +18,12 @@ class CreateArticleTagTable extends Migration
     {
         Schema::create(ArticleTag::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('article_id')->unsigned(); //// Для MySQL 5.0 метод foreign() не работает
+            $table->integer('article_id')->unsigned();
+            $table->foreign('article_id')->references('id')->on(Article::TABLE_NAME);
             $table->integer('tag_id')->unsigned();
+            $table->foreign('tag_id')->references('id')->on(Tag::TABLE_NAME);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
