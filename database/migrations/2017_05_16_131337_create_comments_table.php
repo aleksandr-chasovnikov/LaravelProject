@@ -1,5 +1,7 @@
 <?php
 
+use App\Comment;
+use App\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,13 +15,17 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create(Comment::TABLE_NAME, function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('posts_id')->unsigned()->index();
-            $table->integer('users_id')->unsigned()->index();
-            $table->text('comm');
-            $table->boolean('status');
+            $table->integer('target_id'); // Для MySQL 5.0 полиморф не работает
+            $table->string('target_type');
+            $table->integer('user_id')/*->unsigned()*/;
+//            $table->foreign('user_id')->references('id')->on(User::TABLE_NAME);
+            $table->text('content');
+            $table->integer('level');
+            $table->boolean('status')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +36,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists(Comment::TABLE_NAME);
     }
 }

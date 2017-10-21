@@ -20,7 +20,7 @@
                 <p>{{ $article->description }}</p>
                 <p>
                     <a class="btn btn-default" href="{{ route('articleShow',['id'=>$article->id]) }}" role="button">Подробнее &raquo;</a>
-                    <a class="btn btn-warning" href="{{ route('articleUpdate',['id'=>$article->id]) }}" role="button">Редактировать</a>
+                    <a class="btn btn-warning" href="{{ route('articleEdit',['id'=>$article->id]) }}" role="button">Редактировать</a>
                 </p>                
                 <br>            
                 <form action="{{ route('articleDelete', ['article'=>$article->id]) }}" method="post">

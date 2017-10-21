@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Comment;
 
-class CommentController extends Controller
+class CommentController extends BaseController
 {
     /**
-     * Создать комментарий
+     * Сохранить комментарий
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {

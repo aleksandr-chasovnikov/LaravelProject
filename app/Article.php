@@ -2,39 +2,97 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Presenters\DatePresenter;
-use App\User;
-use App\Comment;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Article extends Model
+/**
+ * @property integer   $id
+ * @property string    $title
+ * @property string    $content
+ * @property integer   $user_id
+ * @property string    $description
+ * @property integer   $viewed
+ * @property string    $keywords
+ * @property string    $meta_desc
+ * @property integer   $categories_id
+ * @property boolean   $status
+ *
+ * @property integer   $created_at
+ * @property integer   $update_at
+ *
+ * @property User[]    $user
+ * @property Comment[] $comments
+ * @property Tag[]     $tags
+ */
+class Article extends BaseModel
 {
-    use DatePresenter;
-    
-    // protected $dateFormat;
-    // protected $dates = ['created_at', 'updated_at'];
+    use DatePresenter; // работает с датами
+
+    const TABLE_NAME = 'articles';
 
     /**
-     * Определяет необходимость отметок времени для модели
-     * @var bool
+     * @var string
      */
-    // public $timestamps = false;
-    
-    protected $fillable = ['id', 'title', 'alias', 'img', 'description', 'text', 'categories_id', 'users_id'];
+    protected $table = self::TABLE_NAME;
 
     /**
-	 * Получить пользователя - владельца данной статьи
-	 */
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+     * Атрибуты, которые должны быть преобразованы в даты.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at'];
 
     /**
-     * Получить все комментарии пользователя.
+     * Атрибуты, для которых запрещено массовое назначение.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
+     * Возращает владельца данной статьи
+     *
+     * @return BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Возращает все комментарии статьи.
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->morphMany(Comment::class, 'target');
+    }
+
+    /**
+     * Возращает все файлы к статье.
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'target');
+    }
+
+    /**
+     * Возращает категорию данной статьи.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categories_id');
+    }
+
+    /**
+     * Возращает тэги статьи.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            ArticleTag::TABLE_NAME/*,
+            'article_id',
+            'tag_id'*/
+        );
     }
 }

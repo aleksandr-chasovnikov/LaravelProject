@@ -12,7 +12,6 @@
 */
 
 
-
 // ======== MyExample =======================
 // Route::post('registerX.{id?}', function() {
 
@@ -36,30 +35,34 @@
 
 // ============================================
 
-//Contact
+// Contact
 Route::get('contact', function () { return view('contact'); })->name('contact');
 Route::post('contact.mail', 'ContactController@contactMail')->name('contactMail');
 
-//Articles
+// Articles
 Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);
 Route::get('article.{id}', 'SiteController@show')->name('articleShow');
-Route::get('category.{categoryId}', 'SiteController@showByCategory')->name('articleByCategory');
+Route::get('category.{categoryId}', 'SiteController@showByCategory')->name('showByCategory');
+Route::get('tag.{tagId}', 'SiteController@showByTag')->name('showByTag');
 
-//Comments
+// Comments
 Route::get('comment{id}', 'CommentController@show')->name('commentShow');
 Route::post('article', 'CommentController@store')->name('commentStore');
 Route::delete('delete.{comment}', 'CommentController@delete')->name('commentDelete');
 
+
 // ======== AdminPanel =========================
+
 Route::group(['prefix' => 'admin/article'], function () {
 // Route::group(['prefix' => 'admin/article', 'middleware' => ['auth', 'admin']], function () {
 
 	Route::get('index', 'Admin\AdminArticleController@index')->name('adminIndex');
 	Route::post('create', 'Admin\AdminArticleController@store')->name('articleStore');
 	Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
-	Route::get('update.{id}', 'Admin\AdminArticleController@update')->name('articleUpdate');
-	Route::post('update', 'Admin\AdminArticleController@postUpdate')->name('articlePostUpdate');
-	Route::delete('delete.{article}', 'Admin\AdminArticleController@delete')->name('articleDelete');
+	Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
+	Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
+	Route::delete('delete.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+
 	Route::post('upload', 'Admin\AdminArticleController@uploadFile')->name('upload');
 });
 
@@ -71,9 +74,12 @@ Route::group(['prefix' => 'admin/category'], function () {
 	Route::get('update.{id}', 'Admin\AdminCategoryController@update')->name('categoryUpdate');
 	Route::get('delete.{article}', 'Admin\AdminCategoryController@delete')->name('categoryDelete');
 });
+
 // ======== END AdminPanel =======================
 
+
 // ======== Authentication =======================
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -85,4 +91,5 @@ Route::get('logoutX', 'Auth\LoginController@logout')->name('logoutX');
 // register
 Route::get('registerX', 'Auth\RegisterController@showRegistrationForm')->name('registerX');
 Route::post('registerX', 'Auth\RegisterController@register')->name('registerX');
+
 // ======== END Authentication =======================

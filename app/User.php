@@ -2,12 +2,42 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property integer $id
+ * @property string  $name
+ * @property string  $email
+ * @property string  $password
+ * @property string  $role
+ * @property integer $rememberTokenName
+ *
+ * @property integer $created_at
+ * @property integer $update_at
+ *
+ * @property Article[] $articles
+ */
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const TABLE_NAME = 'users';
+
+    /**
+     * Связанная с моделью таблица.
+     *
+     * @var string
+     */
+    protected $table = self::TABLE_NAME;
+
+    /**
+     * Атрибуты, которые должны быть преобразованы в даты.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +45,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-    'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -24,23 +56,29 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-    'password', 'remember_token',
+        'password',
+        'role',
+        'remember_token',
     ];
 
     /**
-     * Получить все статьи пользователя.
+     * Возращает все статьи пользователя.
+     *
+     * @return HasMany
      */
     public function articles()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class, 'user_id');
     }
 
     /**
-     * Получить все комментарии пользователя.
+     * Возращает все комментарии пользователя.
+     *
+     * @return HasMany
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'user_id');
     }
 
 }

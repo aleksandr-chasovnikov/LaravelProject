@@ -2,36 +2,60 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Faker\Provider\Base;
 use App\Presenters\DatePresenter;
-use App\User;
-use App\Article;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Comment extends Model
+/**
+ * @property integer $id
+ * @property integer $target_id
+ * @property string  $target_type
+ * @property integer $user_id
+ * @property string  $content
+ * @property integer $level
+ * @property integer $status
+ *
+ * @property integer $created_at
+ * @property integer $update_at
+ */
+class Comment extends BaseModel
 {
     use DatePresenter;
-    
+
+    const TABLE_NAME = 'comments';
+
     /**
-     * Определяет необходимость отметок времени для модели
-     * @var bool
+     * @var string
      */
-    // public $timestamps = false;
-    // //
-    protected $fillable = ['id', 'article_id', 'user_name', 'user_email', 'comm'];
+    protected $table = self::TABLE_NAME;
 
-	/**
-	 * Получить пользователя - владельца данного комментария
-	 */
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
+    /**
+     * Атрибуты, которые должны быть преобразованы в даты.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at'];
 
-	/**
-	 * Получить статью - владельца данного комментария
-	 */
-	public function articles()
-	{
-		return $this->belongsTo(Article::class);
-	}
+    /**
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
+     * Возращает пользователя - владельца данного комментария
+     *
+     * @return belongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Получить все модели, обладающие target.
+     */
+    public function target()
+    {
+        return $this->morphTo();
+    }
 }

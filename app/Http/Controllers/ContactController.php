@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-class ContactController extends Controller
+class ContactController extends BaseController
 {
     public function contactMail()
     {

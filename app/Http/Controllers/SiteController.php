@@ -2,75 +2,101 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Article;
 use App\Category;
+use App\Tag;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\View\View;
 
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
-     * Количество статей на странице
+     * Показывает все статьи
+     *
+     * @return View
      */
-    const PAGINATE = 5;
-    /**
-     * Показать все статьи
-     */
-	public function index()
-	{
-        //Список статей
-        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])->paginate(self::PAGINATE);
-
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-
-        return view('index')->with(['articles' => $articles, 
-                                    'categories' => $categories,
-                                    ]);
-	}
-
-    /**
-     * Показать одну статью
-     */
-    public function show($id)
+    public function index()
     {
-        $article = Article::select(['id', 'title', 'img', 'text', 'created_at'])
-                ->where('id', $id)
-                ->first();
-                
-        //Комментарии, принадлежащие статье
-        $comments = Article::find($id)->comments()->get();
+        $articles = $this->showAllArticles();
 
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
-
-        return view('article')->with(['article' => $article, 
-                                    'categories' => $categories,
-                                    'comments' => $comments,
-                                    ]);
+        return view('index')->with([
+            'articles' => $articles->paginate(self::PAGINATE),
+            'popular' => $this->showPopularArticles($articles),
+            'recent' => $this->showRecentArticles($articles),
+            'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
+        ]);
     }
 
     /**
-     * Показать статьи по категории
+     * Показывает одну статью
+     *
+     * @param $id
+     *
+     * @return $this
+     */
+    public function show($id)
+    {
+        /**
+         * @var Builder $articles
+         */
+        $articles = $this->showAllArticles();
+
+        $article = $articles->where('id', $id)->first();
+
+        return view('article')->with([
+            'article' => $article,
+            'popular' => $this->showPopularArticles($articles),
+            'recent' => $this->showRecentArticles($articles),
+            'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
+        ]);
+    }
+
+    /**
+     * Показывает статьи по категории
+     *
+     * @param $categoryId
+     *
+     * @return $this
      */
     public function showByCategory($categoryId)
     {
-        //Список категорий
-        $categories = Category::select(['id', 'name_category'])->get();
+        $category = (new Category)->find($categoryId)->first(['title']);
 
-        //Выбранная категория
-        $category = Category::all()->where('id', $categoryId);        
+        $articles = $this->showAllArticles(null, $categoryId);
 
-        //Список статей
-        $articles = Article::select(['id', 'title', 'img', 'description', 'created_at'])
-                            ->where('categories_id', $categoryId)
-                            ->paginate(self::PAGINATE);
+        return view('index')->with([
+            'articles' => $articles->paginate(self::PAGINATE),
+            'category' => $category,
+            'popular' => $this->showPopularArticles($articles),
+            'recent' => $this->showRecentArticles($articles),
+            'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
+        ]);
+    }
 
+    /**
+     * Показывает статьи по тегу
+     *
+     * @param $tagId
+     *
+     * @return $this
+     */
+    public function showByTag($tagId)
+    {
+        $tag = (new Tag)->find($tagId)->first(['title']);
 
-        return view('category')->with([
-                'articles' => $articles,
-                'category' => $category,
-                'categories' => $categories
-            ]);
+        $articles = $this->showAllArticles($tagId);
+
+        return view('index')->with([
+            'articles' => $articles->paginate(self::PAGINATE),
+            'tag' => $tag,
+            'popular' => $this->showPopularArticles($articles),
+            'recent' => $this->showRecentArticles($articles),
+            'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
+        ]);
     }
 
 }
