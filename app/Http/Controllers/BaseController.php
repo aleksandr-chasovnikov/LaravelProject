@@ -14,7 +14,7 @@ class BaseController extends Controller
     /**
      * Количество статей на странице
      */
-    const PAGINATE = 2; //TODO Создать AdminProfileController для настройки админ-панели из браузера
+    const PAGINATE = 7; //TODO Создать AdminProfileController для настройки админ-панели из браузера
 
     /**
      * Проверяет пользователя на наличие администраторских прав

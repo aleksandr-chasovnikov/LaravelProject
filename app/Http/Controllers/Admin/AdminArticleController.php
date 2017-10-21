@@ -71,7 +71,7 @@ class AdminArticleController extends BaseController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-            'text' => 'required',
+            'content' => 'required',
         ]);
 
         (new Article)->create($request->all());
@@ -119,7 +119,7 @@ class AdminArticleController extends BaseController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-            'text' => 'required',
+            'content' => 'required',
         ]);
 
         (new Article())->find($request->id)

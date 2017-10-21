@@ -23,7 +23,7 @@ $factory->define(Category::class, function (Faker $faker) {
             return factory(Article::class)->create()->id;
         },
         'target_type' => 'App\Article',
-        'path' => $faker->text(200),
+        'path' => $faker->text(50),
         'status' => true,
     ];
 });

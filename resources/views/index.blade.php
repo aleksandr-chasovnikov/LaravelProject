@@ -66,11 +66,11 @@
 
                     @unless (empty($articles))
                         @foreach ($articles as $article)
-
                             <div class="blog-left">
 
                                 <div class="blog-left-left wow fadeInRight animated animated"
                                      data-wow-delay=".5s">
+                                    <hr>
                                     <p>Статья от <a name="iakor"
                                                     href="">{{$article->user->name}}</a>&nbsp;&nbsp; {{$article->created_at}}
                                         &nbsp;&nbsp;
@@ -109,7 +109,6 @@
                 @endunless
 
                 <hr>
-                <hr>
             </div>
 
 
@@ -133,7 +132,7 @@
                                     <a href="{{ route('articleShow', ['id' => $article->id]) }}">
                                         {{$article->title}}
                                     </a>
-                                    <p>$article->getDate()</p>
+                                    {{--<p>$article->getDate()</p>--}}
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

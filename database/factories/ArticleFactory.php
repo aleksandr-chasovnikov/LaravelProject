@@ -20,15 +20,15 @@ use Faker\Generator as Faker;
 $factory->define(Article::class, function (Faker $faker) {
 
     return [
-        'title' => $faker->text(200),
-        'content' => $faker->text(2000),
+        'title' => $faker->text(50),
+        'content' => $faker->text(300),
         'user_id' =>function () {
             return factory(User::class)->create()->id;
         },
-        'description' => $faker->text(2000),
+        'description' => $faker->text(300),
         'viewed' =>  rand(0, 200000),
-        'keywords' => $faker->text(200),
-        'meta_desc' => $faker->text(200),
+        'keywords' => $faker->text(50),
+        'meta_desc' => $faker->text(50),
         'categories_id' => function () {
             return factory(Category::class)->create()->id;
         },

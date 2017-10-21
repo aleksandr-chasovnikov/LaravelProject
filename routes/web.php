@@ -86,7 +86,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // login
 Route::get('loginX', 'Auth\LoginController@showLoginForm')->name('loginX');
 Route::post('loginX', 'Auth\LoginController@login')->name('loginX');
-Route::post('logoutX', 'Auth\LoginController@logout')->name('logoutX');
+Route::get('logoutX', 'Auth\LoginController@logout')->name('logoutX');
 
 // register
 Route::get('registerX', 'Auth\RegisterController@showRegistrationForm')->name('registerX');

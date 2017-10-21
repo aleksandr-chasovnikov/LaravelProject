@@ -13,6 +13,6 @@ class ArticleTagsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(ArticleTag::class, 30)->create();
+        factory(ArticleTag::class, 10)->create();
     }
 }

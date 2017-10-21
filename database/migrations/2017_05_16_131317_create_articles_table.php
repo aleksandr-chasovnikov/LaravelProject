@@ -17,17 +17,17 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create(Article::TABLE_NAME, function (Blueprint $table) {
-            $table->increments('id')->unsigned();
+            $table->increments('id');
             $table->string('title');
             $table->text('content');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on(User::TABLE_NAME);
+            $table->integer('user_id')/*->unsigned()*/;
+//            $table->foreign('user_id')->references('id')->on(User::TABLE_NAME);
             $table->text('description');
             $table->integer('viewed')->nullable(); // кол-во просмотров
             $table->string('keywords');
             $table->string('meta_desc');
-            $table->integer('categories_id')->unsigned();
-            $table->foreign('categories_id')->references('id')->on(Category::TABLE_NAME);
+            $table->integer('categories_id')/*->unsigned()*/;
+//            $table->foreign('categories_id')->references('id')->on(Category::TABLE_NAME);
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();

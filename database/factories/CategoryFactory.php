@@ -18,7 +18,7 @@ use Faker\Generator as Faker;
 $factory->define(Category::class, function (Faker $faker) {
 
     return [
-        'title' => $faker->text(200),
+        'title' => $faker->text(50),
         'status' => true,
     ];
 });
