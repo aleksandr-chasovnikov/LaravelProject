@@ -22,7 +22,7 @@
                                         @endunless
                                     </a>
                                 </p>
-                                <img src="" alt="image"/>
+                                <img src="{{ asset('storage/app/'.$image->path) }}" alt="image"/>
                             </div>
 
                             <!-- foreach -->
@@ -109,14 +109,12 @@
                             @endif
                         </div>
 
-                        @if( Auth::guest())
-
                             <div class="opinion">
                                 <h3 class="wow fadeInRight animated animated" data-wow-delay=".5s">
                                     <a
                                             name="com">Оставьте свой комментарий</a></h3>
 
-//TODO здесь работа с сессией
+                                //TODO здесь работа с сессией
 
                                 <form action="{{ route('commentStore') }}"
                                       class="wow fadeInRight animated animated" method="post"
@@ -142,47 +140,44 @@
                                     @endif
                                     {{ csrf_field() }}
 
-                                    <button class="btn btn-default" type="submit">Отправить
-                                        комментарий
-                                    </button>
+                                    <button class="btn btn-default" type="submit">Отправить</button>
                                 </form>
 
+                                @if (Auth::check() && isAdmin())
+                                        <form class="form-horizontal" role="form" method="POST"
+                                              action="{{ route('upload') }}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label for="file" class="col-md-4 control-label">Загрузить файл</label>
+                                                <div class="col-md-6">
+                                                    <input name="id" type="hidden" class="form-control"
+                                                           value="{{$article->id}}">
+                                                    <input id="file" type="file" class="form-control" name="file"
+                                                           required>
+                                                    <button type="submit" class="btn btn-info">Загрузить</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr>
+                                        <form class="form-horizontal" role="form" method="POST"
+                                              action="{{ route('upload') }}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <label for="file" class="col-md-4 control-label">Удалить
+                                                    изображение</label>
+                                                <div class="col-md-6">
+                                                    <input name="id" type="hidden" class="form-control"
+                                                           value="{{$article->id}}">
+                                                    <button type="submit" class="btn btn-info">Удалить</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                @endif
                             </div>
 
                     </div>
                 </div>
 
-                @if (Auth::check() && isAdmin())
-                    <form class="form-horizontal" role="form" method="POST"
-                          action="{{ route('upload') }}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="file" class="col-md-4 control-label">Загрузить файл</label>
-                            <div class="col-md-6">
-                                <input name="id" type="hidden" class="form-control"
-                                       value="{{$article->id}}">
-                                <input id="file" type="file" class="form-control" name="file"
-                                       required>
-                                <button type="submit" class="btn btn-info">Загрузить</button>
-                            </div>
-                        </div>
-                    </form>
-                    <hr>
-                    <form class="form-horizontal" role="form" method="POST"
-                          action="{{ route('upload') }}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="file" class="col-md-4 control-label">Удалить
-                                изображение</label>
-                            <div class="col-md-6">
-                                <input name="id" type="hidden" class="form-control"
-                                       value="{{$article->id}}">
-                                <button type="submit" class="btn btn-info">Удалить</button>
-                            </div>
-                        </div>
-                    </form>
-                @endif
-                @endif
             @endunless
 
             <div class="col-md-4 blog-top-right-grid">
@@ -194,14 +189,14 @@
                         @if (!empty($categories))
                             @foreach($categories as $category)
 
-                            <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-                                <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
-                                @unless (empty($articleAll = $category->articles))
-                                    <span class="post-count pull-right">
+                                <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
+                                    <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
+                                    @unless (empty($articleAll = $category->articles))
+                                        <span class="post-count pull-right">
                                         ({{$articleAll->count()}})
                                     </span>
-                                @endunless
-                            </li>
+                                    @endunless
+                                </li>
 
                             @endforeach
                         @endif
@@ -213,18 +208,18 @@
                         статьи</h3>
 
                     @unless (empty($popular))
-                        @foreach($popular as $article)
+                        @foreach($popular as $pop)
 
                             <div class="comments-text wow fadeInLeft animated animated"
                                  data-wow-delay=".5s">
                                 <div class="col-md-3 comments-left">
-                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                    <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
                                         <img src=" " alt="image"/>
                                     </a>
                                 </div>
                                 <div class="col-md-9 comments-right">
-                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                        {{$article->title}}
+                                    <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
+                                        {{$pop->title}}
                                     </a>
                                     <p>$article->getDate()</p>
                                 </div>
@@ -239,18 +234,18 @@
                     <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
                         статьи</h3>
                     @unless (empty($recent))
-                        @foreach($recent as $article)
+                        @foreach($recent as $rec)
 
                             <div class="comments-text wow fadeInLeft animated animated"
                                  data-wow-delay=".5s">
                                 <div class="col-md-3 comments-left">
-                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                    <a href="{{ route('articleShow', ['id' => $rec->id]) }}">
                                         <img src="" alt="image"/>
                                     </a>
                                 </div>
                                 <div class="col-md-9 comments-right">
-                                    <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                        {{ $article->title }}
+                                    <a href="{{ route('articleShow', ['id' => $rec->id]) }}">
+                                        {{ $rec->title }}
                                     </a>
                                     <p><?/*= $article->getDate() */?></p>
                                 </div>

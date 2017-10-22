@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\File;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Article;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -23,16 +25,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $articles = (new Article)->select([
-            'id',
-            'title',
-            'description',
-//            'keywords',
-//            'meta_desc',
-            'created_at',
-        ])->orderBy('created_at', 'desc')
-            ->where('status', true)
-            ->get();
+        $articles = $this->allArticles()->get();
 
         return view('admin/index')->with([
             'articles' => $articles,
@@ -74,7 +67,7 @@ class AdminArticleController extends BaseController
             'content' => 'required',
         ]);
 
-        (new Article)->create($request->all());
+        Article::create($request->all());
 
         return view('admin/create')->with([
             'categories' => $this->showCategories(),
@@ -95,8 +88,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $article = (new Article)->find($id)
-            ->first();
+        $article = Article::find($id)->first();
 
         return view('admin/update')->with([
             'article' => $article,
@@ -105,7 +97,7 @@ class AdminArticleController extends BaseController
     }
 
     /**
-     * Редактирует статью и выводит форму с сообщением об успешной операции
+     * Редактирует статью
      *
      * POST /admin/article/update
      *
@@ -122,7 +114,7 @@ class AdminArticleController extends BaseController
             'content' => 'required',
         ]);
 
-        (new Article())->find($request->id)
+        Article::find($request->id)
             ->update($request->all());
 
         return redirect()->back();
@@ -141,7 +133,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        (new Article)->where('id', $id)
+        Article::find($id)
             ->first()
             ->delete();
 
@@ -153,15 +145,24 @@ class AdminArticleController extends BaseController
      *
      * @param Request $request
      *
-     * @return RedirectResponse | HttpException
+     * @return false|string
      */
     public function uploadFile(Request $request)
     {
         self::checkAdmin();
 
+        $path = $request->file('file')
+            ->store('upload');
+
+        Article::find($request->id)
+            ->first()
+            ->files()
+            ->save(new File([
+                'path' => $path,
+            ]));
+
         //TODO пересмотреть метод
-        if ($request->hasFile('file')) {
-//
+//        if ($request->hasFile('file')) {
 //            try{
 //                $filename = $request->file;
 //
@@ -169,19 +170,21 @@ class AdminArticleController extends BaseController
 //                 * @var ?
 //                 */
 //                $request->file->move('uploads', $filename->getClientOriginalName());
-//            } catch ($exception \Exception) {
-//
+//            } catch (\Exception $exception) {
+//                echo 'Не удалось загрузить файл!';
 //            }
-
-        } else {
-
-            return redirect()->back()
-                ->with('message', 'Ошибка!');
-        }
-
-        DB::table('articles')
-            ->where('id', $request->id)
-            ->update(['img' => $filename]);
+//
+//        } else {
+//            return redirect()->back()
+//                ->with('message', 'Ошибка!');
+//        }
+//
+//        Article::find($request->id)
+//            ->first()
+//            ->files()
+//            ->save(new File([
+//                'path' => $request->file,
+//            ]));
 
         return redirect()->back()
             ->with('message', 'Готово!');
