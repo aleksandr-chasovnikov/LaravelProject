@@ -37,13 +37,13 @@
                         <ul>
 
                             @foreach($categories as $category)
-
+                                @if ($category->articles->count())
                                 <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
                                     <a href="{{route('showByCategory', ['id' => $category->id])}}">{{ $category->title }}</a>
                                     <span class="post-count pull-right">({{ $category->articles->count() }}
                                         )</span>
                                 </li>
-
+                                @endif
                             @endforeach
 
                         </ul>
@@ -103,7 +103,7 @@
 
                 <div class="col-md-4 blog-top-right-grid">
 
-                    @unless (empty($popular))
+                    @unless (empty($popular[0]))
                         <div class="comments">
                             <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">
                                 Популярные
@@ -131,7 +131,7 @@
                         </div>
                     @endunless
 
-                    @unless (empty($recent))
+                    @unless (empty($recent[0]))
                         <div class="comments">
                             <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">
                                 Последние
@@ -158,7 +158,7 @@
                         </div>
                     @endunless
 
-                    @unless (empty($tags))
+                    @unless (empty($tags[0]))
                         <div class="comments">
                             <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако
                                 тегов</h3>

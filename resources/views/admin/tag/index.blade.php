@@ -6,12 +6,10 @@
     <div class="container">
         <div class="admin-panel">
             <ul>
-                <li><a href="{{route('articleCreate')}}">Создать новую статью</a></li>
-                <li><a href="{{route('articleCreateCategory')}}">Создать новую категорию</a></li>
-                <li><a href="{{route('articleCreateTag')}}">Создать новый тег</a></li>
-                <br>
-                <li><a href="{{route('articleAllCategories')}}">Все категории</a></li>
-                <li><a href="{{route('articleAllTags')}}">Все теги</a></li>
+                <li><a href="{{route('articleCreate')}}">Добавить новую статью</a></li>
+            <br>
+        <!--         <li><a href="{{route('categoryIndex')}}">Управление категориями</a></li>
+            <br> -->
             </ul>
 
             @foreach($articles as $article)
