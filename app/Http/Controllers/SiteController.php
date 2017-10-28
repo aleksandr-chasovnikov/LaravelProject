@@ -9,6 +9,8 @@ use Illuminate\View\View;
 
 class SiteController extends BaseController
 {
+    const EMPTY_IMAGE = 'upload/no-image.png';
+
     /**
      * Показывает все статьи
      *
@@ -26,6 +28,7 @@ class SiteController extends BaseController
             'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 
@@ -53,7 +56,9 @@ class SiteController extends BaseController
             'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
-            'image' => $this->showFiles($id),
+            'image' => $this->getFiles($id),
+            'comments' => $this->getComments($id),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 
@@ -77,6 +82,7 @@ class SiteController extends BaseController
             'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 
@@ -100,6 +106,7 @@ class SiteController extends BaseController
             'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 

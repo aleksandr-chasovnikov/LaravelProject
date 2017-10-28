@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Comment;
+use App\File;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -114,15 +116,32 @@ class BaseController extends Controller
     }
 
     /**
-     * Возращает файлы к статье
+     * Возращает последний файл к статье
      *
      * @param $id
      *
-     * @return Article[]|Collection
+     * @return File[] | Collection
      */
-    protected function showFiles($id)
+    protected function getFiles($id)
     {
-        return Article::find($id)->first()->files->last();
+        return Article::find($id)
+            ->first()
+            ->files
+            ->last();
+    }
+
+    /**
+     * Возращает комментарии к статье
+     *
+     * @param $id
+     *
+     * @return Comment[] | Collection
+     */
+    protected function getComments($id)
+    {
+        return Article::find($id)
+            ->first()
+            ->comments;
     }
 
 }

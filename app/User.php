@@ -7,17 +7,18 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * @property integer $id
- * @property string  $name
- * @property string  $email
- * @property string  $password
- * @property string  $role
- * @property integer $rememberTokenName
+ * @property integer   $id
+ * @property string    $name
+ * @property string    $email
+ * @property string    $password
+ * @property string    $role
+ * @property integer   $rememberTokenName
  *
- * @property integer $created_at
- * @property integer $update_at
+ * @property integer   $created_at
+ * @property integer   $update_at
  *
  * @property Article[] $articles
+ * @property File[]    $files
  */
 class User extends Authenticatable
 {
@@ -80,5 +81,23 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class, 'user_id');
     }
+
+    /**
+     * Возращает все файлы пользователя.
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'target');
+    }
+
+//    /**
+//     * Возращает аватарку пользователя.
+//     *
+//     * @return HasMany
+//     */
+//    public function avatar()
+//    {
+//        return $this->files->last();
+//    }
 
 }

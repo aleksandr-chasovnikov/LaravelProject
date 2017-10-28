@@ -27,14 +27,9 @@
                 </div>
                 <div class="form-group">
                     <label for="categories_id">Список категорий</label>
-                    <select name="categories_id" size="7" class="form-control" id="categories_id"
-                            required>
+                    <select name="categories_id" size="7" class="form-control" id="categories_id">
                         @foreach ($categories as $category)
-                            <option
-                                    @if (1 === $category->id)
-                                    selected
-                                    @endif
-                                    value="{{$category->id}}">{{$category->title}}</option>
+                            <option value="{{$category->id}}">{{$category->title}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -53,5 +48,14 @@
             </form>
         </div>
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
 @endsection

@@ -10,7 +10,6 @@ font-family: 'Open Sans', sans-serif;
  font-size: 100%;
  background: #FFf;
 }
-
 body a {
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
@@ -1917,7 +1916,7 @@ ul.bottom i {
 .copy {
     text-align: center;
    background: #252C87;
-    padding: 0.5em 0 0.5em 0;
+    padding: 1.6em 0 1.4em 0;
 }
 .copy p {
     color: #fff;

@@ -5,30 +5,20 @@
 <section>
     <div class="container">
         <div class="admin-panel">
-            <ul>
-                <li><a href="{{route('articleCreate')}}">Добавить новую статью</a></li>
-            <br>
-        <!--         <li><a href="{{route('categoryIndex')}}">Управление категориями</a></li>
-            <br> -->
-            </ul>
 
-            @foreach($articles as $article)
+            @foreach($categories as $category)
 
-                <hr>
-                <small class="pull-right">{{$article->created_at}}</small>     
-                <h2>{{ $article->title }}</h2>
-                <p>{{ $article->description }}</p>
+                <br/>
+                <h2>{{ $category->title }}</h2>
                 <p>
-                    <a class="btn btn-default" href="{{ route('articleShow',['id'=>$article->id]) }}" role="button">Подробнее &raquo;</a>
-                    <a class="btn btn-warning" href="{{ route('articleEdit',['id'=>$article->id]) }}" role="button">Редактировать</a>
-                </p>                
-                <br>            
-                <form action="{{ route('articleDelete', ['article'=>$article->id]) }}" method="post">
+                    <a class="btn btn-warning" href="{{ route('categoryEdit',['id'=>$category->id]) }}" role="button">Редактировать</a>
+                </p>
+                <form action="{{ route('categoryDelete', ['category'=>$category->id]) }}" method="post">
                     <!-- <input type="hidden" name="_method" value="DELETE"> -->
                     {{method_field('DELETE')}}
                     {{csrf_field()}}
                     <button type="submit" class="btn btn-danger">Удалить</button>
-                </form> 
+                </form>
 
             @endforeach
 
@@ -36,5 +26,9 @@
 
     </div>
 </section>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
 @endsection

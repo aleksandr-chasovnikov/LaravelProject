@@ -162,8 +162,11 @@
             <a href="{{ route('contact') }}">© Александр Часовников</a>,
             2017.
             Все права защищены.
-        <div> Блог сделан на <a href="https://laravel.com/">
-                <em>Laravel</em></a></div>
+        <div> Блог сделан на
+            <a href="https://laravel.com/">
+                <em>Laravel</em>
+            </a>
+        </div>
         </p>
     </div>
     <!--//copy-right-->

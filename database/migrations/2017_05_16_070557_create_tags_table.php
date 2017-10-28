@@ -17,6 +17,7 @@ class CreateTagsTable extends Migration
         Schema::create(Tag::TABLE_NAME, function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
+            $table->integer('popular');
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();

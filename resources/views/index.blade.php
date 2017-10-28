@@ -60,13 +60,16 @@
                                     <div class="blog-left-left wow fadeInRight animated animated"
                                          data-wow-delay=".5s">
                                         <hr>
-                                        <p>Статья от <a name="iakor"
-                                                        href="">{{$article->user->name}}</a>&nbsp;&nbsp; {{$article->created_at}}
+                                        <p>Статья от {{$article->user->name}}&nbsp;&nbsp; {{$article->created_at}}
                                             &nbsp;&nbsp;
-                                            <a href="#">(Комментариев: {{$article->comments->count()}}
-                                                )</a></p>
+                                            (Комментариев: {{$article->comments->count()}}
+                                                )</p>
                                         <a href="{{route('articleShow', ['id' => $article->id])}}">
-                                            <img src="" alt="image"/>
+                                            @unless (empty($avatar = $article->files->last()))
+                                            <img class="media-object"
+                                                 src="{{ asset('storage/app/'. $avatar) }}"
+                                                 alt="image">
+                                            @endunless
                                         </a>
                                     </div>
 
@@ -115,14 +118,18 @@
                                      data-wow-delay=".5s">
                                     <div class="col-md-3 comments-left">
                                         <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                            <img src=" " alt="image"/>
+                                            @unless (empty($avatar = $article->files->last()))
+                                                <img class="media-object"
+                                                     src="{{ asset('storage/app/'. $avatar) }}"
+                                                     alt="image">
+                                            @endunless
                                         </a>
                                     </div>
                                     <div class="col-md-9 comments-right">
                                         <a href="{{ route('articleShow', ['id' => $article->id]) }}">
                                             {{$article->title}}
                                         </a>
-                                        {{--<p>$article->getDate()</p>--}}
+                                        <p>{{  $article->created_at }}</p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -142,14 +149,18 @@
                                      data-wow-delay=".5s">
                                     <div class="col-md-3 comments-left">
                                         <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                            <img src="" alt="image"/>
+                                            @unless (empty($avatar = $article->files->last()))
+                                                <img class="media-object"
+                                                     src="{{ asset('storage/app/'. $avatar) }}"
+                                                     alt="image">
+                                            @endunless
                                         </a>
                                     </div>
                                     <div class="col-md-9 comments-right">
                                         <a href="{{ route('articleShow', ['id' => $article->id]) }}">
                                             {{ $article->title }}
                                         </a>
-                                        <p><?/*= $article->getDate() */?></p>
+                                        <p>{{  $article->created_at }}</p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
