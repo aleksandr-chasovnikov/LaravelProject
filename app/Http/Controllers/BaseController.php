@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Comment;
+use App\File;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -59,16 +61,17 @@ class BaseController extends Controller
     }
 
     /**
-     * Возращает список статей разрешенных к показу
+     * Возращает список статей, разрешенных к показу
      *
      * @param string $tagId
      * @param string $categoryId
      *
      * @return Builder
      */
-    protected function showAllArticles($tagId = null, $categoryId = null)
+    protected function allArticles($tagId = null, $categoryId = null)
     {
         $articles = Article::select()
+            ->orderBy('created_at', 'desc')
             ->where('status', true);
 
         if (!empty($categoryId)) {
@@ -91,7 +94,7 @@ class BaseController extends Controller
      *
      * @return Article[] | Collection
      */
-    protected function showRecentArticles(Builder $articles)
+    protected function recentArticles(Builder $articles)
     {
         return $articles->orderBy('created_at', 'desc')
             ->limit(3)
@@ -105,11 +108,40 @@ class BaseController extends Controller
      *
      * @return Article[] | Collection
      */
-    protected function showPopularArticles(Builder $articles)
+    protected function popularArticles(Builder $articles)
     {
         return $articles->orderBy('viewed', 'desc')
             ->limit(3)
             ->get();
+    }
+
+    /**
+     * Возращает последний файл к статье
+     *
+     * @param $id
+     *
+     * @return File[] | Collection
+     */
+    protected function getFiles($id)
+    {
+        return Article::find($id)
+            ->first()
+            ->files
+            ->last();
+    }
+
+    /**
+     * Возращает комментарии к статье
+     *
+     * @param $id
+     *
+     * @return Comment[] | Collection
+     */
+    protected function getComments($id)
+    {
+        return Article::find($id)
+            ->first()
+            ->comments;
     }
 
 }

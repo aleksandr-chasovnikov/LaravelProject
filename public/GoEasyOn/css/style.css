@@ -10,7 +10,6 @@ font-family: 'Open Sans', sans-serif;
  font-size: 100%;
  background: #FFf;
 }
-
 body a {
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
@@ -33,11 +32,11 @@ input[type="button"],input[type="submit"],li.parallelogram{
 	-ms-transition:0.5s all;
 }
 h1,h2,h3,h4,h5,h6{
-   margin:0;		
+   margin:0;
    /* font-family: 'Playfair Display', serif; */
    font-weight:400;
 
-}	
+}
 p {
     margin: 0;
    /* font-family: 'Playfair Display', serif; */
@@ -87,7 +86,7 @@ h1.main-title a:hover{
     width: 100%;
     height: 65px;
     /* background:#3EAABF; */
-    background:#2530BF;
+    background:#4F71A1;
     position: fixed;
     display: none;
     top: 0px;
@@ -401,7 +400,7 @@ a.buy {
 	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s, background-color 0.3s;
 	transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 	-moz-transition: -moz-transform 0.3s, opacity 0.3s, background-color 0.3s;
-	
+
 }
 .btn-wayra:hover {
 	color: #fff;
@@ -589,7 +588,7 @@ figure.effect-ming:hover img {
 	font-size:1em;
 	text-transform:uppercase;
 	font-weight:600;
-} 
+}
 .staff1 p{
 	color: #777;
 	font-size: 0.85em;
@@ -614,7 +613,7 @@ figure.effect-ming:hover img {
 }
  .staff2 h3 a:hover{
 	color: #2530BF;
-	 text-decoration:none;	
+	 text-decoration:none;
 }
 .staff2 p {
     color: #777;
@@ -628,7 +627,7 @@ ul.s_social{
 	padding:0;
 	list-style:none;
 	text-align:Center;
-	
+
 }
 ul.s_social li{
 	display:inline-block;
@@ -870,7 +869,7 @@ figure.effect-jazz:hover p {
 .portfolio-modal .modal-content img {
        margin: 0 auto;
 }
-.portfolio-modal .modal-content p {	
+.portfolio-modal .modal-content p {
     font-size: 0.9em;
     padding: 20px 0;
     color: #fff;
@@ -935,8 +934,8 @@ a.play {
     line-height: 3em;
 	color: #fff;
 }
-a.play :focus{ 
- outline:noe
+a.play :focus{
+ outline:none;
 
 }
 .modal-body.about iframe {
@@ -1078,7 +1077,7 @@ textarea {
 p.para1{
     color: #737171;
     line-height: 1.8em;
-	
+
 }
 address {
     width: 100%;
@@ -1104,7 +1103,7 @@ address  a:hover {
 }
 .more-address{
     padding: 1em 0;
-} 
+}
 abbr[title], abbr[data-original-title] {
     cursor: help;
     border-bottom: none!important;
@@ -1275,7 +1274,7 @@ h1.title a{
 }
 .pic img {
     border-radius: 50%;
-	-webkit- border-radius: 50%;
+	-webkit-border-radius: 50%;
 	-o-border-radius: 50%;
 	-moz-border-radius: 50%;
     width: 20%;
@@ -1319,8 +1318,8 @@ h1.title a{
 }
 .tab-content {
 	padding: 15px;
-	padding-top: 0px; 
-	padding-left: 0px; 
+	padding-top: 0px;
+	padding-left: 0px;
 	padding-bottom: 0px;
 	border-top: none;
 }
@@ -1383,7 +1382,7 @@ h1.title a{
 .grid_4{
 	background:#fff;
 	padding:0em 0em 0em 0em;
-}  
+}
 .grid_5{
 	background:#fff;
 	padding:1em 0 2em 0;
@@ -1899,7 +1898,7 @@ ul.bottom i {
 }
 .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
     color:#2530BF;
-    background-color: none;
+    background-color: transparent;
     border-color: #ddd;
 }
 .pagination > li > a, .pagination > li > span {
@@ -1934,14 +1933,14 @@ ul.bottom i {
 #toTop {
   text-decoration: none;
   position: fixed;
-  bottom: 50px;
+  bottom: 95px;
   right: 15px;
   overflow: hidden;
-  width: 40px;
-  height: 22px;
+  width: 49px;
+  height: 87px;
   border: none;
   text-indent: 100%;
-  background: url(../images/move-top.png) no-repeat 0px 0px;
+  background: url(../images/top3.png) no-repeat 0px 0px;
 }
 /*--responsive--*/
 @media (max-width:1440px){
@@ -2800,7 +2799,7 @@ ul.bottom i {
 	.comments-right {
 		padding: 0;
 		margin-top: 1.8em;
-	}	
+	}
 	.grid.slideanim {
 		float: left;
 		width: 57%;

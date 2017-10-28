@@ -18,7 +18,7 @@ class AdminCategoryController extends BaseController
         self::checkAdmin();
 
         //TODO Не сделаны вьюхи
-        return view('admin/index')->with([
+        return view('admin.category.index')->with([
             'categories' => self::showCategories(),
         ]);
     }
@@ -30,7 +30,9 @@ class AdminCategoryController extends BaseController
     {
         self::checkAdmin();
 
-        return view('admin/create');
+        return view('admin.category.create')->with([
+            'categories' => self::showCategories(),
+        ]);
     }
 
     /**
@@ -40,22 +42,35 @@ class AdminCategoryController extends BaseController
      */
     public function store(Request $request)
     {
-//        self::checkAdmin();
-//
-//        $this->validate($request, [
-//            'title' => 'required|max:255',
-//            'alias' => 'required|unique:articles,alias',
-//            'text' => 'required',
-//        ]);
-//
-//        $data = $request->all();
-//
-//        $article = new Article;
-//        $article->fill($data);
-//
-//        $article->save();
-//
-//        return redirect('admin/index');
+        self::checkAdmin();
+
+        Category::create($request->all());
+
+        return view('admin.category.create')->with([
+            'categories' => self::showCategories(),
+            'message' => 'Категория успешно создана.',
+        ]);
+    }
+
+    /**
+     * Выводит форму для редактирования статьи
+     *
+     * GET /admin/article/edit/{id}
+     *
+     * @var int $id
+     *
+     * @return View | HttpException
+     */
+    public function edit($id)
+    {
+        self::checkAdmin();
+
+        $article = Article::find($id)->first();
+
+        return view('admin/update')->with([
+            'article' => $article,
+            'categories' => $this->showCategories(),
+        ]);
     }
 
     /**
@@ -70,7 +85,7 @@ class AdminCategoryController extends BaseController
         $category = (new Category)->find($id)
             ->first();
 
-        return view('admin/update')->with([
+        return view('admin.category.update')->with([
             'article' => $category
         ]);
     }
@@ -86,7 +101,7 @@ class AdminCategoryController extends BaseController
 //
 //        $category = Category::find($id);
 //
-//        return view('admin/update')->with([
+//        return view('admin.category.update')->with([
 //            'article' => $category
 //        ]);
     }

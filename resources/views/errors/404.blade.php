@@ -8,7 +8,7 @@
   <h2 class="headline text-yellow"> 404</h2>
 
   <div class="error-content">
-    <h3><i class="fa fa-warning text-yellow"></i> Упс! {{ class_basename($exception->getPrevious() ? : $exception) }}</h3>
+    <h3><i class="fa fa-warning text-yellow"></i> Нет такой страницы! {{ class_basename($exception->getPrevious() ? : $exception) }}</h3>
 
     <p>{{ $exception->getPrevious() ? $exception->getPrevious()->getMessage() : $exception->getMessage() }}</p>
 
@@ -16,4 +16,32 @@
   <!-- /.error-content -->
 </div>
 <!-- /.error-page -->
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
 @endsection

@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property User[]    $user
  * @property Comment[] $comments
  * @property Tag[]     $tags
+ * @property File[]    $files
  */
 class Article extends BaseModel
 {

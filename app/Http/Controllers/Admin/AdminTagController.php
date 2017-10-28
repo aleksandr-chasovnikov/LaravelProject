@@ -2,36 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\File;
 use App\Http\Controllers\BaseController;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use App\Article;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Comment;
+use App\Tag;
 
-class AdminArticleController extends BaseController
+class AdminTagController extends BaseController
 {
-    /**
-     * Показывает все статьи в админ панели
-     *
-     * GET /admin/article/index
-     *
-     * @return View | HttpException
-     */
-    public function index()
-    {
-        self::checkAdmin();
+	/**
+	 * Показать все теги
+	 */
+     public function index()
+     {
+         self::checkAdmin();
 
-        $articles = $this->allArticles()->get();
+         $tags = Tag::select()
+             ->orderBy('title')
+             ->get();
 
-        return view('admin/index')->with([
-            'articles' => $articles,
-            'categories' => $this->showCategories(),
-        ]);
-    }
+         return view('admin/index')->with([
+                     'tags' => $tags
+         ]);
+     }
 
     /**
      * Выводит форму для создания статьи
@@ -44,9 +35,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        return view('admin/create')->with([
-            'categories' => $this->showCategories(),
-        ]);
+        return view('admin/tag/create');
     }
 
     /**
@@ -139,54 +128,5 @@ class AdminArticleController extends BaseController
 
         return redirect()->back();
     }
-
-    /**
-     * Загружает файл
-     *
-     * @param Request $request
-     *
-     * @return false|string
-     */
-    public function uploadFile(Request $request)
-    {
-        self::checkAdmin();
-
-        $path = $request->file('file')
-            ->store('upload');
-
-        Article::find($request->id)
-            ->first()
-            ->files()
-            ->save(new File([
-                'path' => $path,
-            ]));
-
-        //TODO пересмотреть метод
-//        if ($request->hasFile('file')) {
-//            try{
-//                $filename = $request->file;
-//
-//                /**
-//                 * @var ?
-//                 */
-//                $request->file->move('uploads', $filename->getClientOriginalName());
-//            } catch (\Exception $exception) {
-//                echo 'Не удалось загрузить файл!';
-//            }
-//
-//        } else {
-//            return redirect()->back()
-//                ->with('message', 'Ошибка!');
-//        }
-//
-//        Article::find($request->id)
-//            ->first()
-//            ->files()
-//            ->save(new File([
-//                'path' => $request->file,
-//            ]));
-
-        return redirect()->back()
-            ->with('message', 'Готово!');
-    }
 }
+

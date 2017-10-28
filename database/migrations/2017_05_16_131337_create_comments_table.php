@@ -22,7 +22,7 @@ class CreateCommentsTable extends Migration
             $table->integer('user_id')/*->unsigned()*/;
 //            $table->foreign('user_id')->references('id')->on(User::TABLE_NAME);
             $table->text('content');
-            $table->integer('level');
+            $table->integer('level')->default(0); // Для создания дерева комментариев
             $table->boolean('status')->default(true);
             $table->timestamps();
             $table->softDeletes();

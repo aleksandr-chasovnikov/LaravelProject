@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
 use App\Category;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
@@ -10,26 +9,33 @@ use Illuminate\View\View;
 
 class SiteController extends BaseController
 {
+    const EMPTY_IMAGE = 'upload/no-image.png';
+
     /**
      * Показывает все статьи
+     *
+     * GET /
      *
      * @return View
      */
     public function index()
     {
-        $articles = $this->showAllArticles();
+        $articles = $this->allArticles();
 
         return view('index')->with([
             'articles' => $articles->paginate(self::PAGINATE),
-            'popular' => $this->showPopularArticles($articles),
-            'recent' => $this->showRecentArticles($articles),
+            'popular' => $this->popularArticles($articles),
+            'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 
     /**
      * Показывает одну статью
+     *
+     * GET /article.{id}
      *
      * @param $id
      *
@@ -40,16 +46,19 @@ class SiteController extends BaseController
         /**
          * @var Builder $articles
          */
-        $articles = $this->showAllArticles();
+        $articles = $this->allArticles();
 
-        $article = $articles->where('id', $id)->first();
+        $article = $this->allArticles()->where('id', $id)->first();
 
         return view('article')->with([
             'article' => $article,
-            'popular' => $this->showPopularArticles($articles),
-            'recent' => $this->showRecentArticles($articles),
+            'popular' => $this->popularArticles($articles),
+            'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'image' => $this->getFiles($id),
+            'comments' => $this->getComments($id),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 
@@ -64,15 +73,16 @@ class SiteController extends BaseController
     {
         $category = (new Category)->find($categoryId)->first(['title']);
 
-        $articles = $this->showAllArticles(null, $categoryId);
+        $articles = $this->allArticles(null, $categoryId);
 
         return view('index')->with([
             'articles' => $articles->paginate(self::PAGINATE),
             'category' => $category,
-            'popular' => $this->showPopularArticles($articles),
-            'recent' => $this->showRecentArticles($articles),
+            'popular' => $this->popularArticles($articles),
+            'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 
@@ -87,15 +97,16 @@ class SiteController extends BaseController
     {
         $tag = (new Tag)->find($tagId)->first(['title']);
 
-        $articles = $this->showAllArticles($tagId);
+        $articles = $this->allArticles($tagId);
 
         return view('index')->with([
             'articles' => $articles->paginate(self::PAGINATE),
             'tag' => $tag,
-            'popular' => $this->showPopularArticles($articles),
-            'recent' => $this->showRecentArticles($articles),
+            'popular' => $this->popularArticles($articles),
+            'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
+            'empty' => self::EMPTY_IMAGE,
         ]);
     }
 

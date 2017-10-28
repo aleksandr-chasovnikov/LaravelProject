@@ -49,7 +49,7 @@
                             </li>
                             <li class="m_nav_item" id="moble_nav_item_2">
                                 <a href="{{ route('contact') }}" class="link link--kumya scroll">
-                                    <span data-letters="О проекте">О проекте</span>
+                                    <span data-letters="О проекте">Контакты</span>
                                 </a>
                             </li>
 
@@ -99,154 +99,174 @@
             </div>
         </div>
     </div>
-
-    {{--@unless (empty($errors->all()))--}}
-
-        {{--<div class="alert alert-danger">--}}
-            {{--<ul>--}}
-
-                {{--@foreach($errors->all() as $error)--}}
-                    {{--<li>{{ $error }}</li>--}}
-                {{--@endforeach--}}
-
-            {{--</ul>--}}
-        {{--</div>--}}
-
-    {{--@endunless--}}
-
-    @yield('content')
-
-    @if ( !empty($comments) )
-        <div class="comments">
-            <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
-                комментарии</h3>
-
-            @foreach ($comments as $comment)
-                <div class="comments-text wow fadeInLeft animated animated"
-                     data-wow-delay=".5s">
-                    <div class="col-md-3 comments-left">
-                        <img src="images/t3.jpg" alt=""/>
-                    </div>
-                    <div class="col-md-9 comments-right">
-                        <h5>Admin</h5>
-                        <a href="#">Phasellus sem leointerdum risus</a>
-                        <p>March 16,2014 6:09:pm</p>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-            @endforeach
+    @unless (empty($articles))
+        <div id="large-header" class="large-header">
+            {{--<canvas id="demo-canvas"></canvas>--}}
+            <h1 class="main-title"><a class="link link--takiri" href="#iakor">BeOnTopic<span
+                            class="wow fadeInUp animated animated" data-wow-delay=".5s">Будь в теме! (&copy;)</span></a>
+            </h1>
 
         </div>
+    @endunless
+
+</div>
+@unless (empty($errors->all()))
+
+    <div class="alert alert-danger">
+        <ul>
+
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+
+        </ul>
+    </div>
+
+@endunless
+
+@yield('content')
+
+@if ( !empty($comments) )
+    <div class="comments">
+        <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
+            комментарии</h3>
+
+        @foreach ($comments as $comment)
+            <div class="comments-text wow fadeInLeft animated animated"
+                 data-wow-delay=".5s">
+                <div class="col-md-3 comments-left">
+                    <img src="images/t3.jpg" alt=""/>
+                </div>
+                <div class="col-md-9 comments-right">
+                    <h5>Admin</h5>
+                    <a href="#">Phasellus sem leointerdum risus</a>
+                    <p>March 16,2014 6:09:pm</p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        @endforeach
+
+    </div>
     @endif
 
 
-</div>
-<div class="clearfix"></div>
-</div>
-<!-- //blog -->
-<!--//end-inner-content-->
+    </div>
+    <div class="clearfix"></div>
 
-<!--copy-right-->
-<div class="copy">
-    <p class="wow fadeInUp animated animated" data-wow-delay=".5s">&copy; 2016 Go Easy On . All
-        Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
-</div>
-<!--//copy-right-->
-<!--//footer-->
-<a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
-                                                                         style="opacity: 1;"> </span></a>
-<!--/script-->
-<script src="{{ asset('GoEasyOn/js/jquery-2.1.4.min.js') }}"></script>
-<script src="{{ asset('GoEasyOn/js/modernizr.custom.js') }}"></script>
-<script type="text/javascript" src="{{ asset('GoEasyOn/js/menu.js') }}"></script>
-<script type="text/javascript" src="{{ asset('GoEasyOn/js/jquery.magnific-popup.js') }}"></script>
-<link href="{{ asset('GoEasyOn/css/magnific-popup.css') }}" rel="stylesheet" type="text/css">
-<script>
-    $(document).ready(function () {
-        $('.popup-with-zoom-anim').magnificPopup({
-            type: 'inline',
-            fixedContentPos: false,
-            fixedBgPos: true,
-            overflowY: 'auto',
-            closeBtnInside: true,
-            preloader: false,
-            midClick: true,
-            removalDelay: 300,
-            mainClass: 'my-mfp-zoom-in'
+    <!-- //blog -->
+    <!--//end-inner-content-->
+
+    <!--copy-right-->
+    <div class="copy">
+        <p class="wow fadeInUp animated animated" data-wow-delay=".5s">
+            <a href="{{ route('contact') }}">© Александр Часовников</a>,
+            2017.
+            Все права защищены.
+        <div> Блог сделан на
+            <a href="https://laravel.com/">
+                <em>Laravel</em>
+            </a>
+        </div>
+        </p>
+    </div>
+    <!--//copy-right-->
+    <!--//footer-->
+    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
+                                                                             style="opacity: 1;"> </span></a>
+    <!--/script-->
+    <script src="{{ asset('GoEasyOn/js/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('GoEasyOn/js/modernizr.custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('GoEasyOn/js/menu.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('GoEasyOn/js/jquery.magnific-popup.js') }}"></script>
+    <link href="{{ asset('GoEasyOn/css/magnific-popup.css') }}" rel="stylesheet" type="text/css">
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
         });
-    });
-</script>
-<!--animate-->
-<link href="{{ asset('GoEasyOn/css/animate.css') }}" rel="stylesheet" type="text/css" media="all">
-<script src="{{ asset('GoEasyOn/js/wow.min.js') }}"></script>
-<script>
-    new WOW().init();
-</script>
-<!--//end-animate-->
-<!-- menu -->
-<script type="text/javascript" src="{{ asset('GoEasyOn/js/main.js') }}"></script>
-<!-- //menu -->
-<script src="{{ asset('GoEasyOn/js/rAF.js') }}"></script>
-<script src="{{ asset('GoEasyOn/js/demo-2.js') }}"></script>
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    </script>
+    <!--animate-->
+    <link href="{{ asset('GoEasyOn/css/animate.css') }}" rel="stylesheet" type="text/css"
+          media="all">
+    <script src="{{ asset('GoEasyOn/js/wow.min.js') }}"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <!--//end-animate-->
+    <!-- menu -->
+    <script type="text/javascript" src="{{ asset('GoEasyOn/js/main.js') }}"></script>
+    <!-- //menu -->
+    <script src="{{ asset('GoEasyOn/js/rAF.js') }}"></script>
+    <script src="{{ asset('GoEasyOn/js/demo-2.js') }}"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-48014931-1', 'codyhouse.co');
-    ga('send', 'pageview');
+        ga('create', 'UA-48014931-1', 'codyhouse.co');
+        ga('send', 'pageview');
 
-    jQuery(document).ready(function ($) {
-        $('.close-carbon-adv').on('click', function (event) {
-            event.preventDefault();
-            $('#carbonads-container').hide();
+        jQuery(document).ready(function ($) {
+            $('.close-carbon-adv').on('click', function (event) {
+                event.preventDefault();
+                $('#carbonads-container').hide();
+            });
+            var domain = 'http://codyhouse.co/demo/stretchy-navigation/';
+            $('.cd-demo-settings').on('change', function () {
+                var animation = $('#selectAnimation').find("option:selected").val(),
+                    newFile = animation + '.html';
+                window.location.href = domain + newFile;
+            });
         });
-        var domain = 'http://codyhouse.co/demo/stretchy-navigation/';
-        $('.cd-demo-settings').on('change', function () {
-            var animation = $('#selectAnimation').find("option:selected").val(),
-                newFile = animation + '.html';
-            window.location.href = domain + newFile;
+    </script>
+    <!-- gallery Modals -->
+    <script type="text/javascript" src="{{ asset('GoEasyOn/js/move-top.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('GoEasyOn/js/easing.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({scrollTop: $(this.hash).offset().top}, 900);
+            });
         });
-    });
-</script>
-<!-- gallery Modals -->
-<script type="text/javascript" src="{{ asset('GoEasyOn/js/move-top.js') }}"></script>
-<script type="text/javascript" src="{{ asset('GoEasyOn/js/easing.js') }}"></script>
-<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $(".scroll").click(function (event) {
-            event.preventDefault();
-            $('html,body').animate({scrollTop: $(this.hash).offset().top}, 900);
+    </script>
+    <!--start-smooth-scrolling-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                  containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed:1000,
+                easingType: 'linear'
+             };
+            */
+
+            $().UItoTop({easingType: 'easeOutQuart'});
+
         });
-    });
-</script>
-<!--start-smooth-scrolling-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        /*
-        var defaults = {
-              containerID: 'toTop', // fading element id
-            containerHoverID: 'toTopHover', // fading element hover id
-            scrollSpeed:1000,
-            easingType: 'linear'
-         };
-        */
-
-        $().UItoTop({easingType: 'easeOutQuart'});
-
-    });
-</script>
-<!-- for bootstrap working -->
-<script src="{{ asset('GoEasyOn/js/bootstrap.js') }}"></script>
-<!-- //for bootstrap working -->
+    </script>
+    <!-- for bootstrap working -->
+    <script src="{{ asset('GoEasyOn/js/bootstrap.js') }}"></script>
+    <!-- //for bootstrap working -->
 
 
 </body>
