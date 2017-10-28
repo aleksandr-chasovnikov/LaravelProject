@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <?php $faker = Faker\Factory::create();?>
+    <?php /*$faker = Faker\Factory::create();*/?>
 
     <div class="container">
         <div class="row">
@@ -13,21 +13,21 @@
                 </div>
             @endif
 
-            <form action="{{ route('articleStore') }}" method="post" role="form"
+            <form action="{{ route('categoryStore') }}" method="post" role="form"
                   enctype="multipart/form-data">
-                <h2>Создать статью</h2>
+                <h2>Создать категорию</h2>
                 <br>
                 <p>Поля, обозначенные звёздочкой (&#10033;), обязательны для заполнения.</p>
                 <br>
 
                 <div class="form-group">
-                    <label for="title">Заголовок</label>&nbsp;&#10033;
+                    <label for="title">Название категории</label>&nbsp;&#10033;
                     <input name="title" type="text" class="form-control" id="title" required
-                           value="{{$faker->text(50)}}">
+                           {{--value="{{$faker->text(50)}}"--}}>
                 </div>
                 <div class="form-group">
-                    <label for="categories_id">Категория</label>&nbsp;&#10033;
-                    <select name="categories_id" size="3" class="form-control" id="categories_id"
+                    <label for="categories_id">Список категорий</label>
+                    <select name="categories_id" size="7" class="form-control" id="categories_id"
                             required>
                         @foreach ($categories as $category)
                             <option
@@ -38,25 +38,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="file">Загрузить файл</label><!--&nbsp;&#10033;
-                    <input type="hidden" name="MAX_FILE_SIZE" value="500000"/> -->
-                    <input name="file" type="file" class="form-control" id="file">
-                </div>
-                <div class="form-group">
-                    <label for="description">Краткое описание</label>&nbsp;&#10033;
-                    <textarea name="description" class="form-control" id="description"
-                              required>{{$faker->text(200)}}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="content">Полный текст</label>&nbsp;&#10033;
-                    <textarea name="content" class="form-control" id="content" required
-                    >{{$faker->text(2000)}}</textarea>
-                </div>
-                <div class="form-group">
-                    <input name="user_id" type="hidden" class="form-control" id="user_id"
-                           value="{{Auth::user()->id}}">
-                </div>
+
                 <div class="form-group">
                     <label for="status">Показывать?</label>
                     <select name="status" id="status">
@@ -64,20 +46,6 @@
                         <option value="0">Нет</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="meta_desc">Мета: описание</label>
-                    <input name="meta_desc" type="text" class="form-control" id="meta_desc"
-                           value="{{$faker->text(50)}}">
-                </div>
-                <div class="form-group">
-                    <label for="keywords">Мета: ключевые слова</label>
-                    <input name="keywords" type="text" class="form-control" id="keywords"
-                           value="{{$faker->text(50)}}">
-                </div>
-            <!-- 	<div class="form-group">
-				<label for="created_at">Дата создания</label>
-				<input name="created_at" type="text" class="form-control" id="created_at" value="{{date('Y-m-d')}}">
-			</div> -->
 
                 <button type="submit" class="btn btn-primary">Сохранить</button>
 

@@ -30,7 +30,9 @@ class AdminCategoryController extends BaseController
     {
         self::checkAdmin();
 
-        return view('admin/create');
+        return view('admin/create')->with([
+            'categories' => self::showCategories(),
+        ]);
     }
 
     /**

@@ -7,11 +7,11 @@
         <div class="admin-panel">
             <ul>
                 <li><a href="{{route('articleCreate')}}">Создать новую статью</a></li>
-                <li><a href="{{route('articleCreateCategory')}}">Создать новую категорию</a></li>
-                <li><a href="{{route('articleCreateTag')}}">Создать новый тег</a></li>
+                <li><a href="{{route('categoryCreate')}}">Создать новую категорию</a></li>
+                {{--<li><a href="{{route('createTag')}}">Создать новый тег</a></li>--}}
                 <br>
-                <li><a href="{{route('articleAllCategories')}}">Все категории</a></li>
-                <li><a href="{{route('articleAllTags')}}">Все теги</a></li>
+                {{--<li><a href="{{route('articleAllCategories')}}">Все категории</a></li>--}}
+                {{--<li><a href="{{route('articleAllTags')}}">Все теги</a></li>--}}
             </ul>
 
             @foreach($articles as $article)

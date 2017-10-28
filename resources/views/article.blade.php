@@ -114,7 +114,7 @@
                                     <a
                                             name="com">Оставьте свой комментарий</a></h3>
 
-                                //TODO здесь работа с сессией
+                                {{--//TODO здесь работа с сессией--}}
 
                                 <form action="{{ route('commentStore') }}"
                                       class="wow fadeInRight animated animated" method="post"

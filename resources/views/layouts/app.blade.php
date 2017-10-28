@@ -49,7 +49,7 @@
                             </li>
                             <li class="m_nav_item" id="moble_nav_item_2">
                                 <a href="{{ route('contact') }}" class="link link--kumya scroll">
-                                    <span data-letters="О проекте">О проекте</span>
+                                    <span data-letters="О проекте">Контакты</span>
                                 </a>
                             </li>
 
@@ -112,15 +112,15 @@
 </div>
 @unless (empty($errors->all()))
 
-<div class="alert alert-danger">
-<ul>
+    <div class="alert alert-danger">
+        <ul>
 
-@foreach($errors->all() as $error)
-<li>{{ $error }}</li>
-@endforeach
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
 
-</ul>
-</div>
+        </ul>
+    </div>
 
 @endunless
 
@@ -152,14 +152,19 @@
 
     </div>
     <div class="clearfix"></div>
-    </div>
+
     <!-- //blog -->
     <!--//end-inner-content-->
 
     <!--copy-right-->
     <div class="copy">
-        <p class="wow fadeInUp animated animated" data-wow-delay=".5s">&copy; 2016 Go Easy On . All
-            Rights Reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+        <p class="wow fadeInUp animated animated" data-wow-delay=".5s">
+            <a href="{{ route('contact') }}">© Александр Часовников</a>,
+            2017.
+            Все права защищены.
+        <div> Блог сделан на <a href="https://laravel.com/">
+                <em>Laravel</em></a></div>
+        </p>
     </div>
     <!--//copy-right-->
     <!--//footer-->
