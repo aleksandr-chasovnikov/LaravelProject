@@ -83,8 +83,10 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('create', 'Admin\AdminCategoryController@create')->name('categoryCreate');
         Route::get('update.{id}', 'Admin\AdminCategoryController@edit')->name('categoryEdit');
         Route::get('update', 'Admin\AdminCategoryController@update')->name('categoryUpdate');
-        Route::get('delete.{category}', 'Admin\AdminCategoryController@delete')
-            ->name('categoryDelete');
+        Route::delete('category.{category}', 'Admin\AdminCategoryController@destroy')->name('categoryDelete');
+        Route::get('category.restore.{category}', 'Admin\AdminCategoryController@restore')
+            ->name('categoryRestore');
+
     });
 });
 

@@ -2957,3 +2957,9 @@ ul.bottom i {
   background: #E92A2A;
   transform: rotate(-45deg);
 }
+.admin-panel table td{
+    border: 1px solid black;
+    min-width: 25px;
+    text-align: center;
+    padding: 4px;
+}

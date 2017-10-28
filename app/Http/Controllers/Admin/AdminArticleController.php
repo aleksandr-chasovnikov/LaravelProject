@@ -7,8 +7,6 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Article;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -78,7 +76,7 @@ class AdminArticleController extends BaseController
     /**
      * Выводит форму для редактирования статьи
      *
-     * GET /admin/article/edit/{id}
+     * GET /admin/article/update/{id}
      *
      * @var int $id
      *
