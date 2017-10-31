@@ -36,15 +36,20 @@
                         </h3>
                         <ul>
 
-                            @foreach($categories as $category)
-                                @if ($category->articles->count())
-                                <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-                                    <a href="{{route('showByCategory', ['id' => $category->id])}}">{{ $category->title }}</a>
-                                    <span class="post-count pull-right">({{ $category->articles->count() }}
-                                        )</span>
-                                </li>
-                                @endif
-                            @endforeach
+                            @if (!empty($categories))
+                                @foreach($categories as $category)
+
+                                    @unless (empty($articleCount = $category->articles->count()))
+                                        <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
+                                            <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
+                                            <span class="post-count pull-right">
+                                        ({{$articleCount}})
+                                    </span>
+                                        </li>
+                                    @endunless
+
+                                @endforeach
+                            @endif
 
                         </ul>
                     </div>

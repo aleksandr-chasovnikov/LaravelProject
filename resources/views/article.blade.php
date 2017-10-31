@@ -200,14 +200,14 @@
                         @if (!empty($categories))
                             @foreach($categories as $category)
 
+                                @unless (empty($articleCount = $category->articles->count()))
                                 <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
                                     <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
-                                    @unless (empty($articleAll = $category->articles))
                                         <span class="post-count pull-right">
-                                        ({{$articleAll->count()}})
+                                        ({{$articleCount}})
                                     </span>
-                                    @endunless
                                 </li>
+                                @endunless
 
                             @endforeach
                         @endif
