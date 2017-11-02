@@ -4,6 +4,8 @@ namespace App;
 
 use App\Presenters\DatePresenter;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * @property integer   $id
@@ -62,6 +64,8 @@ class Article extends BaseModel
 
     /**
      * Возращает все комментарии статьи.
+     *
+     * @return MorphMany
      */
     public function comments()
     {
@@ -70,6 +74,8 @@ class Article extends BaseModel
 
     /**
      * Возращает все файлы к статье.
+     *
+     * @return MorphMany
      */
     public function files()
     {
@@ -78,6 +84,8 @@ class Article extends BaseModel
 
     /**
      * Возращает категорию данной статьи.
+     *
+     * @return BelongsTo
      */
     public function category()
     {
@@ -86,6 +94,8 @@ class Article extends BaseModel
 
     /**
      * Возращает тэги статьи.
+     *
+     * @return BelongsToMany
      */
     public function tags()
     {

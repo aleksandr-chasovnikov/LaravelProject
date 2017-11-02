@@ -133,15 +133,13 @@ class BaseController extends Controller
     /**
      * Возращает комментарии к статье
      *
-     * @param $id
+     * @param $articleId
      *
      * @return Comment[] | Collection
      */
-    protected function getComments($id)
+    protected function getComments($articleId)
     {
-        return Article::find($id)
-            ->first()
-            ->comments;
+        return Article::find($articleId)->comments;
     }
 
 }

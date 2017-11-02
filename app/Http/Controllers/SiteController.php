@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Category;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,14 +42,19 @@ class SiteController extends BaseController
      *
      * @return $this
      */
-    public function show($id)
+    public function show($articleId)
     {
         /**
          * @var Builder $articles
          */
         $articles = $this->allArticles();
 
-        $article = $this->allArticles()->where('id', $id)->first();
+        /**
+         * @var Article $article
+         */
+        $article = $this->allArticles()->where('id', $articleId)->first();
+        $article->viewed += 1;
+        $article->save();
 
         return view('article')->with([
             'article' => $article,
@@ -56,8 +62,8 @@ class SiteController extends BaseController
             'recent' => $this->recentArticles($articles),
             'categories' => $this->showCategories(),
             'tags' => $this->showTags(),
-            'image' => $this->getFiles($id),
-            'comments' => $this->getComments($id),
+            'image' => $this->getFiles($articleId),
+            'comments' => $this->getComments($articleId),
             'empty' => self::EMPTY_IMAGE,
         ]);
     }
