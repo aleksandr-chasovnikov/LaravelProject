@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\File;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -138,53 +137,4 @@ class AdminArticleController extends BaseController
         return redirect()->back();
     }
 
-    /**
-     * Загружает файл
-     *
-     * @param Request $request
-     *
-     * @return false|string
-     */
-    public function uploadFile(Request $request)
-    {
-        self::checkAdmin();
-
-        $path = $request->file('file')
-            ->store('upload');
-
-        Article::find($request->id)
-            ->first()
-            ->files()
-            ->save(new File([
-                'path' => $path,
-            ]));
-
-        //TODO пересмотреть метод
-//        if ($request->hasFile('file')) {
-//            try{
-//                $filename = $request->file;
-//
-//                /**
-//                 * @var ?
-//                 */
-//                $request->file->move('uploads', $filename->getClientOriginalName());
-//            } catch (\Exception $exception) {
-//                echo 'Не удалось загрузить файл!';
-//            }
-//
-//        } else {
-//            return redirect()->back()
-//                ->with('message', 'Ошибка!');
-//        }
-//
-//        Article::find($request->id)
-//            ->first()
-//            ->files()
-//            ->save(new File([
-//                'path' => $request->file,
-//            ]));
-
-        return redirect()->back()
-            ->with('message', 'Готово!');
-    }
 }

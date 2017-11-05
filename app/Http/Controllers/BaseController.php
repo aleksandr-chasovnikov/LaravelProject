@@ -120,7 +120,7 @@ class BaseController extends Controller
      *
      * @param $id
      *
-     * @return File[] | Collection
+     * @return File[]
      */
     protected function getFiles($id)
     {

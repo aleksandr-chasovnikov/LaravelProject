@@ -150,7 +150,7 @@
 
                                 @if (Auth::check() && isAdmin())
                                     <form class="form-horizontal" role="form" method="POST"
-                                          action="{{ route('upload') }}"
+                                          action="{{ route('file.store') }}"
                                           enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <div class="form-group">
@@ -168,20 +168,11 @@
                                         </div>
                                     </form>
                                     <hr>
-                                    <form class="form-horizontal" role="form" method="POST"
-                                          action="{{ route('upload') }}"
-                                          enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <div class="form-group">
-                                            <label for="file" class="col-md-4 control-label">Удалить
-                                                изображение</label>
-                                            <div class="col-md-6">
-                                                <input name="id" type="hidden" class="form-control"
-                                                       value="{{$article->id}}">
-                                                <button type="submit" class="btn btn-info">Удалить
-                                                </button>
-                                            </div>
-                                        </div>
+                                    <form action="{{ route('file.destroy', ['article'=>$article->id]) }}" method="post">
+                                        <!-- <input type="hidden" name="_method" value="DELETE"> -->
+                                        {{method_field('DELETE')}}
+                                        {{csrf_field()}}
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
                                     </form>
                             @endif
                         </div>
