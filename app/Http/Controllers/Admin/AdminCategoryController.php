@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Category;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdminCategoryController extends BaseController
 {
@@ -17,9 +19,13 @@ class AdminCategoryController extends BaseController
     {
         self::checkAdmin();
 
+        $categories = Category::withTrashed()
+            ->orderBy('id')
+            ->get();
+
         //TODO Не сделаны вьюхи
         return view('admin.category.index')->with([
-            'categories' => self::showCategories(),
+            'categories' => $categories,
         ]);
     }
 
@@ -36,6 +42,10 @@ class AdminCategoryController extends BaseController
     }
 
     /**
+     * Сохраняет категорию и выводит форму с сообщением об успешной операции
+     *
+     * POST /admin/article/store
+     *
      * @param Request $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -55,7 +65,7 @@ class AdminCategoryController extends BaseController
     /**
      * Выводит форму для редактирования статьи
      *
-     * GET /admin/article/edit/{id}
+     * GET /admin/category/update/{id}
      *
      * @var int $id
      *
@@ -65,15 +75,19 @@ class AdminCategoryController extends BaseController
     {
         self::checkAdmin();
 
-        $article = Article::find($id)->first();
+        $article = Category::find($id)->first();
 
-        return view('admin/update')->with([
+        return view('admin.category.update')->with([
             'article' => $article,
             'categories' => $this->showCategories(),
         ]);
     }
 
     /**
+     * Редактирует категорию
+     *
+     * POST /admin/category/update
+     *
      * @param $id
      *
      * @return $this
@@ -86,24 +100,50 @@ class AdminCategoryController extends BaseController
             ->first();
 
         return view('admin.category.update')->with([
-            'article' => $category
+            'article' => $category,
+            'categories' => $this->showCategories(),
         ]);
     }
 
     /**
+     * Удаляет категорию
+     *
+     * DELETE /admin/category/delete/{id}
+     *
      * @param $id
      *
-     * @return $this
+     * @return RedirectResponse | HttpException
      */
-    public function delete($id)
+    public function destroy($id)
     {
-//        self::checkAdmin();
-//
-//        $category = Category::find($id);
-//
-//        return view('admin.category.update')->with([
-//            'article' => $category
-//        ]);
+        self::checkAdmin();
+
+        Category::find($id)
+            ->first()
+            ->delete();
+
+        return redirect()->back();
+    }
+
+
+    /**
+     * Удаляет категорию
+     *
+     * GET /admin/category/restore/{id}
+     *
+     * @param $id
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function restore($id)
+    {
+        self::checkAdmin();
+
+        Category::withTrashed()
+            ->where('id', $id)
+            ->restore();
+
+        return redirect()->back();
     }
 
 }

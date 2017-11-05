@@ -62,8 +62,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
         Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
         Route::delete('delete.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
-
-        Route::post('upload', 'Admin\AdminArticleController@uploadFile')->name('upload');
     });
 
     Route::group(['prefix' => 'tag'], function() {
@@ -83,9 +81,26 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('create', 'Admin\AdminCategoryController@create')->name('categoryCreate');
         Route::get('update.{id}', 'Admin\AdminCategoryController@edit')->name('categoryEdit');
         Route::get('update', 'Admin\AdminCategoryController@update')->name('categoryUpdate');
-        Route::get('delete.{category}', 'Admin\AdminCategoryController@delete')
+        Route::delete('category.{category}', 'Admin\AdminCategoryController@destroy')
             ->name('categoryDelete');
+        Route::get('category.restore.{category}', 'Admin\AdminCategoryController@restore')
+            ->name('categoryRestore');
     });
+
+    Route::resource('file', 'Admin\AdminFileController', [
+        'only' => [
+            'store',
+            'update',
+            'destroy',
+        ],
+        [
+            'names' => [
+                'store' => 'file.store',
+                'update' => 'file.update',
+                'destroy' => 'file.destroy',
+            ]
+        ]
+    ]);
 });
 
 // ======== END AdminPanel =======================

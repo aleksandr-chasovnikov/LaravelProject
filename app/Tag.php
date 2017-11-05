@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property integer   $id
@@ -35,9 +35,11 @@ class Tag extends BaseModel
     protected $guarded = [];
 
     /**
-     * Роли, принадлежащие пользователю.
+     * Статьи, принадлежащие тегу.
+     *
+     * @return BelongsToMany
      */
-    public function roles()
+    public function articles()
     {
         return $this->belongsToMany(
             Article::class,

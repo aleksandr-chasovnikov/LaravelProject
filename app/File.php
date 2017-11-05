@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property integer $id
@@ -37,6 +38,8 @@ class File extends BaseModel
 
     /**
      * Получить все модели, обладающие target.
+     *
+     * @return MorphTo
      */
     public function target()
     {

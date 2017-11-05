@@ -60,12 +60,10 @@ class CommentController extends BaseController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'content' => 'required'
+            'content' => 'required',
         ]);
-//        dd($request);
 
-        Article::find($request->input('article_id'))
-            ->first()
+        Article::find($request->input('target_id'))
             ->comments()
             ->save(new Comment([
                 'content' => $request->input('content'),

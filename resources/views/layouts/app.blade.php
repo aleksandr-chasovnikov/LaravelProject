@@ -126,31 +126,6 @@
 
 @yield('content')
 
-@if ( !empty($comments) )
-    <div class="comments">
-        <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Последние
-            комментарии</h3>
-
-        @foreach ($comments as $comment)
-            <div class="comments-text wow fadeInLeft animated animated"
-                 data-wow-delay=".5s">
-                <div class="col-md-3 comments-left">
-                    <img src="images/t3.jpg" alt=""/>
-                </div>
-                <div class="col-md-9 comments-right">
-                    <h5>Admin</h5>
-                    <a href="#">Phasellus sem leointerdum risus</a>
-                    <p>March 16,2014 6:09:pm</p>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        @endforeach
-
-    </div>
-    @endif
-
-
-    </div>
     <div class="clearfix"></div>
 
     <!-- //blog -->

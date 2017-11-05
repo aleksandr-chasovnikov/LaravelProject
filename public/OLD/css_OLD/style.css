@@ -156,6 +156,10 @@ html {
 .admin-panel {
   margin-left: 120px;
 }
+.admin-panel table td{
+  border: 4px double black;
+  min-width: 25px;
+}
 
 h3, h2 {
   font-size: 1.5rem;
