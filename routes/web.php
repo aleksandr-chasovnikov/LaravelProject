@@ -75,8 +75,12 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('create', 'Admin\AdminTagController@store')->name('tagStore');
         Route::get('create', 'Admin\AdminTagController@create')->name('tagCreate');
         Route::get('update.{id}', 'Admin\AdminTagController@edit')->name('tagEdit');
-        Route::post('update', 'Admin\AdminTagController@update')->name('tagUpdate');
+        Route::any('update', 'Admin\AdminTagController@update')->name('tagUpdate');
         Route::delete('delete.{id}', 'Admin\AdminTagController@destroy')->name('tagDelete');
+        Route::get('restore.{tag}', 'Admin\AdminTagController@restore')
+            ->name('tagRestore');
+        Route::get('status.{tag}', 'Admin\AdminTagController@statusChange')
+            ->name('tagStatusChange');
     });
 
     Route::group(['prefix' => 'category'], function() {
@@ -90,6 +94,8 @@ Route::group(['prefix' => 'admin'], function() {
             ->name('categoryDelete');
         Route::get('category.restore.{category}', 'Admin\AdminCategoryController@restore')
             ->name('categoryRestore');
+        Route::get('status.{category}', 'Admin\AdminCategoryController@statusChange')
+            ->name('categoryStatusChange');
     });
 
     Route::resource('file', 'Admin\AdminFileController', [

@@ -3,45 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use App\Comment;
 use App\Tag;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdminTagController extends BaseController
 {
-	/**
-	 * Показать все теги
-	 */
-     public function index()
-     {
-         self::checkAdmin();
-
-         $tags = Tag::select()
-             ->orderBy('title')
-             ->get();
-
-         return view('admin/index')->with([
-                     'tags' => $tags
-         ]);
-     }
-
     /**
-     * Выводит форму для создания статьи
-     *
-     * GET /admin/article/create
-     *
-     * @return View | HttpException
+     * Показать все теги
      */
-    public function create()
+    public function index()
     {
         self::checkAdmin();
 
-        return view('admin/tag/create');
+        $tags = Tag::select()
+            ->orderBy('id', 'desc')
+            ->withTrashed()
+            ->get();
+
+        return view('admin/tag/index')->with([
+            'tags' => $tags
+        ]);
     }
 
     /**
-     * Сохраняет статью и выводит форму с сообщением об успешной операции
+     * Сохраняет тег
      *
-     * POST /admin/article/store
+     * POST /admin/tag/store
      *
      * @param Request $request
      *
@@ -53,42 +43,17 @@ class AdminTagController extends BaseController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-            'content' => 'required',
         ]);
 
-        Article::create($request->all());
+        Tag::create($request->all());
 
-        return view('admin/create')->with([
-            'categories' => $this->showCategories(),
-            'message' => 'Статья успешно создана.',
-        ]);
+        return redirect()->back();
     }
 
     /**
-     * Выводит форму для редактирования статьи
+     * Редактирует тег
      *
-     * GET /admin/article/edit/{id}
-     *
-     * @var int $id
-     *
-     * @return View | HttpException
-     */
-    public function edit($id)
-    {
-        self::checkAdmin();
-
-        $article = Article::find($id)->first();
-
-        return view('admin/update')->with([
-            'article' => $article,
-            'categories' => $this->showCategories(),
-        ]);
-    }
-
-    /**
-     * Редактирует статью
-     *
-     * POST /admin/article/update
+     * POST /admin/tag/update
      *
      * @param Request $request
      *
@@ -100,19 +65,18 @@ class AdminTagController extends BaseController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-            'content' => 'required',
         ]);
 
-        Article::find($request->id)
+        Tag::find($request->id)
             ->update($request->all());
 
         return redirect()->back();
     }
 
     /**
-     * Удаляет статью
+     * Удаляет тег
      *
-     * DELETE /admin/article/delete/{id}
+     * DELETE /admin/tag/delete/{id}
      *
      * @param $id
      *
@@ -122,9 +86,27 @@ class AdminTagController extends BaseController
     {
         self::checkAdmin();
 
-        Article::find($id)
-            ->first()
-            ->delete();
+        Tag::find($id)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Восстанавливает тег
+     *
+     * GET /admin/tag/restore/{tag}
+     *
+     * @param $id
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function restore($id)
+    {
+        self::checkAdmin();
+
+        Tag::withTrashed()
+            ->where('id', $id)
+            ->restore();
 
         return redirect()->back();
     }

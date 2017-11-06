@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Article;
@@ -23,7 +22,8 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $articles = $this->allArticles()
+        $articles = Article::select()
+            ->orderBy('created_at', 'desc')
             ->withTrashed()
             ->get();
 

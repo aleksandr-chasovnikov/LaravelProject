@@ -12,6 +12,7 @@
                     <br/>
                     <li><a class="link" href="{{route('categoryIndex')}}">Все категории</a></li>
                     <li><a class="link" href="{{route('tagIndex')}}">Все теги</a></li>
+                    <br/>
                 </ul>
 
                 @yield('inner_content')
