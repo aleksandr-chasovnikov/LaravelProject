@@ -127,7 +127,7 @@ class AdminCategoryController extends BaseController
 
 
     /**
-     * Удаляет категорию
+     * Восстанавливает категорию
      *
      * GET /admin/category/restore/{id}
      *

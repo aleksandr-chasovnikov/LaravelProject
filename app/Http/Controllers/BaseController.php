@@ -9,6 +9,8 @@ use App\File;
 use App\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BaseController extends Controller
@@ -142,4 +144,24 @@ class BaseController extends Controller
         return Article::find($articleId)->comments;
     }
 
+    /**
+     * Изменить статус модели
+     *
+     * @param Model $model
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function changeStatus(Model $model)
+    {
+        self::checkAdmin();
+
+        if ($model->status) {
+            $model->status = false;
+        } else {
+            $model->status = true;
+        }
+        $model->save();
+
+        return redirect()->back();
+    }
 }

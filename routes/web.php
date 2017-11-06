@@ -38,6 +38,7 @@
 Route::get('contact', function() {
     return view('contact');
 })->name('contact');
+
 Route::post('contact.mail', 'ContactController@contactMail')->name('contactMail');
 
 // Articles
@@ -62,6 +63,10 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
         Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
         Route::delete('delete.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+        Route::get('restore.{article}', 'Admin\AdminArticleController@restore')
+            ->name('articleRestore');
+        Route::get('status.{article}', 'Admin\AdminArticleController@statusChange')
+            ->name('articleStatusChange');
     });
 
     Route::group(['prefix' => 'tag'], function() {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Article;
@@ -22,7 +23,9 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $articles = $this->allArticles()->get();
+        $articles = $this->allArticles()
+            ->withTrashed()
+            ->get();
 
         return view('admin/index')->with([
             'articles' => $articles,
@@ -130,9 +133,27 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        Article::find($id)
-            ->first()
-            ->delete();
+        Article::find($id)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Восстанавливает категорию
+     *
+     * GET /admin/category/restore/{id}
+     *
+     * @param $id
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function restore($id)
+    {
+        self::checkAdmin();
+
+        Article::withTrashed()
+            ->where('id', $id)
+            ->restore();
 
         return redirect()->back();
     }
