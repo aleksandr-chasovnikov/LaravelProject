@@ -18,12 +18,11 @@ class AdminTagController extends BaseController
     {
         self::checkAdmin();
 
-        $tags = Tag::select()
+        $tags = Tag::withTrashed()
             ->orderBy('id', 'desc')
-            ->withTrashed()
             ->get();
 
-        return view('admin/tag/index')->with([
+        return view('admin.tag.index')->with([
             'tags' => $tags
         ]);
     }
@@ -35,7 +34,7 @@ class AdminTagController extends BaseController
      *
      * @param Request $request
      *
-     * @return $this | HttpException
+     * @return RedirectResponse | HttpException
      */
     public function store(Request $request)
     {

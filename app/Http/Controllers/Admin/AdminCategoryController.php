@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Category;
+use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -20,7 +21,7 @@ class AdminCategoryController extends BaseController
         self::checkAdmin();
 
         $categories = Category::withTrashed()
-            ->orderBy('id')
+            ->orderBy('id', 'desc')
             ->get();
 
         //TODO Не сделаны вьюхи
@@ -30,57 +31,25 @@ class AdminCategoryController extends BaseController
     }
 
     /**
-     * @return View
-     */
-    public function create()
-    {
-        self::checkAdmin();
-
-        return view('admin.category.create')->with([
-            'categories' => self::showCategories(),
-        ]);
-    }
-
-    /**
-     * Сохраняет категорию и выводит форму с сообщением об успешной операции
+     * Сохраняет категорию
      *
-     * POST /admin/article/store
+     * POST /admin/category/store
      *
      * @param Request $request
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return RedirectResponse | HttpException
      */
     public function store(Request $request)
     {
         self::checkAdmin();
 
+        $this->validate($request, [
+            'title' => 'required|max:255',
+        ]);
+
         Category::create($request->all());
 
-        return view('admin.category.create')->with([
-            'categories' => self::showCategories(),
-            'message' => 'Категория успешно создана.',
-        ]);
-    }
-
-    /**
-     * Выводит форму для редактирования статьи
-     *
-     * GET /admin/category/update/{id}
-     *
-     * @var int $id
-     *
-     * @return View | HttpException
-     */
-    public function edit($id)
-    {
-        self::checkAdmin();
-
-        $article = Category::find($id)->first();
-
-        return view('admin.category.update')->with([
-            'article' => $article,
-            'categories' => $this->showCategories(),
-        ]);
+        return redirect()->back();
     }
 
     /**
@@ -88,21 +57,22 @@ class AdminCategoryController extends BaseController
      *
      * POST /admin/category/update
      *
-     * @param $id
+     * @param Request $request
      *
-     * @return $this
+     * @return RedirectResponse | HttpException
      */
-    public function update($id)
+    public function update(Request $request)
     {
         self::checkAdmin();
 
-        $category = (new Category)->find($id)
-            ->first();
-
-        return view('admin.category.update')->with([
-            'article' => $category,
-            'categories' => $this->showCategories(),
+        $this->validate($request, [
+            'title' => 'required|max:255',
         ]);
+
+        Category::find($request->id)
+            ->update($request->all());
+
+        return redirect()->back();
     }
 
     /**
@@ -118,9 +88,7 @@ class AdminCategoryController extends BaseController
     {
         self::checkAdmin();
 
-        Category::find($id)
-            ->first()
-            ->delete();
+        Category::find($id)->delete();
 
         return redirect()->back();
     }

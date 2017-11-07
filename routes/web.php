@@ -48,8 +48,9 @@ Route::get('category.{categoryId}', 'SiteController@showByCategory')->name('show
 Route::get('tag.{tagId}', 'SiteController@showByTag')->name('showByTag');
 
 // Comments
-Route::get('comment{id}', 'CommentController@show')->name('commentShow');
-Route::post('article', 'CommentController@store')->name('commentStore');
+Route::get('comment.index', 'CommentController@index')->name('commentIndex');
+Route::get('comment.{id}', 'CommentController@show')->name('commentShow');
+Route::post('comment.create', 'CommentController@store')->name('commentStore');
 Route::delete('delete.{comment}', 'CommentController@delete')->name('commentDelete');
 
 // ======== AdminPanel =========================
@@ -89,7 +90,7 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('create', 'Admin\AdminCategoryController@store')->name('categoryStore');
         Route::get('create', 'Admin\AdminCategoryController@create')->name('categoryCreate');
         Route::get('update.{id}', 'Admin\AdminCategoryController@edit')->name('categoryEdit');
-        Route::get('update', 'Admin\AdminCategoryController@update')->name('categoryUpdate');
+        Route::any('update', 'Admin\AdminCategoryController@update')->name('categoryUpdate');
         Route::delete('category.{category}', 'Admin\AdminCategoryController@destroy')
             ->name('categoryDelete');
         Route::get('category.restore.{category}', 'Admin\AdminCategoryController@restore')

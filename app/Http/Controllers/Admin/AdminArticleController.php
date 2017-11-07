@@ -27,7 +27,7 @@ class AdminArticleController extends BaseController
             ->withTrashed()
             ->get();
 
-        return view('admin/index')->with([
+        return view('admin.index')->with([
             'articles' => $articles,
             'categories' => $this->showCategories(),
         ]);
@@ -44,7 +44,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        return view('admin/create')->with([
+        return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
         ]);
     }
@@ -69,7 +69,7 @@ class AdminArticleController extends BaseController
 
         Article::create($request->all());
 
-        return view('admin/create')->with([
+        return view('admin.create')->with([
             'categories' => $this->showCategories(),
             'message' => 'Статья успешно создана.',
         ]);
@@ -90,7 +90,7 @@ class AdminArticleController extends BaseController
 
         $article = Article::find($id)->first();
 
-        return view('admin/update')->with([
+        return view('admin.update')->with([
             'article' => $article,
             'categories' => $this->showCategories(),
         ]);

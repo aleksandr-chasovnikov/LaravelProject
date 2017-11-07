@@ -11,19 +11,19 @@ class CommentController extends BaseController
     /**
      * Показать все комментарии
      */
-    // public function index()
-    // {
-    //     // Проверка доступа
-    //     self::checkAdmin();
+     public function index()
+     {
+         // Проверка доступа
+         self::checkAdmin();
 
-    //     $articles = Comment::select(['id', 'title', 'description'])->get();
+         $articles = Comment::select(['id', 'title', 'description'])->get();
 
-    //     // dump($articles);
+         // dump($articles);
 
-    //     return view('admin/index')->with([
-    //                 'articles' => $articles
-    //     ]);
-    // }
+         return view('admin/index')->with([
+                     'articles' => $articles
+         ]);
+     }
 
     /**
      * Редактировать комментарий
