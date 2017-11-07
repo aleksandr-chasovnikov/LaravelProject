@@ -51,7 +51,10 @@ Route::get('tag.{tagId}', 'SiteController@showByTag')->name('showByTag');
 Route::get('comment.index', 'CommentController@index')->name('commentIndex');
 Route::get('comment.{id}', 'CommentController@show')->name('commentShow');
 Route::post('comment.create', 'CommentController@store')->name('commentStore');
+Route::post('comment.update', 'CommentController@update')->name('commentUpdate');
 Route::delete('delete.{comment}', 'CommentController@delete')->name('commentDelete');
+Route::get('restore.{comment}', 'CommentController@restore')->name('commentRestore');
+Route::get('comment.status.{comment}', 'CommentController@statusChange')->name('commentStatusChange');
 
 // ======== AdminPanel =========================
 Route::group(['prefix' => 'admin'], function() {

@@ -5,50 +5,37 @@ namespace App\Http\Controllers;
 use App\Article;
 use Illuminate\Http\Request;
 use App\Comment;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CommentController extends BaseController
 {
     /**
      * Показать все комментарии
+     *
+     * GET /admin/comment/index
+     *
+     * @return View | HttpException
      */
      public function index()
      {
-         // Проверка доступа
          self::checkAdmin();
 
-         $articles = Comment::select(['id', 'title', 'description'])->get();
+         $comments = Comment::withTrashed()
+             ->orderBy('created_at', 'desc')
+             ->get();
 
-         // dump($articles);
+         foreach ($comments as $c) {
+             echo '<pre style="background: #0d6aad;color: #ffffff;">';
+             var_dump($c->target);
+             die('<pre>');
+         }
 
-         return view('admin/index')->with([
-                     'articles' => $articles
+         return view('admin.comment.index')->with([
+             'comments' => $comments,
          ]);
      }
-
-    /**
-     * Редактировать комментарий
-     *
-     * @param $id
-     *
-     * @return $this
-     */
-    public function update($id)
-    {
-//        self::checkAdmin();
-//TODO Доделать редактирование комментов
-        $comment = (new Comment)->select([
-            'id',
-            'title',
-            'text'
-        ])
-            ->where('id', $id)
-            ->where('status', true)
-            ->first();
-
-        return view('admin/update')->with([
-            'article' => $comment
-        ]);
-    }
 
     /**
      * Сохранить комментарий
@@ -70,7 +57,24 @@ class CommentController extends BaseController
                 'user_id' => $request->input('user_id'),
             ]));
 
-//        Comment::create($request->all());
+        return redirect()->back();
+    }
+
+    /**
+     * Редактировать комментарий
+     *
+     * @param Request $request
+     *
+     * @return $this
+     */
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'content' => 'required|max:255',
+        ]);
+
+        Comment::find($request->id)
+            ->update($request->all());
 
         return redirect()->back();
     }
@@ -78,17 +82,38 @@ class CommentController extends BaseController
     /**
      * Удалить комментарий
      *
+     * DELETE /admin/comment/delete/{id}
+     *
      * @param $commentId
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse | HttpException
      */
     public function delete($commentId)
     {
-        Comment::where('id', $commentId)
-            ->first()
-            ->delete();
+        Comment::find($commentId)->delete();
 
         return redirect()->back();
     }
+
+    /**
+     * Восстанавливает комментарий
+     *
+     * GET /admin/comment/restore/{id}
+     *
+     * @param $id
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function restore($id)
+    {
+        self::checkAdmin();
+
+        Comment::withTrashed()
+            ->where('id', $id)
+            ->restore();
+
+        return redirect()->back();
+    }
+
 }
 

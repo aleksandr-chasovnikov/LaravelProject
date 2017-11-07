@@ -56,6 +56,6 @@ class Comment extends BaseModel
      */
     public function target()
     {
-        return $this->morphTo();
+//        return $this->belongsTo($this->target_type);
     }
 }

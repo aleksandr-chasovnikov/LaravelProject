@@ -22,9 +22,8 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $articles = Article::select()
+        $articles = Article::withTrashed()
             ->orderBy('created_at', 'desc')
-            ->withTrashed()
             ->get();
 
         return view('admin.index')->with([
