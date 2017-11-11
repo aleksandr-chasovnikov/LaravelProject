@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Presenters\DatePresenter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -19,8 +20,9 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * @property integer   $categories_id
  * @property boolean   $status
  *
- * @property integer   $created_at
- * @property integer   $update_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
+ * @property Carbon   $deleted_at
  *
  * @property User[]    $user
  * @property Comment[] $comments
@@ -43,7 +45,11 @@ class Article extends BaseModel
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * Атрибуты, для которых запрещено массовое назначение.

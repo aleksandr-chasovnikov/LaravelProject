@@ -77,7 +77,7 @@ class AdminArticleController extends BaseController
     /**
      * Выводит форму для редактирования статьи
      *
-     * GET /admin/article/update/{id}
+     * GET /admin/article/update.{id}
      *
      * @var int $id
      *
@@ -87,9 +87,11 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $article = Article::find($id);
+        $article = Article::withTrashed()
+            ->where('id', $id)
+            ->first();
 
-        return view('admin.update')->with([
+        return view('admin.article.update')->with([
             'article' => $article,
             'categories' => $this->showCategories(),
         ]);
@@ -110,10 +112,10 @@ class AdminArticleController extends BaseController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-            'content' => 'required',
         ]);
 
-        Article::find($request->id)
+        Article::withTrashed()
+            ->where('id', $request->id)
             ->update($request->all());
 
         return redirect()->back();

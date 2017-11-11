@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('admin.admin_layout')
 
-@section('content')
+@section('inner_content')
 
     <div class="container">
         <div class="row">

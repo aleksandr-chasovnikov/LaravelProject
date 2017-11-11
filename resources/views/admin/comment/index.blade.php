@@ -5,10 +5,10 @@
     <table class="admin-panel">
         <thead>
         <tr>
-            <td>ID</td>
-            <td style="min-width: 500px;">Текст</td>
+            <td style="min-width: 50px;">ID</td>
+            <td style="min-width: 200px;">Текст</td>
             <td>target_id</td>
-            <td style="min-width: 150px;">target_type</td>
+            <td style="min-width: 120px;">target_type</td>
             <td>user_id</td>
             <td>user_name</td>
             <td>Статус</td>
@@ -33,8 +33,8 @@
                                value="{{$comment->id}}"
                                disabled>
                     </td>
-                    <td><textarea name="content" class="form-control"
-                                  id="content" required>{{ $comment->content }}</textarea></td>
+                    <td><input name="content" class="form-control"
+                               id="content" value="{{ $comment->content }}" required></td>
                     <td><input name="target_id" type="text" class="form-control" id="target_id"
                                value="{{ $comment->target_id }}" required></td>
                     <td><input name="target_type" type="text" class="form-control" id="target_type"

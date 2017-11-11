@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('admin.admin_layout')
 
-@section('content')
+@section('inner_content')
 
     <?php $faker = Faker\Factory::create();?>
 

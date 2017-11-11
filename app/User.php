@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,8 +15,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string    $role
  * @property integer   $rememberTokenName
  *
- * @property integer   $created_at
- * @property integer   $update_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
+ * @property Carbon   $deleted_at
  *
  * @property Article[] $articles
  * @property File[]    $files
@@ -38,7 +40,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * The attributes that are mass assignable.

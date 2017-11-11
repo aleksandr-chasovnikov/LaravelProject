@@ -20,19 +20,21 @@
 
         @foreach($articles as $article)
 
-            <tr>
+            <tr @if ($article->deleted_at)
+                style="background-color: #e4b9b9;"
+                @elseif (!$article->status)
+                style="background-color: #9B859D;"
+                    @endif>
                 <td>{{ $article->id }}</td>
                 <td>{{ $article->title }}</td>
                 <td>
-                    <a class="btn btn-warning"
-                       href="{{ route('articleStatusChange',['article'=>$article]) }}"
-                       role="button">
-                        @if ($article->status)
-                            Скрыть
-                        @elseif (!is_bool($article->status))
-                            Показать
-                        @endif
-                    </a>
+                    @if ($article->deleted_at)
+                        Удалено
+                    @elseif ($article->status)
+                        Видно
+                    @else
+                        Скрыто
+                    @endif
                 </td>
                 <td style="max-width:70px;">
                     @unless (empty($avatar = $article->files->last()))
