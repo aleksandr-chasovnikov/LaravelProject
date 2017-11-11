@@ -87,7 +87,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $article = Article::find($id)->first();
+        $article = Article::find($id);
 
         return view('admin.update')->with([
             'article' => $article,

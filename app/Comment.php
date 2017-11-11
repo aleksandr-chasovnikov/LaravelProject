@@ -51,11 +51,4 @@ class Comment extends BaseModel
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Получить все модели, обладающие target.
-     */
-    public function target()
-    {
-//        return $this->belongsTo($this->target_type);
-    }
 }

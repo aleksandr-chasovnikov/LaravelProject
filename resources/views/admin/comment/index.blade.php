@@ -6,14 +6,13 @@
         <thead>
         <tr>
             <td>ID</td>
-            <td>Контент</td>
+            <td style="min-width: 500px;">Текст</td>
             <td>target_id</td>
-            <td>target_type</td>
-            <td>target_type->title</td>
+            <td style="min-width: 150px;">target_type</td>
             <td>user_id</td>
             <td>user_name</td>
             <td>Статус</td>
-            <td></td>
+            <td>Создано</td>
             <td></td>
             <td></td>
             <td>Удалено</td>
@@ -34,19 +33,12 @@
                                value="{{$comment->id}}"
                                disabled>
                     </td>
-                    <td><input name="content" type="text" class="form-control" id="content"
-                               value="{{ $comment->content }}" required></td>
+                    <td><textarea name="content" class="form-control"
+                                  id="content" required>{{ $comment->content }}</textarea></td>
                     <td><input name="target_id" type="text" class="form-control" id="target_id"
                                value="{{ $comment->target_id }}" required></td>
                     <td><input name="target_type" type="text" class="form-control" id="target_type"
                                value="{{ $comment->target_type }}" required></td>
-                    <td>
-                        <a href="
-                        @if ('App\Article' === $comment->target)
-                        {{ route('articleEdit', ['id' => $comment->target->id]) }}
-                        @endif
-                                ">{{ $comment->target->title }}</a>
-                    </td>
                     <td><input name="user_id" type="text" class="form-control" id="user_id"
                                value="{{ $comment->user->id }}" required></td>
                     <td>{{ $comment->user->name }}</td>

@@ -26,12 +26,6 @@ class CommentController extends BaseController
              ->orderBy('created_at', 'desc')
              ->get();
 
-         foreach ($comments as $c) {
-             echo '<pre style="background: #0d6aad;color: #ffffff;">';
-             var_dump($c->target);
-             die('<pre>');
-         }
-
          return view('admin.comment.index')->with([
              'comments' => $comments,
          ]);
