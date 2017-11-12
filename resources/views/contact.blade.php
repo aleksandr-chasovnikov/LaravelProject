@@ -45,8 +45,8 @@
                                            class="col-md-4 control-label">Сообщение</label>
 
                                     <div class="col-md-6">
-                                        <textarea name="message" id="mess" rows="10"
-                                                  required> {{ old('email') }} </textarea>
+                                        <textarea style="border-color: #2e3436;" name="message" id="mess" rows="10"
+                                                  required> {{ old('mess') }} </textarea>
 
                                         @if ($errors->has('mess'))
                                             <span class="help-block">

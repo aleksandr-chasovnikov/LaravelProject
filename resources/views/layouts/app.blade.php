@@ -135,7 +135,11 @@
     <div class="copy">
         <p class="wow fadeInUp animated animated" data-wow-delay=".5s">
             <a href="{{ route('contact') }}">© Александр Часовников</a>,
-            2017.
+            2017
+            @if (date('Y', time()) > 2017)
+                - {!! date('Y', time()) !!}
+            @endif
+            .
             Все права защищены.
         <div> Блог сделан на
             <a href="https://laravel.com/">
@@ -245,8 +249,8 @@
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
     <script>
-        $('textarea').ckeditor();
-        // $('.textarea').ckeditor(); // if class is prefered.
+//        $('textarea').ckeditor();
+         $('.textarea').ckeditor(); // if class is prefered.
     </script>
 
 </body>
