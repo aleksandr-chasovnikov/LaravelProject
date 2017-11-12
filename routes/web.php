@@ -39,7 +39,7 @@ Route::get('contact', function() {
     return view('contact');
 })->name('contact');
 
-Route::post('contact.mail', 'ContactController@contactMail')->name('contactMail');
+Route::post('contact.mail', 'ContactController@sendMail')->name('sendMail');
 
 // Articles
 Route::get('/', ['as' => 'index', 'uses' => 'SiteController@index']);

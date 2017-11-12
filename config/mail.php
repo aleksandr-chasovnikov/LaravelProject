@@ -120,4 +120,9 @@ return [
         ],
     ],
 
+    'to' => [
+        'address' => env('ADMIN_EMAIL'),
+        'name' => env('APP_NAME'),
+    ],
+
 ];

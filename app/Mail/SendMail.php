@@ -40,7 +40,7 @@ class SendMail extends Mailable
     {
         return $this->view('contact')
             ->with([
-                'user_email' => $this->userEmail,
+                'email' => $this->userEmail,
                 'message' => $this->message,
             ]);
     }

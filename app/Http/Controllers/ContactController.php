@@ -2,35 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SendMailFromContactEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends BaseController
 {
     /**
      * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function contactMail(Request $request)
+    public function sendMail(Request $request)
     {
-//        define('MY_EMAIL', 'aleksandr.chasovnikov@gmail.com');
-//
-//        $receiver = MY_EMAIL;
-//
-//        $email = trim($_POST['email']);
-//        $message = trim($_POST['message']);
-//        $text = "Email: $email \r\nMessage: $message";
-//        $title = 'Новая заявка';
-//
-//        mail($receiver, $title, $text, "Content-type: text/plain; charset=\"utf-8\"\r\nFrom: $receiver");
-//
 
+        $this->validate($request, [
+            'email' => 'required|email',
+            'message' => 'required|string|min:10|max:1000',
+        ]);
 
-        $userEmail = $request->input('email');
-        $message = $request->input('message');
+        $text = 'Сообщение из '
+            . config('app.name')
+            . '. От пользователя: '
+            . $request->input('email')
+            . ': '
+            . $request->input('message');
+        
+        $c = Mail::raw($text, function ($message) {
+//            $message->to(config('app.admin_email'));
+        });
+        
+        echo '<pre style="background: #0d6aad;color: #ffffff;">';
+        var_dump($c);
+        die('<pre>');
 
-        event(new SendMailFromContactEvent($userEmail, $message));
-
-        return view('contact')->with(['success' => 'Сообщение отправлено!']);
+        return redirect()->back()->with(['success' => 'Сообщение отправлено!']);
     }
 
 }

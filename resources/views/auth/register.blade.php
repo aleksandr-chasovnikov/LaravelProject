@@ -20,12 +20,12 @@
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name"
-                                           value="{{ old('name') }}" required autofocus>
+                                           value="{{ old('name') }}" required @if ($errors->has('name')) autofocus @endif>
 
                                     @if ($errors->has('name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                        <div class="help-block">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -35,12 +35,12 @@
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}" required>
+                                           value="{{ old('email') }}"  @if ($errors->has('email')) autofocus @endif required>
 
                                     @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                        <div class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -50,12 +50,12 @@
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control"
-                                           name="password" required>
+                                           name="password" required @if ($errors->has('name')) autofocus @endif>
 
                                     @if ($errors->has('password'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                        <div class="help-block">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </div>
                                     @endif
                                 </div>
                             </div>
