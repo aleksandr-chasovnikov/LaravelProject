@@ -34,7 +34,7 @@
                             <div class="blog-left-bottom wow fadeInRight animated animated"
                                  data-wow-delay=".5s">
                                 <p>
-                                    {{ $article->content }}
+                                    {!!  $article->content !!}
                                 </p>
                             </div>
 
@@ -52,21 +52,23 @@
                                         <div class="media response-info">
                                             <div class="media-left response-text-left wow fadeInRight animated animated"
                                                  data-wow-delay=".5s">
-                                                @if (!empty($avatar = $article->files->last()))
-                                                    <img class="media-object"
-                                                         src="{{ asset('storage/app/'. $avatar) }}"
-                                                         alt="image">
-                                                @else
-                                                    <img class="media-object"
-                                                         src="{{ asset('storage/app/'. $empty) }}"
-                                                         alt="image">
-                                                @endif
-                                                <h5>{{$comment->user->name}}</h5>
+                                                    {{--@if (!empty($avatar = $comment->user->files->last()))--}}
+                                                        {{--<img style="max-width: 70px" class="media-object"--}}
+                                                             {{--src="{{ asset('storage/app/'. $avatar->path) }}"--}}
+                                                             {{--alt="image">--}}
+                                                    {{--@else--}}
+                                                        {{--<img style="max-width: 70px" class="media-object"--}}
+                                                             {{--src="{{ asset('storage/app/'. $empty) }}"--}}
+                                                             {{--alt="image">--}}
+                                                    {{--@endif--}}
+                                                <h5>{{$comment->user->name}}:</h5>
                                             </div>
 
                                             <div class="media-body response-text-right">
                                                 <p class="wow fadeInRight animated animated"
-                                                   data-wow-delay=".5s">{{$comment->content}}</p>
+                                                   data-wow-delay=".5s">
+                                                    {{$comment->content}}
+                                                </p>
                                                 <ul class="wow fadeInRight animated animated"
                                                     data-wow-delay=".5s">
                                                     <li>{{$comment->created_at}}</li>
@@ -229,7 +231,7 @@
                                     <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
                                         @if (!empty($avatar = $pop->files->last()))
                                             <img class="media-object"
-                                                 src="{{ asset('storage/app/'. $avatar) }}"
+                                                 src="{{ asset('storage/app/'. $avatar->path) }}"
                                                  alt="image">
                                         @else
                                             <img class="media-object"
@@ -263,7 +265,7 @@
                                     <a href="{{ route('articleShow', ['id' => $rec->id]) }}">
                                         @if (!empty($avatar = $rec->files->last()))
                                             <img class="media-object"
-                                                 src="{{ asset('storage/app/'. $avatar) }}"
+                                                 src="{{ asset('storage/app/'. $avatar->path) }}"
                                                  alt="image">
                                         @else
                                             <img class="media-object"

@@ -74,7 +74,7 @@
                                         <a href="{{route('articleShow', ['id' => $article->id])}}">
                                             @unless (empty($avatar = $article->files->last()))
                                                 <img class="media-object"
-                                                     src="{{ asset('storage/app/'. $avatar) }}"
+                                                     src="{{ asset('storage/app/'. $avatar->path) }}"
                                                      alt="image">
                                             @endunless
                                         </a>
@@ -127,7 +127,7 @@
                                         <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
                                             @if (!empty($avatar = $pop->files->last()))
                                                 <img class="media-object"
-                                                     src="{{ asset('storage/app/'. $avatar) }}"
+                                                     src="{{ asset('storage/app/'. $avatar->path) }}"
                                                      alt="image">
                                             @else
                                                 <img class="media-object"

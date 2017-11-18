@@ -8,7 +8,7 @@
                     <td>ID</td>
                     <td>Заголовок</td>
                     <td>Статус</td>
-                    <td></td>
+                    <td>Кол-во статей</td>
                     <td></td>
                     <td></td>
                     <td>Удалено</td>
@@ -67,7 +67,7 @@
                                     </option>
                                 </select>
                             </td>
-                            <td>{{ $category->created_at }}</td>
+                            <td>{{ $category->articles->count() }}</td>
                             <td>
                                 <button type="submit" class="btn btn-warning">Сохранить изменения</button>
                                 {{ csrf_field() }}

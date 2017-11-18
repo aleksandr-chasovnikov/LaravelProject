@@ -150,7 +150,11 @@
     </div>
     <!--//copy-right-->
     <!--//footer-->
-    <a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover"
+    <a href="#home" id="toTop" class="scroll" style="
+    display: block;
+    filter: alpha(Opacity=50);
+    opacity: 0.5;
+"> <span id="toTopHover"
                                                                              style="opacity: 1;"> </span></a>
     <!--/script-->
     <script src="{{ asset('GoEasyOn/js/jquery-2.1.4.min.js') }}"></script>

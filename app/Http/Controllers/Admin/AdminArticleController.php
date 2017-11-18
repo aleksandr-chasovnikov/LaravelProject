@@ -68,7 +68,7 @@ class AdminArticleController extends BaseController
 
         Article::create($request->all());
 
-        return view('admin.create')->with([
+        return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
             'message' => 'Статья успешно создана.',
         ]);
