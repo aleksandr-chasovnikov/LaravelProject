@@ -12,9 +12,11 @@ class SendMail extends Mailable
     use Queueable, SerializesModels;
 
     /**
+     * Email, с которого отправляется письмо
+     *
      * @var string
      */
-    protected $userEmail;
+    protected $fromEmail;
 
     /**
      * @var string
@@ -22,12 +24,12 @@ class SendMail extends Mailable
     protected $message;
 
     /**
-     * @param string $userEmail
+     * @param string $fromEmail
      * @param string $message
      */
-    public function __construct(string $userEmail, string $message)
+    public function __construct(string $fromEmail, string $message)
     {
-        $this->userEmail = $userEmail;
+        $this->fromEmail = $fromEmail;
         $this->message = $message;
     }
 
@@ -38,9 +40,9 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->view('contact')
+        return $this->text('emails.contact')
             ->with([
-                'email' => $this->userEmail,
+                'email' => $this->fromEmail,
                 'message' => $this->message,
             ]);
     }

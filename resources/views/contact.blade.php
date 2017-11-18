@@ -20,7 +20,7 @@
 
                         @if (empty($success))
 
-                            <form action="{{ route('sendMail') }}" id="contact-form"
+                            <form action="{{ route('simplePHPEmail') }}" id="contact-form"
                                   method="POST" class="form-horizontal" role="form">
                                 {{ csrf_field() }}
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -68,7 +68,7 @@
 
                             </form>
                         @else
-                            {{ $success }} &nbsp;&nbsp; <a href="/">На главную</a>
+                            {{ $success }} &nbsp;&nbsp; <button><a href="/">На главную</a></button>
                         @endif
 
                     </div>
