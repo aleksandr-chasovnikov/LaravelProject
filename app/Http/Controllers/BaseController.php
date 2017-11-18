@@ -128,7 +128,6 @@ class BaseController extends Controller
     protected function getFiles($id)
     {
         return Article::find($id)
-            ->first()
             ->files
             ->last();
     }

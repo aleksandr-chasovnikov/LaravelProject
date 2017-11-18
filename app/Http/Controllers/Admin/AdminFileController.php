@@ -47,7 +47,6 @@ class AdminFileController extends BaseController
             ->store('upload');
 
         Article::find($request->id)
-            ->first()
             ->files()
             ->save(new File([
                 'path' => $path,

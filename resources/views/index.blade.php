@@ -40,7 +40,8 @@
                                 @foreach($categories as $category)
 
                                     @unless (empty($articleCount = $category->articles->count()))
-                                        <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
+                                        <li class="wow fadeInLeft animated animated"
+                                            data-wow-delay=".5s">
                                             <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
                                             <span class="post-count pull-right">
                                         ({{$articleCount}})
@@ -65,15 +66,16 @@
                                     <div class="blog-left-left wow fadeInRight animated animated"
                                          data-wow-delay=".5s">
                                         <hr>
-                                        <p>Статья от {{$article->user->name}}&nbsp;&nbsp; {{$article->created_at}}
+                                        <p>Статья от {{$article->user->name}}
+                                            &nbsp;&nbsp; {{$article->created_at}}
                                             &nbsp;&nbsp;
                                             (Комментариев: {{$article->comments->count()}}
-                                                )</p>
+                                            )</p>
                                         <a href="{{route('articleShow', ['id' => $article->id])}}">
                                             @unless (empty($avatar = $article->files->last()))
-                                            <img class="media-object"
-                                                 src="{{ asset('storage/app/'. $avatar) }}"
-                                                 alt="image">
+                                                <img class="media-object"
+                                                     src="{{ asset('storage/app/'. $avatar) }}"
+                                                     alt="image">
                                             @endunless
                                         </a>
                                     </div>
@@ -117,24 +119,28 @@
                                 Популярные
                                 статьи</h3>
 
-                            @foreach($popular as $article)
+                            @foreach($popular as $pop)
 
                                 <div class="comments-text wow fadeInLeft animated animated"
                                      data-wow-delay=".5s">
                                     <div class="col-md-3 comments-left">
-                                        <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                            @unless (empty($avatar = $article->files->last()))
+                                        <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
+                                            @if (!empty($avatar = $pop->files->last()))
                                                 <img class="media-object"
                                                      src="{{ asset('storage/app/'. $avatar) }}"
                                                      alt="image">
-                                            @endunless
+                                            @else
+                                                <img class="media-object"
+                                                     src="{{ asset('storage/app/'. $empty) }}"
+                                                     alt="image">
+                                            @endif
                                         </a>
                                     </div>
                                     <div class="col-md-9 comments-right">
-                                        <a href="{{ route('articleShow', ['id' => $article->id]) }}">
+                                        <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
                                             {{$article->title}}
                                         </a>
-                                        <p>{{  $article->created_at }}</p>
+                                        <p>{{  $pop->created_at }}</p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -148,24 +154,28 @@
                             <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">
                                 Последние
                                 статьи</h3>
-                            @foreach($recent as $article)
+                            @foreach($recent as $rec)
 
                                 <div class="comments-text wow fadeInLeft animated animated"
                                      data-wow-delay=".5s">
                                     <div class="col-md-3 comments-left">
-                                        <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                            @unless (empty($avatar = $article->files->last()))
+                                        <a href="{{ route('articleShow', ['id' => $rec->id]) }}">
+                                            @if (!empty($avatar = $rec->files->last()))
                                                 <img class="media-object"
                                                      src="{{ asset('storage/app/'. $avatar) }}"
                                                      alt="image">
-                                            @endunless
+                                            @else
+                                                <img class="media-object"
+                                                     src="{{ asset('storage/app/'. $empty) }}"
+                                                     alt="image">
+                                            @endif
                                         </a>
                                     </div>
                                     <div class="col-md-9 comments-right">
-                                        <a href="{{ route('articleShow', ['id' => $article->id]) }}">
-                                            {{ $article->title }}
+                                        <a href="{{ route('articleShow', ['id' => $rec->id]) }}">
+                                            {{ $rec->title }}
                                         </a>
-                                        <p>{{  $article->created_at }}</p>
+                                        <p>{{  $rec->created_at }}</p>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -176,13 +186,16 @@
 
                     @unless (empty($tags[0]))
                         <div class="comments">
-                            <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако
-                                тегов</h3>
-                            <div class="tags">
+                            <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Поиск по тегам:</h3>
+                            <div style="border: solid 1px #000;
+                                        border-radius: 5px;
+                                        padding: 5px; ">
                                 @foreach($tags as $tag)
-                                    <a href="{{ route('showByTag', ['id' => $tag->id]) }}">
-                                        {{ $tag->title }}
-                                    </a>                                |
+                                    <button class="tags">
+                                        <a href="{{ route('showByTag', ['id' => $tag->id]) }}">
+                                            {{ $tag->title }}
+                                        </a>
+                                    </button>
                                 @endforeach
                             </div>
                         </div>

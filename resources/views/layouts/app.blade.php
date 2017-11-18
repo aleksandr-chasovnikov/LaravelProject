@@ -135,8 +135,7 @@
     <!--copy-right-->
     <div class="copy">
         <p class="wow fadeInUp animated animated" data-wow-delay=".5s">
-            <a href="{{ route('contact') }}">© {{ config('app.name') }}  !!}</a>,
-            2017
+            <a href="{{ route('contact') }}">© {{ config('app.name') }}</a>, 2017
             @if (date('Y', time()) > 2017)
                 - {!! date('Y', time()) !!}
             @endif
