@@ -20,38 +20,40 @@
 
                         @if (empty($success))
 
-                            <form action="{{ route('contactMail') }}" id="contact-form"
+                            <form action="{{ route('simplePHPEmail') }}" id="contact-form"
                                   method="POST" class="form-horizontal" role="form">
                                 {{ csrf_field() }}
                                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+
                                     <label for="email" class="col-md-4 control-label">Ваш
                                         e-mail</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control"
                                                name="email" value="{{ old('email') }}" required
-                                               autofocus>
+                                               @if ($errors->has('name') || !$errors) autofocus @endif>
 
                                         @if ($errors->has('email'))
-                                            <span class="help-block">
-									<strong>{{ $errors->first('email') }}</strong>
-								</span>
+                                            <div class="help-block">
+                                                <strong>{{ $errors->first('email') }}</strong></div>
                                         @endif
                                     </div>
                                 </div>
 
-                                <div class="form-group{{ $errors->has('mess') ? ' has-error' : '' }}">
-                                    <label for="mess"
-                                           class="col-md-4 control-label">Сообщение</label>
+                                <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
+                                    <label for="message"
+                                           class="col-md-4 control-label">Сообщение:</label>
 
                                     <div class="col-md-6">
-                                        <textarea name="message" id="mess" rows="10"
-                                                  required> {{ old('email') }} </textarea>
+                                        <textarea style="border-color: #2e3436;" name="message"
+                                                  id="message" rows="10"
+                                                  required
+                                                  @if ($errors->has('name')) autofocus @endif> {{ old('message') }} </textarea>
 
-                                        @if ($errors->has('mess'))
-                                            <span class="help-block">
-									<strong>{{ $errors->first('mess') }}</strong>
-								</span>
+                                        @if ($errors->has('message'))
+                                            <div class="help-block">
+                                                <strong>{{ $errors->first('message') }}</strong>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -66,7 +68,7 @@
 
                             </form>
                         @else
-                            {{ $success }} &nbsp;&nbsp; <a href="/">На главную</a>
+                            {{ $success }} &nbsp;&nbsp; <button><a href="/">На главную</a></button>
                         @endif
 
                     </div>

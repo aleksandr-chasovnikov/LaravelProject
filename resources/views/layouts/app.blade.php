@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{{ config('app.name', 'BeOnTopic') }}</title>
+    <title>{{ config('app.name') }}</title>
     <!-- bootstrap-css -->
     <link href="{{ asset('GoEasyOn/css/bootstrap.css') }}" rel="stylesheet" type="text/css"
           media="all"/>
@@ -110,20 +110,21 @@
     @endunless
 
 </div>
-@unless (empty($errors->all()))
+{{--@unless (empty($errors->all()))--}}
 
-    <div class="alert alert-danger">
-        <ul>
+    {{--<div class="alert alert-danger">--}}
+        {{--<ul>--}}
 
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
+            {{--@foreach($errors->all() as $error)--}}
+                {{--<li>{{ $error }}</li>--}}
+            {{--@endforeach--}}
 
-        </ul>
-    </div>
+        {{--</ul>--}}
+    {{--</div>--}}
 
-@endunless
+{{--@endunless--}}
 
+<a name="#iakor" ></a>
 @yield('content')
 
     <div class="clearfix"></div>
@@ -134,8 +135,12 @@
     <!--copy-right-->
     <div class="copy">
         <p class="wow fadeInUp animated animated" data-wow-delay=".5s">
-            <a href="{{ route('contact') }}">© Александр Часовников</a>,
-            2017.
+            <a href="{{ route('contact') }}">© {{ config('app.name') }}  !!}</a>,
+            2017
+            @if (date('Y', time()) > 2017)
+                - {!! date('Y', time()) !!}
+            @endif
+            .
             Все права защищены.
         <div> Блог сделан на
             <a href="https://laravel.com/">
@@ -242,7 +247,12 @@
     <!-- for bootstrap working -->
     <script src="{{ asset('GoEasyOn/js/bootstrap.js') }}"></script>
     <!-- //for bootstrap working -->
-
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script src="/vendor/unisharp/laravel-ckeditor/adapters/jquery.js"></script>
+    <script>
+//        $('textarea').ckeditor();
+         $('.textarea').ckeditor(); // if class is prefered.
+    </script>
 
 </body>
 </html>

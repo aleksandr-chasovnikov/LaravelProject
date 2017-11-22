@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\Tag;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 
 class SiteController extends BaseController
@@ -38,23 +37,20 @@ class SiteController extends BaseController
      *
      * GET /article.{id}
      *
-     * @param $id
+     * @param $articleId
      *
      * @return $this
      */
     public function show($articleId)
     {
         /**
-         * @var Builder $articles
-         */
-        $articles = $this->allArticles();
-
-        /**
          * @var Article $article
          */
-        $article = $this->allArticles()->where('id', $articleId)->first();
+        $article = Article::findOrFail($articleId);
         $article->viewed += 1;
         $article->save();
+
+        $articles = $this->allArticles();
 
         return view('article')->with([
             'article' => $article,

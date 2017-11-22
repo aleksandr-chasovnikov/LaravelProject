@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'aleksandr.chasovnikov@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => env('MAIL_FROM_NAME', 'BeOnTopic'),
     ],
 
     /*
@@ -118,6 +118,11 @@ return [
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
+    ],
+
+    'to' => [
+        'address' => env('ADMIN_EMAIL'),
+        'name' => env('APP_NAME'),
     ],
 
 ];

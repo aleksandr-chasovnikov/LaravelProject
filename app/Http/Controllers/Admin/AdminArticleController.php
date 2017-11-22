@@ -22,9 +22,11 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $articles = $this->allArticles()->get();
+        $articles = Article::withTrashed()
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        return view('admin/index')->with([
+        return view('admin.index')->with([
             'articles' => $articles,
             'categories' => $this->showCategories(),
         ]);
@@ -41,7 +43,7 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        return view('admin/create')->with([
+        return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
         ]);
     }
@@ -66,7 +68,7 @@ class AdminArticleController extends BaseController
 
         Article::create($request->all());
 
-        return view('admin/create')->with([
+        return view('admin.create')->with([
             'categories' => $this->showCategories(),
             'message' => 'Статья успешно создана.',
         ]);
@@ -75,7 +77,7 @@ class AdminArticleController extends BaseController
     /**
      * Выводит форму для редактирования статьи
      *
-     * GET /admin/article/update/{id}
+     * GET /admin/article/update.{id}
      *
      * @var int $id
      *
@@ -85,9 +87,11 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        $article = Article::find($id)->first();
+        $article = Article::withTrashed()
+            ->where('id', $id)
+            ->first();
 
-        return view('admin/update')->with([
+        return view('admin.article.update')->with([
             'article' => $article,
             'categories' => $this->showCategories(),
         ]);
@@ -108,10 +112,10 @@ class AdminArticleController extends BaseController
 
         $this->validate($request, [
             'title' => 'required|max:255',
-            'content' => 'required',
         ]);
 
-        Article::find($request->id)
+        Article::withTrashed()
+            ->where('id', $request->id)
             ->update($request->all());
 
         return redirect()->back();
@@ -130,9 +134,27 @@ class AdminArticleController extends BaseController
     {
         self::checkAdmin();
 
-        Article::find($id)
-            ->first()
-            ->delete();
+        Article::find($id)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Восстанавливает категорию
+     *
+     * GET /admin/category/restore/{id}
+     *
+     * @param $id
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function restore($id)
+    {
+        self::checkAdmin();
+
+        Article::withTrashed()
+            ->where('id', $id)
+            ->restore();
 
         return redirect()->back();
     }

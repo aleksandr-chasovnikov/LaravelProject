@@ -176,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 
@@ -227,5 +228,16 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | My settings
+    |--------------------------------------------------------------------------
+    |
+    |
+    |
+    */
+
+        'admin_email' => env('ADMIN_EMAIL'),
 
 ];

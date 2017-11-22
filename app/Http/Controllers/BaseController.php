@@ -7,8 +7,11 @@ use App\Category;
 use App\Comment;
 use App\File;
 use App\Tag;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BaseController extends Controller
@@ -70,8 +73,8 @@ class BaseController extends Controller
      */
     protected function allArticles($tagId = null, $categoryId = null)
     {
-        $articles = Article::select()
-            ->orderBy('created_at', 'desc')
+        $articles = Article::latest()
+//            ->where('published_at', '<=', Carbon::now()) //TODO Реализовать постепенную самопобликацию по устанновленным датам
             ->where('status', true);
 
         if (!empty($categoryId)) {

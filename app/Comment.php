@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Faker\Provider\Base;
 use App\Presenters\DatePresenter;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,8 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property integer $level
  * @property integer $status
  *
- * @property integer $created_at
- * @property integer $update_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
+ * @property Carbon   $deleted_at
  */
 class Comment extends BaseModel
 {
@@ -34,7 +36,11 @@ class Comment extends BaseModel
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * @var array
@@ -51,11 +57,4 @@ class Comment extends BaseModel
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Получить все модели, обладающие target.
-     */
-    public function target()
-    {
-        return $this->morphTo();
-    }
 }

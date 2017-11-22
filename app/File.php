@@ -1,6 +1,8 @@
 <?php
 
 namespace App;
+
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -10,8 +12,9 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property string  $path
  * @property boolean $status
  *
- * @property integer $created_at
- * @property integer $update_at
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
+ * @property Carbon   $deleted_at
  */
 class File extends BaseModel
 {
@@ -27,7 +30,11 @@ class File extends BaseModel
      *
      * @var array
      */
-    protected $dates = ['created_at', 'updated_at'];
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * Атрибуты, для которых запрещено массовое назначение.
