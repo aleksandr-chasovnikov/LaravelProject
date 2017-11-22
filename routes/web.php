@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 // Contact
 Route::get('contact', function() {
     return view('contact');
@@ -102,21 +104,6 @@ Route::group(['prefix' => 'admin'], function() {
 
 // ======== END AdminPanel =======================
 
-// ======== Authentication =======================
-
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-
-// login
-Route::get('loginX', 'Auth\LoginController@showLoginForm')->name('loginX');
-Route::post('loginX', 'Auth\LoginController@login')->name('loginX');
-Route::get('logoutX', 'Auth\LoginController@logout')->name('logoutX');
-
-// register
-Route::get('registerX', 'Auth\RegisterController@showRegistrationForm')->name('registerX');
-Route::post('registerX', 'Auth\RegisterController@register')->name('registerX');
-
-// ======== END Authentication =======================
 
 // ======== MyExample =======================
 // Route::post('registerX.{id?}', function() {

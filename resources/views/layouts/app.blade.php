@@ -56,12 +56,12 @@
                             @if (Auth::guest())
 
                                 <li class="m_nav_item" id="moble_nav_item_5">
-                                    <a href="{{ route('loginX') }}" class="link link--kumya scroll">
+                                    <a href="{{ route('login') }}" class="link link--kumya scroll">
                                         <span data-letters="Вход">Вход&nbsp;</span>
                                     </a>
                                 </li>
                                 <li class="m_nav_item" id="moble_nav_item_6">
-                                    <a href="{{ route('registerX') }}"
+                                    <a href="{{ route('register') }}"
                                        class="link link--kumya scroll">
                                         <span data-letters="Регистрация">Регистрация</span>
                                     </a>

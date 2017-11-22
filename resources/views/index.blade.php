@@ -44,7 +44,7 @@
                                             data-wow-delay=".5s">
                                             <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
                                             <span class="post-count pull-right">
-                                        ({{$articleCount}})
+                                        ({{ $articleCount }})
                                     </span>
                                         </li>
                                     @endunless
