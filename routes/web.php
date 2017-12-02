@@ -13,6 +13,14 @@
 
 Auth::routes();
 
+Route::get('/verify_email/{token}', 'Auth\RegisterController@verify');
+
+// Logout
+Route::any('/logout', function() { //TODO Не доделал
+    Auth::logout();
+    return redirect()->back();
+})->name('logout');
+
 // Contact
 Route::get('contact', function() {
     return view('contact');

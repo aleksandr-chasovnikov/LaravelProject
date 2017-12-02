@@ -85,7 +85,7 @@
                                     </a>
                                 </li>
                                 <li class="m_nav_item" id="moble_nav_item_6">
-                                    <a href="{{ route('logoutX') }}"
+                                    <a href="{{ route('logout') }}"
                                        class="link link--kumya scroll">
                                         <span data-letters="Выход">Выход</span>
                                     </a>
@@ -124,7 +124,7 @@
 
 {{--@endunless--}}
 
-<a name="#iakor" ></a>
+<a name="iakor" ></a>
 @yield('content')
 
     <div class="clearfix"></div>

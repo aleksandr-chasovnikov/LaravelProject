@@ -74,6 +74,20 @@
                     <input name="keywords" type="text" class="form-control" id="keywords"
                            value="{{--{{$faker->text(50)}}--}}" required>
                 </div>
+                <div class="form-group">
+                    <label for="tags_id">Теги</label>&nbsp;&#10033;
+                    <select name="tags_id[]" size="5" class="form-control" id="tags_id"
+                            required multiple>
+                        @foreach ($tags as $tag)
+                            <option
+                                    @if (1 === $tag->id)
+                                    selected
+                                    @endif
+                                    value="{{$tag->id}}">{{$tag->title}}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             <!-- 	<div class="form-group">
 				<label for="created_at">Дата создания</label>
 				<input name="created_at" type="text" class="form-control" id="created_at" value="{{date('Y-m-d')}}">

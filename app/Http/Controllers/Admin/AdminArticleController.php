@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ArticleTag;
 use App\Http\Controllers\BaseController;
+use App\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Article;
@@ -45,6 +47,7 @@ class AdminArticleController extends BaseController
 
         return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
         ]);
     }
 
@@ -66,10 +69,20 @@ class AdminArticleController extends BaseController
             'content' => 'required',
         ]);
 
-        Article::create($request->all());
+        $article = Article::create(
+            array_except($request->all(), ['tags_id'])
+        );
+
+        foreach ($request->input('tags_id') as $tagId) {
+            $article->tags()->save(new ArticleTag([
+                'article_id' => $article->id,
+                'tag_id' => $tagId,
+            ]));
+        }
 
         return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
             'message' => 'Статья успешно создана.',
         ]);
     }

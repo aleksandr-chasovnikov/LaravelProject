@@ -148,7 +148,7 @@
                                         </button>
                                     </form>
                                 @else
-                                    <p><a href="{{ route('loginX') }}">Авторизуйся, чтобы
+                                    <p><a href="{{ route('login') }}">Авторизуйся, чтобы
                                             прокомментировать.</a></p>
                                     {{--<input class="form-control" name="user_email" type="email"--}}
                                     {{--placeholder="E-mail (обязательно)" required>--}}
