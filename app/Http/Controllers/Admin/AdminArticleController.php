@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Article;
 use App\ArticleTag;
 use Illuminate\View\View;
@@ -107,6 +106,7 @@ class AdminArticleController extends BaseController
         return view('admin.article.update')->with([
             'article' => $article,
             'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
         ]);
     }
 
@@ -127,11 +127,18 @@ class AdminArticleController extends BaseController
             'title' => 'required|max:255',
         ]);
 
-        Article::withTrashed()
+        $articleId = Article::withTrashed()
             ->where('id', $request->id)
-            ->update($request->all());
+            ->update(array_except($request->all(), ['tags_id', '_token']));
 
-        return redirect()->back();
+        foreach ($request->input('tags_id') as $tagId) {
+            ArticleTag::create([
+                'article_id' => $request->id,
+                'tag_id' => $tagId,
+            ]);
+        }
+
+        return redirect()->route('articleEdit', ['id' => $articleId]);
     }
 
     /**
@@ -148,6 +155,27 @@ class AdminArticleController extends BaseController
         self::checkAdmin();
 
         Article::find($id)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Удаляет тег статьи
+     *
+     * DELETE /admin/article/delete/{article_id}/{tag_id}
+     *
+     * @param $article
+     * @param $tag
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function deleteTag($article, $tag)
+    {
+        self::checkAdmin();
+
+        ArticleTag::where('article_id', $article)
+            ->where('tag_id', $tag)
+            ->delete();
 
         return redirect()->back();
     }

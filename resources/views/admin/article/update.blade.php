@@ -69,18 +69,9 @@
                            value="{{$article->keywords}}">
                 </div>
                 <div class="form-group">
-                    <label for="tags">Выбранные теги</label>&nbsp;&#10033;
-                    <select name="tags[]" size="5" class="form-control" id="tags"
-                            required multiple>
-                        @foreach ($article->tags as $tag)
-                            <option value="{{$tag->id}}">{{$tag->title}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="tags_id">Все теги</label>&nbsp;&#10033;
+                    <label for="tags_id">Все теги:</label>
                     <select name="tags_id[]" size="5" class="form-control" id="tags_id"
-                            required multiple>
+                            multiple>
                         @foreach ($tags as $tag)
                             <option
                                     @if (1 === $tag->id)
@@ -104,6 +95,28 @@
 
                 {{ csrf_field() }}
             </form>
+
+            <label for="tags">Выбранные теги:</label>
+            <table>
+                @if (!$article->tags->count())
+                    Тегов нет.
+                @endif
+
+                @foreach ($article->tags as $tag)
+                    <tr>
+                        <td>{{$tag->title}}</td>
+                        <td>
+                            <form action="{{ route('articleTagDelete', ['article'=>$article->id, 'tag'=>$tag->id]) }}"
+                                  method="post">
+                                <!-- <input type="hidden" name="_method" value="DELETE"> -->
+                                {{method_field('DELETE')}}
+                                {{csrf_field()}}
+                                <button type="submit" class="btn-twitter btn-danger">Удалить</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
         </div>
     </div>
 

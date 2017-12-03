@@ -61,7 +61,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
         Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
         Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
-        Route::delete('delete.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+        Route::delete('destroy.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+        Route::delete('delete.{article}.{tag}', 'Admin\AdminArticleController@deleteTag')->name('articleTagDelete');
         Route::get('restore.{article}', 'Admin\AdminArticleController@restore')->name('articleRestore');
         Route::get('status.{article}', 'Admin\AdminArticleController@statusChange')->name('articleStatusChange');
     });

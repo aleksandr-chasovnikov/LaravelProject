@@ -74,7 +74,7 @@ class BaseController extends Controller
     protected function allArticles($tagId = null, $categoryId = null)
     {
         $articles = Article::latest()
-//            ->where('published_at', '<=', Carbon::now()) //TODO Реализовать постепенную самопобликацию по устанновленным датам
+//            ->where('published_at', '<=', Carbon::now()) //TODO Реализовать постепенную самопубликацию по устанновленным датам
             ->where('status', true);
 
         if (!empty($categoryId)) {

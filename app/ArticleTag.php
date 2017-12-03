@@ -48,6 +48,6 @@ class ArticleTag extends BaseModel
      */
     public function article()
     {
-        return $this->hasOne(Article::class, 'article_id');
+        return $this->hasOne(Article::class, 'id');
     }
 }
