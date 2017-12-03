@@ -6,11 +6,16 @@
         <div class="container">
             <div class="admin-panel">
                 <ul>
+                    @if ('admin/article/index' !== Illuminate\Support\Facades\Route::current())
+                        <li><a class="link" href="{{route('adminIndex')}}">Все теги</a></li>
+                    @endif
                     <li><a class="link" href="{{route('articleCreate')}}">Создать новую статью</a></li>
                     <br/>
                     <li><a class="link" href="{{route('commentIndex')}}">Все комментарии</a></li>
                     <li><a class="link" href="{{route('categoryIndex')}}">Все категории</a></li>
                     <li><a class="link" href="{{route('tagIndex')}}">Все теги</a></li>
+                    <li><a class="link" href="{{route('userIndex')}}">Все пользователи</a></li>
+
                     <br/>
                 </ul>
 

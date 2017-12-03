@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ArticleTag;
-use App\Http\Controllers\BaseController;
-use App\Tag;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+
 use App\Article;
+use App\ArticleTag;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\BaseController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdminArticleController extends BaseController
@@ -153,9 +153,9 @@ class AdminArticleController extends BaseController
     }
 
     /**
-     * Восстанавливает категорию
+     * Восстанавливает пользователя
      *
-     * GET /admin/category/restore/{id}
+     * GET /admin/article/restore/{id}
      *
      * @param $id
      *
