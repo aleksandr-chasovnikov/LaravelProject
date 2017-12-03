@@ -99,32 +99,8 @@
             </div>
         </div>
     </div>
-    @unless (empty($articles))
-        <div id="large-header" class="large-header">
-            {{--<canvas id="demo-canvas"></canvas>--}}
-            <h1 class="main-title"><a class="link link--takiri" href="#iakor">BeOnTopic<span
-                            class="wow fadeInUp animated animated" data-wow-delay=".5s">Будь в теме! (&copy;)</span></a>
-            </h1>
-
-        </div>
-    @endunless
 
 </div>
-{{--@unless (empty($errors->all()))--}}
-
-    {{--<div class="alert alert-danger">--}}
-        {{--<ul>--}}
-
-            {{--@foreach($errors->all() as $error)--}}
-                {{--<li>{{ $error }}</li>--}}
-            {{--@endforeach--}}
-
-        {{--</ul>--}}
-    {{--</div>--}}
-
-{{--@endunless--}}
-
-<a name="iakor" ></a>
 
 @yield('content')
 

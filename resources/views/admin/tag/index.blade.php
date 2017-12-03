@@ -49,7 +49,7 @@
                 <form action="{{ route('tagUpdate') }}" method="post" role="form">
                     <td>
                         <input name="id" type="hidden" class="form-control" value="{{$tag->id}}">
-                        <input style="max-width: 50px" type="numeric" class="form-control" id="id"
+                        <input style="max-width: 50px" type="ta" class="form-control" id="id"
                                value="{{$tag->id}}"
                                disabled>
                     </td>
@@ -96,20 +96,6 @@
         @endforeach
         </tbody>
 
-
     </table>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
 @endsection

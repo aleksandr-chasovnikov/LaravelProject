@@ -61,6 +61,7 @@
 
                         @unless (empty($articles))
                             @foreach ($articles as $article)
+
                                 <div class="blog-left">
 
                                     <div class="blog-left-left wow fadeInRight animated animated"
@@ -97,6 +98,7 @@
                                 </div>
 
                             @endforeach
+
                     </div>
                     <nav>
                         <ul class="pagination wow fadeInRight animated animated"

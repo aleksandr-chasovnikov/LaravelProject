@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.admin_external')
 
 @section('content')
 
@@ -6,8 +6,8 @@
         <div class="container">
             <div class="admin-panel">
                 <ul>
-                    @if ('admin/article/index' !== Illuminate\Support\Facades\Route::current())
-                        <li><a class="link" href="{{route('adminIndex')}}">Все теги</a></li>
+                    @if ('adminIndex' !== Route::current()->getName())
+                        <li><a class="link" href="{{route('adminIndex')}}">Все статьи</a></li>
                     @endif
                     <li><a class="link" href="{{route('articleCreate')}}">Создать новую статью</a></li>
                     <br/>
@@ -25,5 +25,10 @@
 
         </div>
     </section>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 @endsection
