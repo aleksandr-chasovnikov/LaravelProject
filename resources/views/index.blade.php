@@ -84,7 +84,7 @@
                                          data-wow-delay=".5s">
                                         <a href="{{route('articleShow', ['id' => $article->id])}}">{{$article->title}}</a>
                                         <p>
-                                            {{$article->description}}
+                                            {!! $article->description !!}
                                         </p>
                                     </div>
 

@@ -34,7 +34,6 @@ function isAdmin(){
 
 
 require __DIR__.'/../bootstrap/autoload.php';
-require_once __DIR__.'/../vendor/fzaninotto/Faker/src/autoload.php';
 
 /*
 |--------------------------------------------------------------------------

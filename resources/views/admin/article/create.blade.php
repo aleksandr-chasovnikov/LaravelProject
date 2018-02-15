@@ -2,8 +2,6 @@
 
 @section('inner_content')
 
-    <?/* $faker = Faker\Factory::create();*/?>
-
     <div class="container">
         <div class="row">
 
