@@ -137,8 +137,7 @@
     <script src="{{ asset('GoEasyOn/js/jquery-2.1.4.min.js') }}"></script>
     <script src="{{ asset('GoEasyOn/js/modernizr.custom.js') }}"></script>
     <script type="text/javascript" src="{{ asset('GoEasyOn/js/menu.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('GoEasyOn/js/jquery.magnific-popup.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('GoEasyOn/js/jquery.magnific-popup.js') }}"></script>
     <link href="{{ asset('GoEasyOn/css/magnific-popup.css') }}" rel="stylesheet" type="text/css">
     <script>
         $(document).ready(function () {

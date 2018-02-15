@@ -66,6 +66,7 @@ class AdminArticleController extends BaseController
         $this->validate($request, [
             'title' => 'required|max:255',
             'content' => 'required',
+            'description' => 'required',
         ]);
 
         $article = Article::create(
@@ -127,18 +128,22 @@ class AdminArticleController extends BaseController
             'title' => 'required|max:255',
         ]);
 
-        $articleId = Article::withTrashed()
+        $article = Article::withTrashed()
             ->where('id', $request->id)
             ->update(array_except($request->all(), ['tags_id', '_token']));
 
-        foreach ($request->input('tags_id') as $tagId) {
-            ArticleTag::create([
-                'article_id' => $request->id,
-                'tag_id' => $tagId,
-            ]);
+        $tagIds = $request->input('tags_id');
+
+        if (is_array($tagIds)) {
+            foreach ($request->input('tags_id') as $tagId) {
+                ArticleTag::create([
+                    'article_id' => $request->id,
+                    'tag_id' => $tagId,
+                ]);
+            }
         }
 
-        return redirect()->route('articleEdit', ['id' => $articleId]);
+        return redirect()->route('articleEdit', ['id' => $request->id]);
     }
 
     /**

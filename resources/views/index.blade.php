@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
     <!--/start-inner-content-->
     <!-- blog -->
     <div class="blog">
