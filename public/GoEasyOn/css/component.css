@@ -24,7 +24,7 @@ ul.side_nav li {
 }
 
 .demo-2 .large-header {
-	background-image: url('../images/banner.jpg');
+	background-image: url('../images/banner.jpg') ;
 	background-position: center bottom;
 }
 

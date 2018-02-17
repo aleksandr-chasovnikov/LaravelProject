@@ -4,8 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Contracts\Validation\Validator as Validation;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use App\Jobs\SendVerificationEmail;
 
 class RegisterController extends Controller
 {
@@ -31,8 +38,6 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -42,12 +47,13 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param  Request $request
+     *
+     * @return Validation
      */
-    protected function validator(array $data)
+    protected function validator(Request $request)
     {
-        return Validator::make($data, [
+        return Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
@@ -57,15 +63,55 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param Request $request
+     *
      * @return User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'email_token' => str_random($request->email),
         ]);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request)
+            ->validate();
+
+        event(new Registered(
+            $user = $this->create($request)
+        ));
+
+        dispatch(new SendVerificationEmail($user));
+
+        return view('verification');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param string $token
+     *
+     * @return Response
+     */
+    public function verify($token)
+    {
+        $user = User::where('email_token', $token)->first();
+        $user->verified = true;
+        if ($user->save()) {
+
+            return view('email_confirm', ['user' => $user]);
+        }
     }
 }

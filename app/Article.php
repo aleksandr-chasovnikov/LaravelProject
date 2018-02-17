@@ -2,32 +2,34 @@
 
 namespace App;
 
-use App\Presenters\DatePresenter;
 use Carbon\Carbon;
+use App\Presenters\DatePresenter;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * @property integer   $id
- * @property string    $title
- * @property string    $content
- * @property integer   $user_id
- * @property string    $description
- * @property integer   $viewed
- * @property string    $keywords
- * @property string    $meta_desc
- * @property integer   $categories_id
- * @property boolean   $status
+ * @property integer      $id
+ * @property string       $title
+ * @property string       $content
+ * @property integer      $user_id
+ * @property string       $description
+ * @property integer      $viewed
+ * @property string       $keywords
+ * @property string       $meta_desc
+ * @property integer      $categories_id
+ * @property boolean      $status
  *
- * @property Carbon   $created_at
- * @property Carbon   $updated_at
- * @property Carbon   $deleted_at
+ * @property Carbon       $created_at
+ * @property Carbon       $updated_at
+ * @property Carbon       $deleted_at
  *
- * @property User[]    $user
- * @property Comment[] $comments
- * @property Tag[]     $tags
- * @property File[]    $files
+ * @property User[]       $user
+ * @property Comment[]    $comments
+ * @property Tag[]        $tags
+ * @property File[]       $files
+ * @property ArticleTag[] $articleTags
  */
 class Article extends BaseModel
 {
@@ -111,5 +113,15 @@ class Article extends BaseModel
             'article_id',
             'tag_id'*/
         );
+    }
+
+    /**
+     * Возращает все комментарии пользователя.
+     *
+     * @return HasMany
+     */
+    public function articleTags()
+    {
+        return $this->hasMany(ArticleTag::class, 'article_id');
     }
 }

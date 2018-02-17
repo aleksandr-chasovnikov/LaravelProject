@@ -97,7 +97,7 @@ class SiteController extends BaseController
      */
     public function showByTag($tagId)
     {
-        $tag = (new Tag)->find($tagId)->first(['title']);
+        $tag = Tag::find($tagId);
 
         $articles = $this->allArticles($tagId);
 

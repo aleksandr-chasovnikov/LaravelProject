@@ -11,6 +11,19 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Auth::routes();
+
+Route::get('/verify_email/{token}', 'Auth\RegisterController@verify');
+
+// Logout
+Route::any('/logout', function() { //TODO Не доделал
+    Auth::logout();
+    return redirect()->back();
+})->name('logout');
+
 // Contact
 Route::get('contact', function() {
     return view('contact');
@@ -48,11 +61,19 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('create', 'Admin\AdminArticleController@create')->name('articleCreate');
         Route::get('update.{id}', 'Admin\AdminArticleController@edit')->name('articleEdit');
         Route::post('update', 'Admin\AdminArticleController@update')->name('articleUpdate');
-        Route::delete('delete.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
-        Route::get('restore.{article}', 'Admin\AdminArticleController@restore')
-            ->name('articleRestore');
-        Route::get('status.{article}', 'Admin\AdminArticleController@statusChange')
-            ->name('articleStatusChange');
+        Route::delete('destroy.{id}', 'Admin\AdminArticleController@destroy')->name('articleDelete');
+        Route::delete('delete.{article}.{tag}', 'Admin\AdminArticleController@deleteTag')->name('articleTagDelete');
+        Route::get('restore.{article}', 'Admin\AdminArticleController@restore')->name('articleRestore');
+        Route::get('status.{article}', 'Admin\AdminArticleController@statusChange')->name('articleStatusChange');
+    });
+
+    Route::group(['prefix' => 'user'], function() {
+
+        Route::get('index', 'Admin\AdminUserController@index')->name('userIndex');
+        Route::get('update.{id}', 'Admin\AdminUserController@edit')->name('userEdit');
+        Route::post('update', 'Admin\AdminUserController@update')->name('userUpdate');
+        Route::delete('delete.{id}', 'Admin\AdminUserController@destroy')->name('userDelete');
+        Route::get('restore.{user}', 'Admin\AdminUserController@restore')->name('userRestore');
     });
 
     Route::group(['prefix' => 'tag'], function() {
@@ -102,21 +123,6 @@ Route::group(['prefix' => 'admin'], function() {
 
 // ======== END AdminPanel =======================
 
-// ======== Authentication =======================
-
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
-
-// login
-Route::get('loginX', 'Auth\LoginController@showLoginForm')->name('loginX');
-Route::post('loginX', 'Auth\LoginController@login')->name('loginX');
-Route::get('logoutX', 'Auth\LoginController@logout')->name('logoutX');
-
-// register
-Route::get('registerX', 'Auth\RegisterController@showRegistrationForm')->name('registerX');
-Route::post('registerX', 'Auth\RegisterController@register')->name('registerX');
-
-// ======== END Authentication =======================
 
 // ======== MyExample =======================
 // Route::post('registerX.{id?}', function() {

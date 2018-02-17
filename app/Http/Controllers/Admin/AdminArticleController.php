@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Article;
+use App\ArticleTag;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\BaseController;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AdminArticleController extends BaseController
@@ -45,6 +46,7 @@ class AdminArticleController extends BaseController
 
         return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
         ]);
     }
 
@@ -64,12 +66,23 @@ class AdminArticleController extends BaseController
         $this->validate($request, [
             'title' => 'required|max:255',
             'content' => 'required',
+            'description' => 'required',
         ]);
 
-        Article::create($request->all());
+        $article = Article::create(
+            array_except($request->all(), ['tags_id'])
+        );
 
-        return view('admin.create')->with([
+        foreach ($request->input('tags_id') as $tagId) {
+            $article->tags()->save(new ArticleTag([
+                'article_id' => $article->id,
+                'tag_id' => $tagId,
+            ]));
+        }
+
+        return view('admin.article.create')->with([
             'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
             'message' => 'Статья успешно создана.',
         ]);
     }
@@ -94,6 +107,7 @@ class AdminArticleController extends BaseController
         return view('admin.article.update')->with([
             'article' => $article,
             'categories' => $this->showCategories(),
+            'tags' => $this->showTags(),
         ]);
     }
 
@@ -114,11 +128,22 @@ class AdminArticleController extends BaseController
             'title' => 'required|max:255',
         ]);
 
-        Article::withTrashed()
+        $article = Article::withTrashed()
             ->where('id', $request->id)
-            ->update($request->all());
+            ->update(array_except($request->all(), ['tags_id', '_token']));
 
-        return redirect()->back();
+        $tagIds = $request->input('tags_id');
+
+        if (is_array($tagIds)) {
+            foreach ($request->input('tags_id') as $tagId) {
+                ArticleTag::create([
+                    'article_id' => $request->id,
+                    'tag_id' => $tagId,
+                ]);
+            }
+        }
+
+        return redirect()->route('articleEdit', ['id' => $request->id]);
     }
 
     /**
@@ -140,9 +165,30 @@ class AdminArticleController extends BaseController
     }
 
     /**
-     * Восстанавливает категорию
+     * Удаляет тег статьи
      *
-     * GET /admin/category/restore/{id}
+     * DELETE /admin/article/delete/{article_id}/{tag_id}
+     *
+     * @param $article
+     * @param $tag
+     *
+     * @return RedirectResponse | HttpException
+     */
+    public function deleteTag($article, $tag)
+    {
+        self::checkAdmin();
+
+        ArticleTag::where('article_id', $article)
+            ->where('tag_id', $tag)
+            ->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Восстанавливает пользователя
+     *
+     * GET /admin/article/restore/{id}
      *
      * @param $id
      *

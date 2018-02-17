@@ -40,11 +40,16 @@
 
         @foreach($tags as $tag)
 
-            <tr>
+            <tr @if ($tag->deleted_at)
+                    style="background-color: #e4b9b9;"
+                @elseif (!$tag->status)
+                    style="background-color: #9B859D;"
+                @endif
+            >
                 <form action="{{ route('tagUpdate') }}" method="post" role="form">
                     <td>
                         <input name="id" type="hidden" class="form-control" value="{{$tag->id}}">
-                        <input style="max-width: 50px" type="numeric" class="form-control" id="id"
+                        <input style="max-width: 50px" type="ta" class="form-control" id="id"
                                value="{{$tag->id}}"
                                disabled>
                     </td>
@@ -91,20 +96,6 @@
         @endforeach
         </tbody>
 
-
     </table>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 
 @endsection

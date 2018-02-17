@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -14,6 +15,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string    $password
  * @property string    $role
  * @property integer   $rememberTokenName
+ * @property integer   $email_token
+ * @property integer   $verified
  *
  * @property Carbon   $created_at
  * @property Carbon   $updated_at
@@ -24,6 +27,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use Notifiable;
 
     const TABLE_NAME = 'users';
@@ -55,6 +59,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_token',
+        'verified',
     ];
 
     /**

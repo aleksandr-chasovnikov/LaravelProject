@@ -9,6 +9,13 @@
             @unless(empty($article))
 
                 <h3 class="tittle">{{ $article->title }}</h3>
+            @if (isAdmin())
+                    <a class="btn btn-warning"
+                       href="{{ route('articleEdit',['id'=>$article->id]) }}"
+                       role="button">Редактировать
+                    </a>
+            @endif
+
                 <div class="col-md-8 blog-top-left-grid">
                     <div class="left-blog left-single">
                         <div class="blog-left">
@@ -22,7 +29,11 @@
                                         @endunless
                                     </a>
                                 </p>
-                                <img src="{{ asset('storage/app/'.$image->path) }}" alt="image"/>
+                                @if (isset($image->path))
+                                    <img class="media-object"
+                                         src="{{ asset('storage/app/'. $image->path) }}"
+                                         alt="image">
+                                @endif
                             </div>
 
                             <!-- foreach -->
@@ -30,7 +41,7 @@
                             <div class="blog-left-bottom wow fadeInRight animated animated"
                                  data-wow-delay=".5s">
                                 <p>
-                                    {{ $article->content }}
+                                    {!!  $article->content !!}
                                 </p>
                             </div>
 
@@ -48,19 +59,23 @@
                                         <div class="media response-info">
                                             <div class="media-left response-text-left wow fadeInRight animated animated"
                                                  data-wow-delay=".5s">
-                                                <img width="50" class="media-object"
-                                                 @unless (empty($avatar = $comment->user->files->last()))
-                                                 src="{{ asset('storage/app/'. $avatar) }}"
-                                                     @else
-                                                     src="{{ asset('storage/app/'. $empty) }}"
-                                                     @endunless
-                                                     alt="image">
-                                                <h5>{{$comment->user->name}}</h5>
+                                                    {{--@if (!empty($avatar = $comment->user->files->last()))--}}
+                                                        {{--<img style="max-width: 70px" class="media-object"--}}
+                                                             {{--src="{{ asset('storage/app/'. $avatar->path) }}"--}}
+                                                             {{--alt="image">--}}
+                                                    {{--@else--}}
+                                                        {{--<img style="max-width: 70px" class="media-object"--}}
+                                                             {{--src="{{ asset('storage/app/'. $empty) }}"--}}
+                                                             {{--alt="image">--}}
+                                                    {{--@endif--}}
+                                                <h5>{{$comment->user->name}}:</h5>
                                             </div>
 
                                             <div class="media-body response-text-right">
                                                 <p class="wow fadeInRight animated animated"
-                                                   data-wow-delay=".5s">{{$comment->content}}</p>
+                                                   data-wow-delay=".5s">
+                                                    {{$comment->content}}
+                                                </p>
                                                 <ul class="wow fadeInRight animated animated"
                                                     data-wow-delay=".5s">
                                                     <li>{{$comment->created_at}}</li>
@@ -140,7 +155,7 @@
                                         </button>
                                     </form>
                                 @else
-                                    <p><a href="{{ route('loginX') }}">Авторизуйся, чтобы
+                                    <p><a href="{{ route('login') }}">Авторизуйся, чтобы
                                             прокомментировать.</a></p>
                                     {{--<input class="form-control" name="user_email" type="email"--}}
                                     {{--placeholder="E-mail (обязательно)" required>--}}
@@ -168,12 +183,16 @@
                                         </div>
                                     </form>
                                     <hr>
-                                    <form action="{{ route('file.destroy', ['article'=>$article->id]) }}" method="post">
-                                        <!-- <input type="hidden" name="_method" value="DELETE"> -->
-                                        {{method_field('DELETE')}}
-                                        {{csrf_field()}}
-                                        <button type="submit" class="btn btn-danger">Удалить</button>
-                                    </form>
+                                    @if (isset($image->path))
+                                        <form action="{{ route('file.destroy', ['article'=>$article->id]) }}"
+                                              method="post">
+                                            <!-- <input type="hidden" name="_method" value="DELETE"> -->
+                                            {{method_field('DELETE')}}
+                                            {{csrf_field()}}
+                                            <button type="submit" class="btn btn-danger">Удалить
+                                            </button>
+                                        </form>
+                                    @endif
                             @endif
                         </div>
 
@@ -192,12 +211,13 @@
                             @foreach($categories as $category)
 
                                 @unless (empty($articleCount = $category->articles->count()))
-                                <li class="wow fadeInLeft animated animated" data-wow-delay=".5s">
-                                    <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
+                                    <li class="wow fadeInLeft animated animated"
+                                        data-wow-delay=".5s">
+                                        <a href="{{ route('showByCategory', ['id' => $category->id] ) }}">{{$category->title}}</a>
                                         <span class="post-count pull-right">
                                         ({{$articleCount}})
                                     </span>
-                                </li>
+                                    </li>
                                 @endunless
 
                             @endforeach
@@ -216,14 +236,22 @@
                                  data-wow-delay=".5s">
                                 <div class="col-md-3 comments-left">
                                     <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
-                                        <img src=" " alt="image"/>
+                                        @if (!empty($avatar = $pop->files->last()))
+                                            <img class="media-object"
+                                                 src="{{ asset('storage/app/'. $avatar->path) }}"
+                                                 alt="image">
+                                        @else
+                                            <img class="media-object"
+                                                 src="{{ asset('storage/app/'. $empty) }}"
+                                                 alt="image">
+                                        @endif
                                     </a>
                                 </div>
                                 <div class="col-md-9 comments-right">
                                     <a href="{{ route('articleShow', ['id' => $pop->id]) }}">
                                         {{$pop->title}}
                                     </a>
-                                    <p>$article->getDate()</p>
+                                    <p><?/*= $article->getDate() */?></p>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -242,7 +270,15 @@
                                  data-wow-delay=".5s">
                                 <div class="col-md-3 comments-left">
                                     <a href="{{ route('articleShow', ['id' => $rec->id]) }}">
-                                        <img src="" alt="image"/>
+                                        @if (!empty($avatar = $rec->files->last()))
+                                            <img class="media-object"
+                                                 src="{{ asset('storage/app/'. $avatar->path) }}"
+                                                 alt="image">
+                                        @else
+                                            <img class="media-object"
+                                                 src="{{ asset('storage/app/'. $empty) }}"
+                                                 alt="image">
+                                        @endif
                                     </a>
                                 </div>
                                 <div class="col-md-9 comments-right">
@@ -258,19 +294,22 @@
                     @endunless
 
                 </div>
-                <div class="comments">
-                    <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Облако
-                        тегов</h3>
-                    @unless (empty($tags))
-                        <div class="tags">
+                @unless (empty($tags[0]))
+                    <div class="comments">
+                        <h3 class="wow fadeInLeft animated animated" data-wow-delay=".5s">Поиск по тегам:</h3>
+                        <div style="border: solid 1px #000;
+                                        border-radius: 5px;
+                                        padding: 5px; ">
                             @foreach($tags as $tag)
-                                <a href="{{ route('showByTag', ['id' => $tag->id]) }}">{{ $tag->title }}</a>
-                                |
+                                <button class="tags">
+                                    <a href="{{ route('showByTag', ['id' => $tag->id]) }}">
+                                        {{ $tag->title }}
+                                    </a>
+                                </button>
                             @endforeach
                         </div>
-                    @endunless
-
-                </div>
+                    </div>
+                @endunless
             </div>
 
             <div class="clearfix"></div>

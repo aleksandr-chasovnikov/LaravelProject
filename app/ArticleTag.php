@@ -2,12 +2,17 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property integer $id
  * @property integer $article_id
  * @property integer $tag_id
+ *
+ * @property Carbon   $created_at
+ * @property Carbon   $updated_at
+ * @property Carbon   $deleted_at
  */
 class ArticleTag extends BaseModel
 {
@@ -19,11 +24,15 @@ class ArticleTag extends BaseModel
     protected $table = self::TABLE_NAME;
 
     /**
-     * Определяет необходимость отметок времени для модели.
+     * Атрибуты, которые должны быть преобразованы в даты.
      *
-     * @var bool
+     * @var array
      */
-    public $timestamps = false;
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
     /**
      * Атрибуты, для которых запрещено массовое назначение.
@@ -39,6 +48,6 @@ class ArticleTag extends BaseModel
      */
     public function article()
     {
-        return $this->hasOne(Article::class, 'article_id');
+        return $this->hasOne(Article::class, 'id');
     }
 }
