@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label for="content">Полный текст</label>&nbsp;&#10033;
-                    <textarea name="content" rows="7" class="form-control" id="content"
+                    <textarea name="content" rows="25" class="form-control" id="content"
                               required>{{$article->content}}</textarea>
                 </div>
                 <div class="form-group">

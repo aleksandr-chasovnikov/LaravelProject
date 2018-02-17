@@ -9,6 +9,13 @@
             @unless(empty($article))
 
                 <h3 class="tittle">{{ $article->title }}</h3>
+            @if (isAdmin())
+                    <a class="btn btn-warning"
+                       href="{{ route('articleEdit',['id'=>$article->id]) }}"
+                       role="button">Редактировать
+                    </a>
+            @endif
+
                 <div class="col-md-8 blog-top-left-grid">
                     <div class="left-blog left-single">
                         <div class="blog-left">
